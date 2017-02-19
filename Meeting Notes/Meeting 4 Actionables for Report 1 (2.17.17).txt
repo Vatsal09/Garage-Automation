@@ -1,0 +1,31 @@
+Add the meeting notes/pics from yesterday to github
+Update the TODOs
+Table of Contents needs to be added for Report 1
+Effort Breakdown needs to be discussed and finalized
+Since Last Report section needs to be added
+Problem Statement - Make sure the language is changed from the feedback. Change the list as necessary.
+Glossary - Needs to be descriptive 
+Enumerated Functional Requirements - We need to make sure we have all the user stories because we added stuff later.
+Change the User stories so it's more descriptive. The point system needs to be be checked for final.
+Non-Func - Final check before submission
+On-Screen- Moved UI mockups to UI Specification. Explain why we don't need it and which UI we will have.
+Use Cases - final update check and rearrange according user, manager, parking/system
+Use Case Diagram- needs do over because of new use cases
+Traceability - add the new stuff
+Fully dressed Description - the people that added use cases have to make these
+System sequence- we have to make sure we use the same website to produce it
+UI- make the mckups for screens talked about yesterday and then show flow of what will happen
+User effort estimation - redo it based on new UI
+
+!New Stuff!
+Domain Model
+System Contracts
+Plan of Work
+References
+
+
+
+
+
+
+ 
