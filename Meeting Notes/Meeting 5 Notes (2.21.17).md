@@ -18,4 +18,4 @@ What we have to do:
 * Project Management and Plan of Work
 	* Need exact description of what each team is working on 
 	* Who is doing what
-	* The timeline for your part (from now to demo 2) (These are things due for the overall project that we listed in Report 1) [https://app.smartsheet.com/b/publish?EQBCT=6e550bb75170435685b17b56898a4db5]
+	* The timeline for your part (from now to demo 2) [These are things due for the overall project that we listed in Report 1] (https://app.smartsheet.com/b/publish?EQBCT=6e550bb75170435685b17b56898a4db5)
