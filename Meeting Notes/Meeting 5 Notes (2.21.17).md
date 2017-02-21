@@ -1,13 +1,15 @@
 # Meeting 5
 
 ## Objectives
-We have to discuss:  
+We have to discuss:
+
 	* Class Diagram design and responsibilities
 	* Interaction Diagram design and responsibilities
 	* Database design
 	* Timeline of overall, sub-group, and individuals till Demo 1
 
-What we have to do:
+What we have to do:  
+
 	* Each team has to do 3 interaction diagrams
 		* Sequence diagram their team had
 		* 2 others from the fully dressed descriptions
