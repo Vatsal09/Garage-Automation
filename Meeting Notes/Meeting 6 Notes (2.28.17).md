@@ -10,7 +10,7 @@ We have to discuss:
 
 What we have to do:  
 
-* Each team should come up with classes and functions + data for each class. Show how these are related to controller (UML diagram). Do this in paper. One person will use these drawings to compile 1 class diagram. [DUE SATURDAY AT 6PM]
+* Each team should come up with classes and functions + data for each class. Show how these are related to controller (UML diagram). Do this in paper. One person will use these drawings to compile 1 class diagram. [**DUE SATURDAY AT 6PM**]
 	* Team 1 (Guy and Arthur) - Guy and Artur are doing the class diagrams
 	* Team 2 (Gao, Kendric, and Vatsal) - Gao is doing the class diagrams
 	* Team 3 (Peter and Yunqi) - Yunqi is doing the class diagrams
