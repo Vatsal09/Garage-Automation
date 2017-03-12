@@ -1,5 +1,7 @@
 ##TODO  
 
+Note: Week 5+ we changed the format from one long TODO to separate weekly meeting notes, weekly deliverables, and weekly TODOS. This change occured to better facilitate the distribution of responsibilities. Please view the weekly meeting notes under the "Meeting Notes" folder.
+
 #Week 4 (Final Report 1 Due)
 - [x] Add the meeting notes/pics from meeting 
 - [x] Update the TODOs
