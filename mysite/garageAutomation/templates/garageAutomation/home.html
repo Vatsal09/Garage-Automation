@@ -1,0 +1,204 @@
+<html lang="en">
+<head>
+    <!--JQuery-->
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-3.1.1.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<style>
+.menuModalDiv{
+    float: left;
+    width: auto;
+    margin: 0px;
+    height: 100%;
+    padding: 0px;
+}
+.modal-body.menuModalDiv {
+    padding: 5px;
+}
+.modal.fade:not(.in).left .modal-dialog { /* slide modal from left */
+    -webkit-transform: translate3d(-25%, 0, 0);
+    transform: translate3d(-25%, 0, 0);
+}
+.modal.fade:not(.in).bottom .modal-dialog { /* slide modal from bottom */
+    -webkit-transform: translate3d(0, 25%, 0);
+    transform: translate3d(0, 25%, 0);
+}
+.modal.fade:not(.in).right .modal-dialog { /* slide modal from right */
+    -webkit-transform: translate3d(25%, 0, 0);
+    transform: translate3d(25%, 0, 0);
+}
+.menuButton{
+    background-color: white;
+    border: none;
+    display: block;
+    font-weight: bolder;
+    font-size: 40;
+    text-align: left;
+    width: 200px;
+    height: 70;
+}
+.glyphicon-menu-hamburger {
+    margin: 20px;
+    margin-top: 30px;
+    background: white;
+}
+
+.glyphicon-remove, .glyphicon-arrow-left{
+    padding: 0;
+    margin: 20px;
+    margin-top: 30px;
+    border: none;
+    display: block;
+    background: white;
+    
+}
+.windowModal{
+    padding: 0em;
+    margin: 0em;
+    height: 100%;
+    width: 100%;
+}
+
+.subMenuTitles{
+    margin-left: 20px;
+}
+
+.subMenu_subTitle{
+    color: gray;
+}
+.subMenuListButton{
+    background-color: white;
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: left;
+    width: 100%;
+    height: 70px;
+    margin-left: 0px;
+    
+    border-style: solid;
+    border-left: none;
+    border-right: none;
+    border-width: thin;
+}
+
+.detailsMenuListItem{
+    border-style: solid;
+    border-left: none;
+    border-right: none;
+    border-width: thin;
+    border-color: lightgray;
+    height: 70px;
+}
+
+.menuItemDetailsDescription{
+    margin-top: 7px;
+    color: gray;
+}
+
+.detailsMenuListItem p{
+    font-size: 20px;
+    padding-left: 20px;
+    margin-bottom: 0px;
+}
+
+</style>
+<script src="js/homes.js"></script>
+
+<body>
+    <button type="button" class="btn-lg btn glyphicon glyphicon-menu-hamburger" data-toggle="modal" data-target="#menuModal"></button>
+
+    <h1> Hello, {{account.first_name}} </h1>
+
+    <!-- Menu Modal -->
+    <div class="modal fade left" id="menuModal" role="dialog">
+        <div class="modal-dialog menuModalDiv">
+            <div class="modal-content menuModalDiv">
+                <div class="modal-body menuModalDiv">
+                    <span style="padding:10px"></span>
+                    <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#paymentModal">Payment</button> <!-- closes menu and opens payment -->
+                    <button class="menuButton" type="button">History</button>
+                    <button class="menuButton" type="button">Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal fade bottom windowModal" id="paymentModal" role="dialog">
+        <div class="modal-dialog modal-lg windowModal">
+            <div class="modal-content windowModal">
+                <div class="modal-body">
+                    <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <div class="subMenuTitles">
+                        <h1>Payment</h1>
+                        <h3 class="subMenu_subTitle">Payment Methods</h3>
+                    </div>
+                    <div> 
+                        {% if payment_methods %}
+                            {%for payment_method in payment_methods%}
+                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}"><span style="padding-left:14px"></span>{{payment_method.type}} •••• {{payment_method.getLastFour}}</button>   
+                            {% endfor %}
+                        {% else %}
+                            <h1> THIS SHOULD NEVER HAPPEN! </h1> <!-- TODO: logic? -->
+                        {% endif %}
+                        <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal"><span style="padding-left:14px"></span>Add Payment</button>                           
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Payment Method Detail Modals-->
+        {% if payment_methods %}
+            {%for payment_method in payment_methods%}
+                <div class="modal fade right windowModal" id="paymentMethod_{{payment_method.pk}}" role="dialog">
+                    <div class="modal-dialog modal-lg windowModal">
+                        <div class="modal-content windowModal">
+                            <div class="modal-body">
+                                <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                                <div class="subMenuTitles">
+                                    <h1>{{payment_method.type}}</h1>
+                                </div>
+                                <div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Card Number </p>
+                                        <p> •••• •••• •••• {{ payment_method.getLastFour }} </p>
+                                    </div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Expiry Date </p>
+                                        <p>{{ payment_method.exp }}</p>
+                                    </div>
+                                    <button type="button" class="subMenuListButton"><span style="padding-left:14px"></span>Remove Card</button> <!--TODO -->                                       
+                                </div>                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    <!--Add payment method Modal-->
+    <div class="modal fade right windowModal" id="addPaymentMethodModal" role="dialog">
+        <div class="modal-dialog modal-lg windowModal">
+            <div class="modal-content windowModal">
+                <div class="modal-body">
+                    <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                    <div class="subMenuTitles">
+                        <h1>Add Payment Method</h1>
+                    </div>
+                    <div>
+                                  
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
