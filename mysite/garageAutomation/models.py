@@ -46,6 +46,26 @@ class Account(models.Model):
     
     def __str__(self):
         return str(self.account_id) + ": " + self.first_name
+
+    def haveCard(self,card_number):
+        cards = PaymentMethod.objects.filter(account=self.account_id)
+        for card in cards:
+            if card.card_number == card_number:
+                return True
+        return False
+
+    def addCard(self, type, card_number, exp, cvv, country, zip):
+        if self.haveCard(card_number) == False:
+            newCard = PaymentMethod()
+            newCard.account = self
+            newCard.type = type
+            newCard.card_number = card_number
+            newCard.exp = exp
+            newCard.cvv = cvv
+            newCard.country = country
+            newCard.zip = zip
+
+            newCard.save()
     
     #foreign key for:
         #payment methods
@@ -77,9 +97,8 @@ class PaymentMethod(models.Model):
 
     def __str__(self):
         return str(self.account.account_id) + ": " + self.getLastFour()
-
+    
     #TODO: 
-        #def getLastFour
         #def remove
         #def charge
 
