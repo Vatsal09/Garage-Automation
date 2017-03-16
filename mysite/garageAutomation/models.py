@@ -70,6 +70,10 @@ class Account(models.Model):
     def removeCard(self,recieved_card_number,recieved_exp):
         card = PaymentMethod.objects.filter(account=self.account_id, card_number=recieved_card_number, exp=recieved_exp)
         card.delete()
+
+    def printPhoneNumber(self):
+        return "(" + self.phone_number[0:3] + ") " + self.phone_number[3:6] + "-" + self.phone_number[6:]
+
     #foreign key for:
         #payment methods
         #vehicles
@@ -96,10 +100,16 @@ class PaymentMethod(models.Model):
 
     def getLastFour(self):
         return self.card_number[-4:]
-
+ 
     def __str__(self):
         return str(self.account.account_id) + ": " + self.getLastFour()
     
+    def printType(self):
+        if (self.type == "Debit"):
+            return "Debit "
+        else: 
+            return self.type
+
     #TODO: 
         #def remove
         #def charge

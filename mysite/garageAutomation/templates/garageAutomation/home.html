@@ -27,8 +27,8 @@
                 <div class="modal-body menuModalDiv">
                     <span style="padding:10px"></span>
                     <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#paymentModal">Payment</button> <!-- closes menu and opens payment -->
-                    <button class="menuButton" type="button">History</button>
-                    <button class="menuButton" type="button">Settings</button>
+                    <button class="menuButton" type="button">History</button> <!--TODO-->
+                    <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#settingsModal">Settings</button>
                 </div>
             </div>
         </div>
@@ -47,10 +47,10 @@
                     <div> 
                         {% if payment_methods %}
                             {%for payment_method in payment_methods%}
-                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{payment_method.type}} •••• {{payment_method.getLastFour}}</button>   
+                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{payment_method.printType}} •••• {{payment_method.getLastFour}}</button>   
                             {% endfor %}
                         {% else %}
-                            <h1> THIS SHOULD NEVER HAPPEN! </h1> <!-- TODO: logic? -->
+                            <<!-- TODO: logic to force payment method -->
                         {% endif %}
                         <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal">Add Payment Method</button>                           
                     </div>                     
@@ -127,6 +127,38 @@
                             <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px" value="Save">
                         </fieldset>
                     </form>        
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Settings Modal-->
+    <div class="modal fade bottom windowModal" id="settingsModal" role="dialog">
+        <div class="modal-dialog modal-lg windowModal">
+            <div class="modal-content windowModal">
+                <div class="modal-body">
+                    <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <div>
+                        <h1 class="subMenuTitles">Settings</h1>
+
+                        <div class="subMenuBlock">
+                            <h3>{{account.first_name}} {{account.last_name}}</h1>
+                            <h3>{{account.printPhoneNumber}}</h1>
+                        </div>
+
+                        <h3 class="subMenuTitles subMenu_subTitle">Vehicles</h3>
+                    </div>
+                    <div> 
+                        {% if vehicles %}
+                            {%for vehicle in vehicles%}
+                                <div type="button" class="detailsMenuListItem" >
+                                <p style="display: inline-block; margin-top: 22;">{{vehicle.license_plate}} </p>
+                                <button class="glyphicon glyphicon-remove"></button></div>   
+                            {% endfor %}
+                        {% else %}
+                        <p style="font-size: 20px; padding-left: 20px; margin-bottom: 0px;">No Vehicles Registered</p>
+                        {% endif %}                       
+                    </div>                     
                 </div>
             </div>
         </div>

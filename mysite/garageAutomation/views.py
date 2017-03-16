@@ -25,10 +25,10 @@ def home(request):
             context = {
                 'account' : recievedAccount,
                 'payment_methods' : PaymentMethod.objects.filter(account=recievedAccount.account_id),
-                # 'vehicles' : Vehicle.objects.get(account = 1),
+                'vehicles' : Vehicle.objects.filter(account=recievedAccount.account_id),
             }
         except Account.DoesNotExist:
             raise Http404("Account does not exist")
         return render(request, 'garageAutomation/home.html', context)
     else:
-        return redirect('/')
+        return redirect('garageAutomation/')
