@@ -10,107 +10,10 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{%static "garageAutomation/home.css"%}"/>
 </head>
-<style>
-.menuModalDiv{
-    float: left;
-    width: auto;
-    margin: 0px;
-    height: 100%;
-    padding: 0px;
-}
-.modal-body.menuModalDiv {
-    padding: 5px;
-}
-.modal.fade:not(.in).left .modal-dialog { /* slide modal from left */
-    -webkit-transform: translate3d(-25%, 0, 0);
-    transform: translate3d(-25%, 0, 0);
-}
-.modal.fade:not(.in).bottom .modal-dialog { /* slide modal from bottom */
-    -webkit-transform: translate3d(0, 25%, 0);
-    transform: translate3d(0, 25%, 0);
-}
-.modal.fade:not(.in).right .modal-dialog { /* slide modal from right */
-    -webkit-transform: translate3d(25%, 0, 0);
-    transform: translate3d(25%, 0, 0);
-}
-.menuButton{
-    background-color: white;
-    border: none;
-    display: block;
-    font-weight: bolder;
-    font-size: 40;
-    text-align: left;
-    width: 200px;
-    height: 70;
-}
-.glyphicon-menu-hamburger {
-    margin: 20px;
-    margin-top: 30px;
-    background: white;
-}
-
-.glyphicon-remove, .glyphicon-arrow-left{
-    padding: 0;
-    margin: 20px;
-    margin-top: 30px;
-    border: none;
-    display: block;
-    background: white;
-    
-}
-.windowModal{
-    padding: 0em;
-    margin: 0em;
-    height: 100%;
-    width: 100%;
-}
-
-.subMenuTitles{
-    margin-left: 20px;
-}
-
-.subMenu_subTitle{
-    color: gray;
-}
-.subMenuListButton{
-    background-color: white;
-    display: block;
-    font-weight: bold;
-    font-size: 20px;
-    text-align: left;
-    width: 100%;
-    height: 70px;
-    margin-left: 0px;
-    
-    border-style: solid;
-    border-left: none;
-    border-right: none;
-    border-width: thin;
-}
-
-.detailsMenuListItem{
-    border-style: solid;
-    border-left: none;
-    border-right: none;
-    border-width: thin;
-    border-color: lightgray;
-    height: 70px;
-}
-
-.menuItemDetailsDescription{
-    margin-top: 7px;
-    color: gray;
-}
-
-.detailsMenuListItem p{
-    font-size: 20px;
-    padding-left: 20px;
-    margin-bottom: 0px;
-}
-
-</style>
-<script src="js/homes.js"></script>
 
 <body>
     <button type="button" class="btn-lg btn glyphicon glyphicon-menu-hamburger" data-toggle="modal" data-target="#menuModal"></button>
@@ -144,12 +47,12 @@
                     <div> 
                         {% if payment_methods %}
                             {%for payment_method in payment_methods%}
-                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}"><span style="padding-left:14px"></span>{{payment_method.type}} •••• {{payment_method.getLastFour}}</button>   
+                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{payment_method.type}} •••• {{payment_method.getLastFour}}</button>   
                             {% endfor %}
                         {% else %}
                             <h1> THIS SHOULD NEVER HAPPEN! </h1> <!-- TODO: logic? -->
                         {% endif %}
-                        <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal"><span style="padding-left:14px"></span>Add Payment</button>                           
+                        <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal">Add Payment Method</button>                           
                     </div>                     
                 </div>
             </div>
@@ -176,7 +79,17 @@
                                         <p class="menuItemDetailsDescription"> Expiry Date </p>
                                         <p>{{ payment_method.exp }}</p>
                                     </div>
-                                    <button type="button" class="subMenuListButton"><span style="padding-left:14px"></span>Remove Card</button> <!--TODO -->                                       
+                                    
+                                    <!--Delete Card-->
+                                    <form id="removePaymentMethodForm" action="/garageAutomation/home/" method="post">
+                                    {% csrf_token %}
+                                        <input hidden="hidden" name="removeCard", value="true">
+                                        <input hidden="hidden" name="account_id", value="{{account.account_id}}">                                        
+                                        <input hidden="hidden" name="card_number", value="{{payment_method.card_number}}">    
+                                        <input hidden="hidden" name="exp", value="{{payment_method.exp}}">
+                                        
+                                        <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px" value="Remove">                               
+                                    </form>
                                 </div>                     
                             </div>
                         </div>
@@ -194,9 +107,26 @@
                     <div class="subMenuTitles">
                         <h1>Add Payment Method</h1>
                     </div>
-                    <div>
-                                  
-                    </div>                     
+                    <form id="addPaymentMethodForm" action="/garageAutomation/home/" method="post" onload="clearForm(this);" >
+                    {% csrf_token %}
+                        <fieldset>
+                            <!--not input-->
+                            <input hidden="hidden" name="addCard", value="true">
+                            <input hidden="hidden" name="account_id", value="{{account.account_id}}">
+
+                            <!--input-->
+                            <input type="radio" name="type" value=Credit required> <p class="menuItemRadioDescription"> Credit </p> <br>
+                            <input type="radio" name="type" value=Debit required> <p class="menuItemRadioDescription"> Debit </p> <br>
+
+                            <input type="text" name="card_number" placeholder="Card Number" required pattern="[0-9]{16}" title="FORMAT: 0000123400001234"> <br>
+                            <input type="text" name="exp" placeholder="Exp. Date (xx/xx)" required pattern="[0-9]{2}[/][0-9]{2}" title="FORMAT: 00/00"> <br>   
+                            <input type="text" name="cvv" placeholder="CVV" required required pattern="[0-9]{3}" title="FORMAT: 000"> <br>
+                            <input type="text" name="country" placeholder="Country" required pattern="\D{4,30}"> <br>
+                            <input type="text" name="zip" placeholder="Zip Code" required pattern="[0-9]{5}" title="FORMAT: 08901"> <br>
+
+                            <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px" value="Save">
+                        </fieldset>
+                    </form>        
                 </div>
             </div>
         </div>
