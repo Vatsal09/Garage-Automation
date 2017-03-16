@@ -66,7 +66,10 @@ class Account(models.Model):
             newCard.zip = zip
 
             newCard.save()
-    
+
+    def removeCard(self,recieved_card_number,recieved_exp):
+        card = PaymentMethod.objects.filter(account=self.account_id, card_number=recieved_card_number, exp=recieved_exp)
+        card.delete()
     #foreign key for:
         #payment methods
         #vehicles
@@ -78,7 +81,6 @@ class Account(models.Model):
         #def verifyPassword
         #def remove
         #remove vehicle
-        #remove paymentMethod
 
 class PaymentMethod(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)

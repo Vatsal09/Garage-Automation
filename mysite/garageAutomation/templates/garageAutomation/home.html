@@ -10,6 +10,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 </head>
 <style>
 .menuModalDiv{
@@ -83,6 +84,7 @@
 }
 .subMenuListButton{
     width: 100%;
+    text-indent: 14px
 }
 .detailsMenuListItem{
     border-style: solid;
@@ -113,6 +115,15 @@ form input[type=text]{
 .menuItemRadioDescription{
     display: inline-block;
     font-size: 20;
+}
+form input{
+    text-indent: 20px;
+}
+form input[type="radio"]{
+    margin-left: 20px;
+}
+form{
+    margin-bottom: 0px;
 }
 </style>
 
@@ -148,12 +159,12 @@ form input[type=text]{
                     <div> 
                         {% if payment_methods %}
                             {%for payment_method in payment_methods%}
-                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}"><span style="padding-left:14px"></span>{{payment_method.type}} •••• {{payment_method.getLastFour}}</button>   
+                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{payment_method.type}} •••• {{payment_method.getLastFour}}</button>   
                             {% endfor %}
                         {% else %}
                             <h1> THIS SHOULD NEVER HAPPEN! </h1> <!-- TODO: logic? -->
                         {% endif %}
-                        <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal"><span style="padding-left:14px"></span>Add Payment</button>                           
+                        <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal">Add Payment Method</button>                           
                     </div>                     
                 </div>
             </div>
@@ -180,7 +191,17 @@ form input[type=text]{
                                         <p class="menuItemDetailsDescription"> Expiry Date </p>
                                         <p>{{ payment_method.exp }}</p>
                                     </div>
-                                    <button type="button" class="subMenuListButton"><span style="padding-left:14px"></span>Remove Card</button> <!--TODO -->                                       
+                                    
+                                    <!--Delete Card-->
+                                    <form id="removePaymentMethodForm" action="/garageAutomation/home/" method="post">
+                                    {% csrf_token %}
+                                        <input hidden="hidden" name="removeCard", value="true">
+                                        <input hidden="hidden" name="account_id", value="{{account.account_id}}">                                        
+                                        <input hidden="hidden" name="card_number", value="{{payment_method.card_number}}">    
+                                        <input hidden="hidden" name="exp", value="{{payment_method.exp}}">
+                                        
+                                        <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px" value="Remove">                               
+                                    </form>
                                 </div>                     
                             </div>
                         </div>
@@ -198,7 +219,7 @@ form input[type=text]{
                     <div class="subMenuTitles">
                         <h1>Add Payment Method</h1>
                     </div>
-                    <form id="addPaymentMethodForm" action="/garageAutomation/home/" method="post">
+                    <form id="addPaymentMethodForm" action="/garageAutomation/home/" method="post" onload="clearForm(this);" >
                     {% csrf_token %}
                         <fieldset>
                             <!--not input-->
@@ -215,9 +236,9 @@ form input[type=text]{
                             <input type="text" name="country" placeholder="Country" required pattern="\D{4,30}"> <br>
                             <input type="text" name="zip" placeholder="Zip Code" required pattern="[0-9]{5}" title="FORMAT: 08901"> <br>
 
-                            <input type="submit" class="subMenuListButton" name="Save">
+                            <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px" value="Save">
                         </fieldset>
-                    </form>                  
+                    </form>        
                 </div>
             </div>
         </div>

@@ -9,18 +9,22 @@ def index(request):
     return render(request, 'garageAutomation/index.html', context)
 
 def home(request):
-    if request.method == "POST":
-        print("*"*50)
-        print(request.POST)
-        print("*"*50)       
+    if request.method == "POST":     
         try:
-            account = Account.objects.get(pk=request.POST.get('account_id'))
+            recievedAccount = Account.objects.get(pk=request.POST.get('account_id'))
+            
+            # add card
             if request.POST.get('addCard'):
-                account.addCard(request.POST.get('type'), request.POST.get('card_number'), request.POST.get('exp'), request.POST.get('cvv'), request.POST.get('country'), request.POST.get('zip'))
-                       
+                recievedAccount.addCard(request.POST.get('type'), request.POST.get('card_number'), request.POST.get('exp'), request.POST.get('cvv'), request.POST.get('country'), request.POST.get('zip'))
+
+            # delete card
+            if request.POST.get('removeCard'):     
+                recievedAccount.removeCard(request.POST.get('card_number'), request.POST.get('exp'))
+                
+            # render home
             context = {
-                'account' : account,
-                'payment_methods' : PaymentMethod.objects.filter(account = 1),
+                'account' : recievedAccount,
+                'payment_methods' : PaymentMethod.objects.filter(account=recievedAccount.account_id),
                 # 'vehicles' : Vehicle.objects.get(account = 1),
             }
         except Account.DoesNotExist:
