@@ -12,15 +12,20 @@ class Parking_Lot(models.Model):
 	max_levels = models.Charfield(max_length = 3, validators=[RegexValidator(r'^\d{1,3}$')])
 	max_spots = models.Charfield(max_length = 5, validators=[RegexValidator(r'^\d{1,5}$')])
 
-	# Function to check number of spots open
-	def num_spots_open()	
+	def __str__(self):
+		return self.id
 
+	# Function to check number of spots open
+	def num_spots_open(self): #This needs to be checked
+		
+		open_spots = Spot.objects.filter(is_occupied = False).count() #This needs to be checked
+		return open_spots 
 
 
 
 
 class Spot(models.Model):
-	# 1 -M relationship between parkingLot and spot
+	# 1 -M relationship between Parking_Lot and Spot
 	lot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE)
 	# Physical number of the parking spot 
 	spot_number = models.CharField(max_length = 10, validators=[RegexValidator(r'^\d{1,10}$')])

@@ -21,7 +21,8 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from djgeojson.views import GeoJSONLayerView
 urlpatterns = [
-    url(r'^parking/', include('parking.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^parking/', include('parking.urls')),
     url(r'^garageAutomation/', include('garageAutomation.urls')),
+
 ]
