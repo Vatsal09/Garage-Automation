@@ -1,0 +1,2 @@
+-r requirements3.txt
+WMI>=1.4.9
