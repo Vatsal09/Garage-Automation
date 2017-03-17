@@ -13,6 +13,8 @@
     
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{%static "garageAutomation/home.css"%}"/>
+    <script type="text/javascript" src="{%static "garageAutomation/home.js"%}"></script>
+    
 </head>
 
 <body>
@@ -153,7 +155,8 @@
                             {%for vehicle in vehicles%}
                                 <div type="button" class="detailsMenuListItem" >
                                 <p style="display: inline-block; margin-top: 22;">{{vehicle.license_plate}} </p>
-                                <button class="glyphicon glyphicon-remove"></button></div>   
+                                <button class="glyphicon glyphicon-remove" onclick="removeVehicle('{{account.account_id}}','{{vehicle.pk}}','{{vehicle.license_plate}}')"></button>
+                                </div>   
                             {% endfor %}
                         {% else %}
                         <p style="font-size: 20px; padding-left: 20px; margin-bottom: 0px;">No Vehicles Registered</p>

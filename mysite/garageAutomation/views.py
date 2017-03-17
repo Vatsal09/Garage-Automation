@@ -20,7 +20,11 @@ def home(request):
             # delete card
             if request.POST.get('removeCard'):     
                 recievedAccount.removeCard(request.POST.get('card_number'), request.POST.get('exp'))
-                
+            
+            #remove Vehicle
+            if request.POST.get('removeVehicle'):     
+                recievedAccount.removeVehicle(request.POST.get('vehicle_pk'),request.POST.get('license_plate'))
+
             # render home
             context = {
                 'account' : recievedAccount,

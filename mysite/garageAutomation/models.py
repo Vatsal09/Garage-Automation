@@ -73,6 +73,10 @@ class Account(models.Model):
 
     def printPhoneNumber(self):
         return "(" + self.phone_number[0:3] + ") " + self.phone_number[3:6] + "-" + self.phone_number[6:]
+    
+    def removeVehicle(self,recieved_vehicle_pk,recieved_license_plate):
+        vehicle = Vehicle.objects.get(account=self.account_id,pk=recieved_vehicle_pk, license_plate=recieved_license_plate)
+        vehicle.delete()
 
     #foreign key for:
         #payment methods
@@ -117,11 +121,14 @@ class PaymentMethod(models.Model):
 class Vehicle(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
-    license_plate = models.CharField(max_length=10)
+    license_plate = models.CharField(max_length=10, unique=True) #license_plate can only be registered to one account
     make = models.CharField(max_length = 10)
     color = models.CharField(max_length=10)
     # make = enum.EnumField(VehicleMake, default=VehicleMake.UNKOWN)
     # color = enum.EnumField(Color, default=Color.BLACK)
+
+    def __str__(self):
+        return self.license_plate
 
 class ParkingSession(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
