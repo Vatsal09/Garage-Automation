@@ -20,15 +20,19 @@ def home(request):
             # delete card
             if request.POST.get('removeCard'):     
                 recievedAccount.removeCard(request.POST.get('card_number'), request.POST.get('exp'))
-                
+            
+            #remove Vehicle
+            if request.POST.get('removeVehicle'):     
+                recievedAccount.removeVehicle(request.POST.get('vehicle_pk'),request.POST.get('license_plate'))
+
             # render home
             context = {
                 'account' : recievedAccount,
                 'payment_methods' : PaymentMethod.objects.filter(account=recievedAccount.account_id),
-                # 'vehicles' : Vehicle.objects.get(account = 1),
+                'vehicles' : Vehicle.objects.filter(account=recievedAccount.account_id),
             }
         except Account.DoesNotExist:
             raise Http404("Account does not exist")
         return render(request, 'garageAutomation/home.html', context)
     else:
-        return redirect('/')
+        return redirect('garageAutomation/')

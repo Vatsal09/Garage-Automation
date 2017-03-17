@@ -70,6 +70,14 @@ class Account(models.Model):
     def removeCard(self,recieved_card_number,recieved_exp):
         card = PaymentMethod.objects.filter(account=self.account_id, card_number=recieved_card_number, exp=recieved_exp)
         card.delete()
+
+    def printPhoneNumber(self):
+        return "(" + self.phone_number[0:3] + ") " + self.phone_number[3:6] + "-" + self.phone_number[6:]
+    
+    def removeVehicle(self,recieved_vehicle_pk,recieved_license_plate):
+        vehicle = Vehicle.objects.get(account=self.account_id,pk=recieved_vehicle_pk, license_plate=recieved_license_plate)
+        vehicle.delete()
+
     #foreign key for:
         #payment methods
         #vehicles
@@ -96,10 +104,16 @@ class PaymentMethod(models.Model):
 
     def getLastFour(self):
         return self.card_number[-4:]
-
+ 
     def __str__(self):
         return str(self.account.account_id) + ": " + self.getLastFour()
     
+    def printType(self):
+        if (self.type == "Debit"):
+            return "Debit "
+        else: 
+            return self.type
+
     #TODO: 
         #def remove
         #def charge
@@ -107,11 +121,14 @@ class PaymentMethod(models.Model):
 class Vehicle(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
-    license_plate = models.CharField(max_length=10)
+    license_plate = models.CharField(max_length=10, unique=True) #license_plate can only be registered to one account
     make = models.CharField(max_length = 10)
     color = models.CharField(max_length=10)
     # make = enum.EnumField(VehicleMake, default=VehicleMake.UNKOWN)
     # color = enum.EnumField(Color, default=Color.BLACK)
+
+    def __str__(self):
+        return self.license_plate
 
 class ParkingSession(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
