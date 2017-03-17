@@ -48,8 +48,8 @@ class Spot(models.Model):
 	# Function to check if spot is open
 	def is_open(self):
 		if(self.is_occupied):
-			return True
-		return False
+			return "Yes"
+		return "No"
 	# Updates sensor status
 	def update_sensor_status(self):
 		self.is_occupied = bool(random.getrandbits(1))
