@@ -52,7 +52,7 @@
 }
 .menuButton{  
     width: 200px;
-    border-top-style: none
+    border: none
 }
 .menuButton, .subMenuListButton{
     background-color: white;
@@ -61,15 +61,16 @@
     text-align: left;
     height: 70px;
     margin-left: 0px;
-    
+
+}
+.subMenuListButton{
+    width: 100%;
+    text-indent: 14px;
+
     border-style: solid;
     border-left: none;
     border-right: none;
     border-width: thin;
-}
-.subMenuListButton{
-    width: 100%;
-    text-indent: 14px
 }
 .detailsMenuListItem{
     border-style: solid;
@@ -109,4 +110,20 @@ form input[type="radio"]{
 }
 form{
     margin-bottom: 0px;
+}
+.subMenuBlock{
+    text-indent: 20px;
+    border: solid;
+    border-width: thin;    
+    border-left: none;
+    border-right: none;
+}
+.subMenuBlock h3{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.detailsMenuListItem button{
+    display: inline-block;
+    float: right;
 }
