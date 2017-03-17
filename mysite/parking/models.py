@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import Permission, User
 from django.core.validators import RegexValidator
 from django.db import models
-
+import random
 # Create your models here.
 class Parking_Lot(models.Model):
 	# Initialize after manager has been created 
-	manager = models.ForeignKey(User, default=1)	
+	user = models.ForeignKey(User, default=1)	
 	address = models.CharField(max_length= 150)
 	max_levels = models.CharField(max_length = 3, validators=[RegexValidator(r'^\d{1,3}$')])
 	max_spots = models.CharField(max_length = 5, validators=[RegexValidator(r'^\d{1,5}$')])
@@ -50,4 +50,23 @@ class Spot(models.Model):
 		if(self.is_occupied):
 			return True
 		return False
+	# Updates sensor status
+	def update_sensor_status(self):
+		self.is_occupied = bool(random.getrandbits(1))
+		self.save()
+		return "Sensor status for " + self.spot_number + " updated" 
+		
+# class Sensor(models.Model):
+# 	spot = models.OneToOneField(Spot, on_delete=models.CASCADE, primary_key=True)
+# 	sensor_id = models.CharField(max_length = 10, validators=[RegexValidator(r'^\d{1,10}$')])
+# 	sensor_status = models.BooleanField(default= True)
+# 	# Function to check if spot is open
+# 	def check_status(self):
+# 		if(self.is_occupied):
+# 			return True
+# 		return False
+
+
+
+
 
