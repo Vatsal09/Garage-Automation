@@ -11,7 +11,7 @@ from .models import Parking_Lot, Spot
 # Create your views here.
 
 def index(request):
-	return render(request, 'parking/login.html')
+	return render(request, 'parking/index.html')
 
 def add_lot(request):
 	return HttpResponse("<h1> add_lot </h1>") 

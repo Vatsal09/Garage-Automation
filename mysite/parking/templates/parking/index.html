@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+
+    <title>{% block title %}Manager{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{%  static 'favicon-car.ico' %}"/>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'parking/main.css' %}"/>
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="{% static 'parking/soon.css' %}"/>
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="{% static 'parking/js/custom.js' %}"></script>
+    <script src="{% static 'parking/js/jquery.themepunch.revolution.min.js' %}"></script>
+    <script src="{% static 'parking/js/plugins.js' %}"></script>
+  </head>
+  <!-- START BODY -->
+  <body class="nomobile">
+
+    <!-- START HEADER -->
+    <section id="header" style= "margin-top: 60px;">
+        <div class="container">
+            <header>
+                <!-- HEADLINE -->
+                <h1 data-animated="GoIn"><b>SYSTEM</b> INITIALIZATION</h1>
+            </header>
+            
+            
+            <div class="col-lg-8 col-lg-offset-2 centered">
+            	<h4>Management must first register and initialize the parking spaces. </h4>
+                
+                <h4> Later you can add, delete, and update spots from your account. </h4>
+				<div class="form-inline">
+				<button type="submit" class="btn btn-info btn_lg button_space button_bigger"><a href="{% url 'parking:login_manager' %}">Log In</a></button>  
+				<button type="submit" class="btn btn-info btn_lg  button_bigger"><a href="{% url 'parking:register_manager' %}">Register</a></button>
+				</div>            
+			</div>
+            
+        </div>
+        <!-- LAYER OVER THE SLIDER TO MAKE THE WHITE TEXTE READABLE -->
+        <div id="layer"></div>
+        <!-- END LAYER -->
+        <!-- START SLIDER -->
+        <div id="slider" class="rev_slider">
+            <ul>
+              <li data-transition="slideleft" data-slotamount="1" data-thumb="assets/img/slider/1.jpg">
+                <img src="http://demos.bornthemes.com/landingpages/conversion/templates/images/backgrounds/background_01.jpg">
+              </li>
+              
+            </ul>
+        </div>
+        <!-- END SLIDER -->
+    </section>
+    <!-- END HEADER -->
+
+    
+    
+  </body>
+  <!-- END BODY -->
+</html>
