@@ -14,10 +14,44 @@ def index(request):
 	return render(request, 'parking/index.html')
 
 def add_lot(request):
-	return HttpResponse("<h1> add_lot </h1>") 
+	if not request.user.is_authenticated():
+        return render(request, 'parking/login_manager.html')
+    else:
+        form = ParkingLotForm(request.POST or None)
+        if form.is_valid():
+            parkingLot = form.save(commit=False)
+            parkingLot.user = request.user
+              
+            parkingLot.save()
+            return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
+        context = {
+            "form": form,
+        }
+        return render(request, 'parking/add_lot.html', context) 
 
 def add_spot(request, parkingLot_id):
-	
+	form = SpotForm(request.POST or None)
+    parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+    if form.is_valid():
+        parkingLots_spots = parkingLot.spot_set.all()
+        for s in parkingLots_spots:
+            if s.spot_number == form.cleaned_data.get("spot_number"):
+                context = {
+                    'parkingLot': parkingLot,
+                    'form': form,
+                    'error_message': 'You already added that spot',
+                }
+                return render(request, 'parking/add_spot.html', context)
+        spot = form.save(commit=False)
+        spot.lot = parkingLot
+        
+        spot.save()
+        return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
+    context = {
+        'parkingLot': parkingLot,
+        'form': form,
+    }
+    return render(request, 'parking/add_spot.html', context)
 
 def delete_lot(request, parkingLot_id):
 	parkingLot = Parking_Lot.objects.get(pk=parkingLot_id)
