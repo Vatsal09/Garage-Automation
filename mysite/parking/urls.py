@@ -7,6 +7,8 @@ app_name = 'parking'
 urlpatterns = [
 	# /parking/
     url(r'^$', views.index, name='index'),
+    # /parking/index/
+    url(r'^main/$', views.main, name='main'),
     # /parking/add_lot/
     url(r'^add_lot/$', views.add_lot, name='add_lot'),
     # /parking/delete_lot/

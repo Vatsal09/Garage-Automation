@@ -26,7 +26,7 @@ class Parking_Lot(models.Model):
 
 class Spot(models.Model):
 	# 1 -M relationship between Parking_Lot and Spot
-	lot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE)
+	parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE)
 	# Physical number of the parking spot 
 	spot_number = models.CharField(max_length = 10, validators=[RegexValidator(r'^\d{1,10}$')])
 	# Sensor id number associated witht he spot_number

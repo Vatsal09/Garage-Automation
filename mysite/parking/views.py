@@ -43,7 +43,7 @@ def add_spot(request, parkingLot_id):
                 }
                 return render(request, 'parking/add_spot.html', context)
         spot = form.save(commit=False)
-        spot.lot = parkingLot
+        spot.parkingLot = parkingLot
         
         spot.save()
         return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
@@ -121,3 +121,25 @@ def logout_manager(request):
         "form": form,
     }
     return render(request, 'parking/index.html', context)
+
+def main(request):
+    if not request.user.is_authenticated():
+        return render(request, 'parking/login_manager.html')
+    else:
+        parkingLots = Parking_Lot.objects.filter(user=request.user)
+        spot_results = Spot.objects.all()
+        query = request.GET.get("q")
+        if query:
+            parkingLots = parkingLots.filter(
+                Q(address__icontains=query)                
+            ).distinct()
+            spot_results = spot_results.filter(
+                Q(spot_number__icontains=query) |
+                Q(sensor_id__icontains=query)
+            ).distinct()
+            return render(request, 'parking/main.html', {
+                'parkingLots': parkingLots,
+                'spots': spot_results,
+            })
+        else:
+            return render(request, 'parking/main.html', {'parkingLots': parkingLots})

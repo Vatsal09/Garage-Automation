@@ -1,0 +1,51 @@
+{% extends 'parking/base.html' %}
+{% block title %}Add a New Parking Lot{% endblock %}
+{% block parkingLots_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Add a New Parking Lot</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'parking/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>What does adding parking lot do?</h3>
+                    <p> It is part of initialization process of the overall system. Once a parking lot is added, you can add, update, and delete parking spots.</p>
+                    <h3>How does this affect the user app?</h3>
+                    <p>Only once a parking lot, along with its parking spots, are added can the app display a map of the parking occupancy, provide a number of open spots, or give a recommended parking spot to the user. </p>
+                    <h3>What is the structure of how I should input the address?</h3>
+                    <p> Please input the address in this form: </p>
+                    <ul>
+                        <li>96 Frelinghuysen Road</li>
+                        <li>Piscataway, NJ 08854</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
