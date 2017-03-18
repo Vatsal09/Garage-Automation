@@ -26,8 +26,8 @@ urlpatterns = [
     # /parking/logout_manager
     url(r'^logout_manager/$', views.logout_manager, name='logout_manager'),
     # Polls the sensors and updates the spot occupation status 
-    # /parking/update_occupancy
-    url(r'^update_occupancy/$', views.update_occupancy, name='update_occupancy'),
+    # /parking/<parkingLot ID>/update_occupancy
+    url(r'^(?P<parkingLot_id>[0-9]+)/update_occupancy/$', views.update_occupancy, name='update_occupancy'),
     # /parking/<Parking_Lot ID>/disable_spot
     url(r'^(?P<parkingLot_id>[0-9]+)/disable_spot/(?P<spot_id>[0-9]+)/$', views.disable_spot, name='disable_spot'),
     # /parking/<Parking_Lot ID>/disable_spot

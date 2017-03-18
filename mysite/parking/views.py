@@ -8,6 +8,7 @@ from django.db.models import Q
 from .forms import ParkingLotForm, SpotForm, UserForm
 from .models import Parking_Lot, Spot
 import time
+import random
 
 # Create your views here.
 
@@ -147,14 +148,16 @@ def main(request):
         else:
             return render(request, 'parking/main.html', {'parkingLots': parkingLots})
 
-def update_occupancy(request):
+def update_occupancy(request, parkingLot_id):
     if not request.user.is_authenticated():
         return render(request, 'parking/login_manager.html')
     else:
-        for s in Spot.objects.all():
+        parkingLot = Parking_Lot.objects.get(pk=parkingLot_id)
+        parkingLots_spots = parkingLot.spot_set.all()
+        for s in parkingLots_spots:
                 s.is_occupied = bool(random.getrandbits(1))
                 s.save()
-        return render(request, 'parking/update_occupancy')
+        return render(request, 'parking/update_occupancy.html')
     # If the inifinite loop is to be activated for checker, uncomment below and uncomment the render request in login_manager(request) view
     # else:
     #     while True:

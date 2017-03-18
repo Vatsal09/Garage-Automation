@@ -16,7 +16,8 @@
                     </a>
                     <h4 class="give_space"><strong>Management Username:</strong> {{parkingLot.user}}</h4>
                     <h4 class="give_space"><strong>Parking Lot Number:</strong> {{ parkingLot.id }}</h4>
-                    <h4 class="give_space"><strong>Parking Lot Address:</strong> {{ parkingLot.address }}</h4>
+                    <h4 class="give_space"><strong>Parking Lot Address:</strong> </h4>
+                    <h4 class="give_space">{{ parkingLot.address }}</h4>
                     <h4 class="give_space"><strong>Number of Levels:</strong> {{ parkingLot.max_levels }}</h4>
                     <h4 class="give_space"><strong>Number of Spots:</strong> {{ parkingLot.max_spots }}</h4>                    
                 </div>
@@ -27,8 +28,8 @@
         <div class="col-sm-8 col-md-9">
 
             <ul class="nav nav-pills" style="margin-bottom: 10px;">
-                <li role="presentation" class="active"><a href="{% url 'parking:detail' parkingLot.id %}">View All</a></li>
-                <li role="presentation"><a href="{% url 'parking:add_spot' parkingLot.id %}">Add New Spot</a></li>
+                
+                <li role="presentation" class="active"><a href="{% url 'parking:add_spot' parkingLot.id %}">Add New Spot</a></li>
             </ul>
 
             <div class="panel panel-default">
