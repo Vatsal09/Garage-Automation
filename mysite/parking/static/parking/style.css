@@ -29,3 +29,14 @@ ul.errorlist > li {
 .glyphicon-star.active {
     color: #FDB230;
 }
+
+.center_spot {
+  text-align: center;
+}
+strong { 
+    font-weight: bold;
+}
+.give_space{
+  margin-top: 25px;
+  margin-bottom: 25px;
+}

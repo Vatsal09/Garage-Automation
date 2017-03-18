@@ -13,7 +13,7 @@ class Parking_Lot(models.Model):
 	max_spots = models.CharField(max_length = 5, validators=[RegexValidator(r'^\d{1,5}$')])
 
 	def __str__(self):
-		return self.id
+		return str(self.id)
 
 	# Function to check number of spots open
 	def num_spots_open(self): #This needs to be checked

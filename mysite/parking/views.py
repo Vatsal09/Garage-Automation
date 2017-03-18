@@ -167,5 +167,14 @@ def disable_spot(request, parkingLot_id, spot_id):
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     spot = Spot.objects.get(pk=spot_id)
     spot.is_disabled = True
+    spot.is_occupied = False
+    spot.save()
+    return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
+
+def enable_spot(request, parkingLot_id, spot_id):
+    parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+    spot = Spot.objects.get(pk=spot_id)
+    spot.is_disabled = False
+    spot.is_occupied = True
     spot.save()
     return render(request, 'parking/detail.html', {'parkingLot': parkingLot})

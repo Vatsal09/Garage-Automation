@@ -1,7 +1,7 @@
 {% extends 'parking/base.html' %}
-{% block title %}{{ parkingLot }}{% endblock %}
+{% block title %}{{ Detail }}{% endblock %}
 {% block parkingLots_active %}active{% endblock %}
-
+{% load staticfiles %}
 {% block body %}
 <div class="container-fluid songs-container">
 
@@ -12,11 +12,13 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a href="{% url 'parking:detail' parkingLot.id %}">
-                        <img src="{% static 'parking/images/index_image.png' %}" class="img-responsive"> 
+                        <img src="{% static 'parking/images/index_image.png' %}" class="img-responsive">
                     </a>
-                    <h1>{{ parkingLot.id }} <small>{{ parkingLot.address }}</small></h1>
-                    <h2>{{ parkingLot.max_levels }}</h2>
-                    <h2>{{ parkingLot.max_spots }}</h2>
+                    <h4 class="give_space"><strong>Management Username:</strong> {{parkingLot.user}}</h4>
+                    <h4 class="give_space"><strong>Parking Lot Number:</strong> {{ parkingLot.id }}</h4>
+                    <h4 class="give_space"><strong>Parking Lot Address:</strong> {{ parkingLot.address }}</h4>
+                    <h4 class="give_space"><strong>Number of Levels:</strong> {{ parkingLot.max_levels }}</h4>
+                    <h4 class="give_space"><strong>Number of Spots:</strong> {{ parkingLot.max_spots }}</h4>                    
                 </div>
             </div>
         </div>
@@ -41,28 +43,48 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Parking Lot Level</th>
-                            <th>Spot Number</th>
-                            <th>Sensor ID</th>
-                            <th>Spot Occupied?</th> 
-                            <th>Spot Disabled?</th>
-                            <th>Actions</th>
+                            <th style="text-align: center">Parking Lot Level</th>
+                            <th style="text-align: center">Spot Number</th>
+                            <th style="text-align: center">Sensor ID</th>
+                            <th style="text-align: center">Spot Occupied?</th> 
+                            <th style="text-align: center">Spot Disabled?</th>
+                            <th style="text-align: center">Disable Spot</th>
+                            <th style="text-align: center">Enable Spot</th>
+                            <th style="text-align: center">Delete Spot</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for spot in parkingLot.spot_set.all %}
                             <tr>
-                                <td>{{ spot.level }}</td>
-                                <td>{{ spot.spot_number }}</td>
-                                <td>{{ spot.sensor_id }}</td>
-                                <td>{{ spot.is_occupied}}</td>
-                                <td>{{ spot.is_disabled}}</td>
-                                <td>
+                                <td class="center_spot" style="text-align: center">{{ spot.level }}</td>
+                                <td class="center_spot" style="text-align: center">{{ spot.spot_number }}</td>
+                                <td class="center_spot" style="text-align: center">{{ spot.sensor_id }}</td>
+                                <td class="center_spot" style="text-align: center">{{ spot.is_occupied}}</td>
+                                <td class="center_spot" style="text-align: center">{{ spot.is_disabled}}</td>
+                                <td class="center_spot" style="text-align: center">
                                     <form action="{% url 'parking:disable_spot' parkingLot.id spot.id %}" method="post" style="display: inline;">
                                         {% csrf_token %}
-                                        <input type="hidden" name="song_id" value="{{ spot.id }}" />
+                                        <input type="hidden" name="spot_id" value="{{ spot.id }}" />
                                         <button type="submit" class="btn btn-danger btn-xs">
                                             <span class="glyphicon glyphicon-remove"></span>&nbsp; Disable
+                                        </button>
+                                    </form>
+                                </td>
+                                <td class="center_spot" style="text-align: center">
+                                    <form action="{% url 'parking:enable_spot' parkingLot.id spot.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="spot_id" value="{{ spot.id }}" />
+                                        <button type="submit" class="btn btn-success btn-xs">
+                                            <span class="glyphicon glyphicon-ok"></span>&nbsp; Enable
+                                        </button>
+                                    </form>
+                                </td>
+                                <td class="center_spot" style="text-align: center">
+                                    <form action="{% url 'parking:delete_spot' parkingLot.id spot.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="spot_id" value="{{ spot.id }}" />
+                                        <button type="submit" class="btn btn-default btn-xs">
+                                            <span class="glyphicon glyphicon-trash"></span>&nbsp; 
                                         </button>
                                     </form>
                                 </td>
