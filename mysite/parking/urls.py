@@ -28,6 +28,8 @@ urlpatterns = [
     # Polls the sensors and updates the spot occupation status 
     # /parking/update_occupancy
     url(r'^update_occupancy/$', views.update_occupancy, name='update_occupancy'),
+    # /parking/<Parking_Lot ID>/disable_spot
+    url(r'^(?P<lot_id>[0-9]+)/disable_spot/(?P<spot_id>[0-9]+)/$', views.disable_spot, name='disable_spot'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

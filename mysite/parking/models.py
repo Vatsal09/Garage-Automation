@@ -35,6 +35,8 @@ class Spot(models.Model):
 	level = models.CharField(max_length = 3, validators=[RegexValidator(r'^\d{1,3}$')])
 	# Is the space occupied or not
 	is_occupied = models.BooleanField(default= True)
+	# Disabled by manager
+	is_disabled = models.BooleanField(default= False)
 
 	def __str__(self):
 		result = "Not Sure if Occupied"
@@ -48,6 +50,11 @@ class Spot(models.Model):
 	# Function to check if spot is open
 	def is_open(self):
 		if(self.is_occupied):
+			return "Yes"
+		return "No"
+	# Function to check if spot is disabled
+	def sensor_disable_status(self):
+		if(self.is_disabled):
 			return "Yes"
 		return "No"
 	# Updates sensor status

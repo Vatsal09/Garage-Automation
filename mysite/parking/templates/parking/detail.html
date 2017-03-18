@@ -45,6 +45,8 @@
                             <th>Spot Number</th>
                             <th>Sensor ID</th>
                             <th>Spot Occupied?</th> 
+                            <th>Spot Disabled?</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,6 +56,16 @@
                                 <td>{{ spot.spot_number }}</td>
                                 <td>{{ spot.sensor_id }}</td>
                                 <td>{{ spot.is_occupied}}</td>
+                                <td>{{ spot.is_disabled}}</td>
+                                <td>
+                                    <form action="{% url 'parking:disable_spot' parkingLot.id spot.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="song_id" value="{{ spot.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Disable
+                                        </button>
+                                    </form>
+                                </td>
                                                              
                                 
                             </tr>
