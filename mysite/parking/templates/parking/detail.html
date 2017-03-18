@@ -1,6 +1,6 @@
-{% extends 'music/base.html' %}
-{% block title %}{{ album }}{% endblock %}
-{% block albums_active %}active{% endblock %}
+{% extends 'parking/base.html' %}
+{% block title %}{{ parkingLot }}{% endblock %}
+{% block parkingLots_active %}active{% endblock %}
 
 {% block body %}
 <div class="container-fluid songs-container">
@@ -11,15 +11,12 @@
         <div class="col-sm-4 col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a href="{% url 'music:detail' album.id %}">
-                        {% if album.album_logo %}
-                            <img src="{{ album.album_logo.url }}" class="img-responsive">
-                        {% else %}
-                            <h3>No image to display</h3>
-                        {% endif %}
+                    <a href="{% url 'parking:detail' parkingLot.id %}">
+                        <img src="{% static 'parking/images/index_image.png' %}" class="img-responsive"> 
                     </a>
-                    <h1>{{ album.album_title }} <small>{{ album.genre }}</small></h1>
-                    <h2>{{ album.artist }}</h2>
+                    <h1>{{ parkingLot.id }} <small>{{ parkingLot.address }}</small></h1>
+                    <h2>{{ parkingLot.max_levels }}</h2>
+                    <h2>{{ parkingLot.max_spots }}</h2>
                 </div>
             </div>
         </div>
@@ -28,14 +25,14 @@
         <div class="col-sm-8 col-md-9">
 
             <ul class="nav nav-pills" style="margin-bottom: 10px;">
-                <li role="presentation" class="active"><a href="{% url 'music:detail' album.id %}">View All</a></li>
-                <li role="presentation"><a href="{% url 'music:create_song' album.id %}">Add New Song</a></li>
+                <li role="presentation" class="active"><a href="{% url 'parking:detail' parkingLot.id %}">View All</a></li>
+                <li role="presentation"><a href="{% url 'parking:add_spot' parkingLot.id %}">Add New Spot</a></li>
             </ul>
 
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <h3>All Songs</h3>
+                    <h3>All Spots</h3>
 
                     {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>
@@ -44,35 +41,21 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Audio File</th>
-                            <th>Favorite</th>
-                            <th>Actions</th>
+                            <th>Parking Lot Level</th>
+                            <th>Spot Number</th>
+                            <th>Sensor ID</th>
+                            <th>Spot Occupied?</th> 
                         </tr>
                         </thead>
                         <tbody>
-                        {% for song in album.song_set.all %}
+                        {% for spot in parkingLot.spot_set.all %}
                             <tr>
-                                <td>{{ song.song_title }}</td>
-                                <td>
-                                    <a target="_blank" href="{{ song.audio_file.url }}">
-                                        <button type="button" class="btn btn-success btn-xs">
-                                            <span class="glyphicon glyphicon-play"></span>&nbsp; Play
-                                        </button>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
-                                </td>
-                                <td>
-                                    <form action="{% url 'music:delete_song' album.id song.id %}" method="post" style="display: inline;">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="song_id" value="{{ song.id }}" />
-                                        <button type="submit" class="btn btn-danger btn-xs">
-                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
-                                        </button>
-                                    </form>
-                                </td>
+                                <td>{{ spot.level }}</td>
+                                <td>{{ spot.spot_number }}</td>
+                                <td>{{ spot.sensor_id }}</td>
+                                <td>{{ spot.is_occupied}}</td>
+                                                             
+                                
                             </tr>
                         {% endfor %}
                         </tbody>
