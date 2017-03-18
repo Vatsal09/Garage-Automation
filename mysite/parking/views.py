@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .forms import ParkingLotForm, SpotForm, UserForm
 from .models import Parking_Lot, Spot
+import time
 
 # Create your views here.
 
@@ -105,6 +106,8 @@ def login_manager(request):
             if user.is_active:
                 login(request, user)
                 parkingLots = Parking_Lot.objects.filter(user=request.user)
+                # Infinite loop for sensor checker activate
+                #render(request, 'parking/update_occupancy')
                 return render(request, 'parking/main.html', {'parkingLots': parkingLots})
             else:
                 return render(request, 'parking/login_manager.html', {'error_message': 'Your account has been disabled'})
@@ -143,3 +146,20 @@ def main(request):
             })
         else:
             return render(request, 'parking/main.html', {'parkingLots': parkingLots})
+
+def update_occupancy(request):
+    if not request.user.is_authenticated():
+        return render(request, 'parking/login_manager.html')
+    else:
+        for s in Spot.objects.all():
+                s.is_occupied = bool(random.getrandbits(1))
+                s.save()
+        return render(request, 'parking/update_occupancy')
+    # If the inifinite loop is to be activated for checker, uncomment below and uncomment the render request in login_manager(request) view
+    # else:
+    #     while True:
+    #         for s in Spot.objects.all():
+    #             s.is_occupied = bool(random.getrandbits(1))
+    #             s.save()
+    #         time.sleep(10)
+    

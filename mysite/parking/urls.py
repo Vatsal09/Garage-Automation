@@ -7,7 +7,7 @@ app_name = 'parking'
 urlpatterns = [
 	# /parking/
     url(r'^$', views.index, name='index'),
-    # /parking/index/
+    # /parking/main/
     url(r'^main/$', views.main, name='main'),
     # /parking/add_lot/
     url(r'^add_lot/$', views.add_lot, name='add_lot'),
@@ -25,6 +25,9 @@ urlpatterns = [
     url(r'^login_manager/$', views.login_manager, name='login_manager'),
     # /parking/logout_manager
     url(r'^logout_manager/$', views.logout_manager, name='logout_manager'),
+    # Polls the sensors and updates the spot occupation status 
+    # /parking/update_occupancy
+    url(r'^update_occupancy/$', views.update_occupancy, name='update_occupancy'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
