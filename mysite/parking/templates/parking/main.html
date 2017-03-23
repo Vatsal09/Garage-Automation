@@ -14,6 +14,9 @@
                 <div class="col-sm-4 col-lg-2">
                     <div class="thumbnail">
                         <a href="{% url 'parking:detail' parkingLot.id %}">
+                            <!-- <img src=" '../static/parking/images/index_image.png'" class="img-responsive"> -->
+                            <div class="el"> 
+                            </div>
                             <img src="{% static 'parking/images/index_image.png' %}" class="img-responsive" alt="someimage">
                         </a>
                         <div class="caption">
@@ -49,7 +52,7 @@
             </div>
         {% endif %}
     </div>
-<!-- 
+
     <!-- If user searches and there are songs -->
     {% if spots %}
         <div class="row">
@@ -89,6 +92,6 @@
             </div>
         </div>
     {% endif %}
- -->
+ 
 </div>
 {% endblock %}
