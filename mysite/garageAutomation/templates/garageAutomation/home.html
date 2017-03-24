@@ -52,7 +52,7 @@
                                 <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{payment_method.printType}} •••• {{payment_method.getLastFour}}</button>   
                             {% endfor %}
                         {% else %}
-                            <<!-- TODO: logic to force payment method -->
+                            <!-- TODO: logic to force payment method -->
                         {% endif %}
                         <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal">Add Payment Method</button>                           
                     </div>                     
