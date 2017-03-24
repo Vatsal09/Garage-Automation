@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Parking_Lot, Spot
+from .models import Parking_Lot, Spot, Session
 
 
 class ParkingLotForm(forms.ModelForm):
@@ -24,3 +24,9 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+
+# class SessionForm(forms.ModelForm):
+#
+#     class Meta:
+#         model = Session
+#         fields = ['license_plate_number', 'user_type', 'time_arrived']
