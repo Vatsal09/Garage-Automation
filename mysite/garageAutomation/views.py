@@ -2,16 +2,19 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 
 from .models import Account, PaymentMethod, Vehicle
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 def index(request):
-    account_list = Account.objects.order_by('account_id')
+    account_list = Account.objects.order_by('pk')
     context = {'account_list': account_list}
     return render(request, 'garageAutomation/index.html', context)
 
+@login_required
 def home(request):
     if request.method == "POST":     
         try:
-            recievedAccount = Account.objects.get(pk=request.POST.get('account_id'))
+            recievedAccount = Account.objects.get(user = request.user)
             
             # add card
             if request.POST.get('addCard'):
@@ -35,4 +38,35 @@ def home(request):
             raise Http404("Account does not exist")
         return render(request, 'garageAutomation/home.html', context)
     else:
-        return redirect('garageAutomation/')
+        account = Account.objects.get(user = request.user)
+        context = {
+            'account' : account,
+            'payment_methods' : PaymentMethod.objects.filter(account=account.account_id),
+            'vehicles' : Vehicle.objects.filter(account=account.account_id),
+        }
+        return render(request, 'garageAutomation/home.html', context)
+
+def register(request):
+    form = UserCreationForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            print(request.POST)
+            form = form.save()
+            account = Account()          
+            account.user = form 
+            account.first_name = str(request.POST.get('first_name'))
+            account.last_name = str(request.POST.get('last_name'))
+            account.phone_number = str(request.POST.get('phone_number'))
+            account.save()
+            return redirect('garageAutomation/login')
+    return render(request, 'garageAutomation/register.html', {'form':form})
+
+
+
+
+
+
+
+
+
+

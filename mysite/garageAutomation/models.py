@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 # from django_enumfield import enum
 
 # pip install --pre django-enumfield==1.3b2  <-- Does not work, neither does stable
@@ -39,7 +40,8 @@ from django.db import models
 #     }
 
 class Account(models.Model):
-    account_id = models.PositiveIntegerField(primary_key=True)
+    account_id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=10)
