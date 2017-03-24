@@ -1,0 +1,87 @@
+{% extends 'parking/base.html' %}
+{% block title %}{{ System }}{% endblock %}
+{% block parkingLots_active %}active{% endblock %}
+{% load staticfiles %}
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <h1 align="center">Parking Lot Status</h1>
+
+    <div class="row">
+
+        <div class="col-sm-4 col-md-6">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3 align="center">Current Customers</h3>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">License Plate Number</th>
+                            <th style="text-align: center">User Type</th>
+                            <th style="text-align: center">Time Arrived</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for session in parkingLot.session_set.all %}
+                            <tr>
+                                <td class="center_spot" style="text-align: center">{{ session.license_plate_number }}</td>
+                                <td class="center_spot" style="text-align: center">{{ session.user_type }}</td>
+                                <td class="center_spot" style="text-align: center">{{ session.time_arrived }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3 align="center">Past Customers</h3>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">License Plate Number</th>
+                            <th style="text-align: center">User Type</th>
+                            <th style="text-align: center">Time Exited</th>
+                            <th style="text-align: center">Total Stay Time</th>
+                            <th style="text-align: center">Amount Charged</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for session in parkingLot.session_set.all %}
+                            {% if session.time_exited != '' %}
+                            <tr>
+                                <td class="center_spot" style="text-align: center">{{ session.license_plate_number }}</td>
+                                <td class="center_spot" style="text-align: center">{{ session.user_type }}</td>
+                                <td class="center_spot" style="text-align: center">{{ session.time_exited }}</td>
+                                <td class="center_spot" style="text-align: center">{{ session.stay_length}}</td>
+                                <td class="center_spot" style="text-align: center">{{ session.time_arrived }}</td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
