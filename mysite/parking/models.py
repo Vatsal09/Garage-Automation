@@ -34,7 +34,7 @@ class Spot(models.Model):
 	# Level of the spot 
 	level = models.CharField(max_length = 3, validators=[RegexValidator(r'^\d{1,3}$')])
 	# Is the space occupied or not
-	is_occupied = models.BooleanField(default= True)
+	is_occupied = models.BooleanField(default= False)
 	# Disabled by manager
 	is_disabled = models.BooleanField(default= False)
 
