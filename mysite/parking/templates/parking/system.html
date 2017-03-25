@@ -27,18 +27,20 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th style="text-align: center">License Plate Number</th>
+                            <th style="text-align: center">License Plate</th>
                             <th style="text-align: center">User Type</th>
                             <th style="text-align: center">Time Arrived</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for session in parkingLot.session_set.all %}
+                            {% if session.time_exited == '' %}
                             <tr>
                                 <td class="center_spot" style="text-align: center">{{ session.license_plate_number }}</td>
                                 <td class="center_spot" style="text-align: center">{{ session.user_type }}</td>
                                 <td class="center_spot" style="text-align: center">{{ session.time_arrived }}</td>
                             </tr>
+                            {% endif %}
                         {% endfor %}
                         </tbody>
                     </table>
@@ -64,7 +66,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th style="text-align: center">License Plate Number</th>
+                            <th style="text-align: center">License Plate</th>
                             <th style="text-align: center">User Type</th>
                             <th style="text-align: center">Time Exited</th>
                             <th style="text-align: center">Total Stay Time</th>
@@ -78,8 +80,8 @@
                                 <td class="center_spot" style="text-align: center">{{ session.license_plate_number }}</td>
                                 <td class="center_spot" style="text-align: center">{{ session.user_type }}</td>
                                 <td class="center_spot" style="text-align: center">{{ session.time_exited }}</td>
-                                <td class="center_spot" style="text-align: center">{{ session.stay_length}}</td>
-                                <td class="center_spot" style="text-align: center">{{ session.time_arrived }}</td>
+                                <td class="center_spot" style="text-align: center">{{ session.stay_length}} Hours</td>
+                                <td class="center_spot" style="text-align: center">${{ session.amount_charged }}</td>
                             </tr>
                             {% endif %}
                         {% endfor %}

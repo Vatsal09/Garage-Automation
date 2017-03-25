@@ -229,25 +229,29 @@ def enter_session(request, parkingLot_id):
 	return render(request, 'parking/enter_session.html', context)
 
 def exit_session(request, parkingLot_id):
-    form = SessionForm(request.POST or None)
-    parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
-    if form.is_valid():
-        parkingLots_spots = parkingLot.spot_set.all()
-        for s in parkingLots_spots:
-            if s.spot_number == form.cleaned_data.get("spot_number"):
-                context = {
-                    'parkingLot': parkingLot,
-                    'form': form,
-                    'error_message': 'You already added that spot',
-                }
-                return render(request, 'parking/add_spot.html', context)
-        spot = form.save(commit=False)
-        spot.parkingLot = parkingLot
+	form = SessionForm(request.POST or None)
+	parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+	if form.is_valid():
+		license_plate_number= form.cleaned_data['license_plate_number']
+		try:
+			check_session = Session.objects.get(license_plate_number = license_plate_number)
+		except Session.DoesNotExist:
+			check_session = None
+		if (check_session != None):
+			check_session.time_exited =  datetime.datetime.now().strftime('%H:%M:%S')
+			check_session.stay_length = int(check_session.time_exited[:2]) - int(check_session.time_arrived[:2])
+			check_session.amount_charged = str(int(check_session.stay_length[:2])*5)
+			check_session.save()
+			return render(request, 'parking/system.html', {'parkingLot': parkingLot})
+		else:
+			context = {
+				'parkingLot': parkingLot,
+				'license_plate_number': license_plate_number,
+			}
+			return render(request, 'parking/system.html', context)
 
-        spot.save()
-        return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
-    context = {
-        'parkingLot': parkingLot,
-        'form': form,
-    }
-    return render(request, 'parking/add_spot.html', context)
+	context = {
+		'parkingLot': parkingLot,
+		'form': form,
+	}
+	return render(request, 'parking/exit_session.html', context)
