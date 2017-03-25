@@ -13,7 +13,9 @@ import random
 # Create your views here.
 
 def index(request):
+    if not request.user.is_authenticated():
 	return render(request, 'parking/index.html')
+    return render(request, 'parking/main.html')
 def add_lot(request):
     if not request.user.is_authenticated():
         return render(request, 'parking/login_manager.html')
