@@ -23,5 +23,5 @@ from djgeojson.views import GeoJSONLayerView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^parking/', include('parking.urls')),
-    url(r'^garageAutomation/', include('garageAutomation.urls')),
+    url(r'^garageAutomation/', include('garageAutomation.urls')), url(r'^manager/', include('manager.urls')),
 ]
