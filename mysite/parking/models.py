@@ -19,8 +19,8 @@ class Parking_Lot(models.Model):
 	# Initialize after manager has been created
 	user = models.ForeignKey(User, default=1)
 	address = models.CharField(max_length= 150)
-	max_levels = models.CharField(max_length = 3, validators=[RegexValidator(r'^\d{1,3}$')])
-	max_spots = models.CharField(max_length = 5, validators=[RegexValidator(r'^\d{1,5}$')])
+	max_levels = models.CharField(max_length = 3, validators=[RegexValidator(r'^[1-9]\d{0,2}$')])
+	max_spots = models.CharField(max_length = 5, validators=[RegexValidator(r'^[1-9]\d{0,4}$')])
 
 	def __str__(self):
 		return str(self.id)
