@@ -17,7 +17,7 @@
     
 </head>
 
-<body>
+<body style="background-image: url({%static "garageAutomation/background.png"%});>
     <nav class="navbar navbar-fixed-top">
         <div class="container-fluid">
              {% if user.is_authenticated %}
@@ -30,7 +30,7 @@
     <button type="button" class="btn-lg btn glyphicon glyphicon-menu-hamburger" data-toggle="modal" data-target="#menuModal"></button>
 
     <h1> Hello, {{account.first_name}} </h1>
-
+    
     <!-- Menu Modal -->
     <div class="modal fade left" id="menuModal" role="dialog">
         <div class="modal-dialog menuModalDiv">
