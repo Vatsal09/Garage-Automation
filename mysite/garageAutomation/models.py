@@ -38,7 +38,6 @@ from django.contrib.auth.models import User
 #     labels = {
 #         NBPL: "New Brunswick Parking Lot",
 #     }
-
 class Account(models.Model):
     account_id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)

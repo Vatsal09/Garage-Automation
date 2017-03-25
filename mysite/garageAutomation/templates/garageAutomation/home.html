@@ -29,7 +29,7 @@
                 <div class="modal-body menuModalDiv">
                     <span style="padding:10px"></span>
                     <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#paymentModal">Payment</button> <!-- closes menu and opens payment -->
-                    <button class="menuButton" type="button">History</button> <!--TODO-->
+                    <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#historyModal">History</button> <!--TODO-->
                     <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#settingsModal">Settings</button>
                 </div>
             </div>
@@ -133,7 +133,29 @@
             </div>
         </div>
     </div>
-
+    <!-- History Modal -->
+    <div class="modal fade bottom windowModal" id="historyModal" role="dialog">
+        <div class="modal-dialog modal-lg windowModal">
+            <div class="modal-content windowModal">
+                <div class="modal-body">
+                    <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <div class="subMenuTitles">
+                        <h1>History</h1>
+                        <h3 class="subMenu_subTitle">Parking Session</h3>
+                    </div>
+                    <div> 
+                        {% if parking_sessions %}
+                            {%for session in parking_sessions%}
+                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{session.date}} - {{session.location}}</button>   
+                            {% endfor %}
+                        {% else %}
+                            <!-- TODO: logic to force payment method -->
+                        {% endif %}                       
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </div>
     <!--Settings Modal-->
     <div class="modal fade bottom windowModal" id="settingsModal" role="dialog">
         <div class="modal-dialog modal-lg windowModal">
