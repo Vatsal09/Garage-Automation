@@ -1,0 +1,14 @@
+../webencodings/__init__.py
+../webencodings/labels.py
+../webencodings/mklabels.py
+../webencodings/tests.py
+../webencodings/x_user_defined.py
+../webencodings/__init__.pyc
+../webencodings/labels.pyc
+../webencodings/mklabels.pyc
+../webencodings/tests.pyc
+../webencodings/x_user_defined.pyc
+dependency_links.txt
+PKG-INFO
+SOURCES.txt
+top_level.txt

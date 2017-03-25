@@ -1,0 +1,10 @@
+Django
+six
+
+[docs]
+sphinx
+sphinx-autobuild
+
+[field]
+jsonfield
+django-leaflet>=0.12

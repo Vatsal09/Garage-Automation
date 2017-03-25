@@ -25,8 +25,14 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'email', 'password']
 
-# class SessionForm(forms.ModelForm):
-#
-#     class Meta:
-#         model = Session
-#         fields = ['license_plate_number', 'user_type', 'time_arrived']
+class SessionForm(forms.ModelForm):
+
+    class Meta:
+        model = Session
+        fields = ['license_plate_number']
+
+class GuestSessionForm(forms.ModelForm):
+
+    class Meta:
+        model = Session
+        fields = ['CreditCard']
