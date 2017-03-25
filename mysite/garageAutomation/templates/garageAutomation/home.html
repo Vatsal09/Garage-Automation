@@ -155,7 +155,7 @@
                     <div> 
                         {% if parking_sessions %}
                             {%for session in parking_sessions%}
-                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{session.date}} - {{session.location}}</button>   
+                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#session_{{session.pk}}">{{session.enter_time}} - {{session.location}}</button>   
                             {% endfor %}
                         {% else %}
                             <!-- TODO: logic to force payment method -->
@@ -165,6 +165,39 @@
             </div>
         </div>
     </div>
+
+    {% if parking_sessions %}
+            {%for session in parking_sessions%}
+                <div class="modal fade right windowModal" id="session_{{session.pk}}" role="dialog">
+                    <div class="modal-dialog modal-lg windowModal">
+                        <div class="modal-content windowModal">
+                            <div class="modal-body">
+                                <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                                <div class="subMenuTitles">
+                                    <h1>{{session.enter_time}} - {{session.location}}</h1>
+                                </div>
+                                <div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Cost </p>
+                                        <p> {{ session.cost }} </p>
+                                    </div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> License Plate </p>
+                                        <p>{{ session.vehicle.license_plate }}</p>
+                                    </div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Card Number </p>
+                                        <p> •••• •••• •••• {{ session.paymentMethod.getLastFour }} </p>
+                                    </div>
+                                    
+                                </div>                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
     <!--Settings Modal-->
     <div class="modal fade bottom windowModal" id="settingsModal" role="dialog">
         <div class="modal-dialog modal-lg windowModal">
