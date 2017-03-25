@@ -43,7 +43,37 @@
                             		<input type="text" name="phone_number" required>
                             	</td>
                             </tr>
-					       
+                            <tr><td><hr></td><td><hr></td></tr>
+                            <tr><td><strong>Payment Info</strong></td></tr>
+                            <tr>
+                            	<td style="padding-top: 2em;"><p class="menuItemRadioDescription"><strong> Credit </strong></p></td>
+	                            <td style="padding-left:2em;padding-top:2em;"><input type="radio" name="type" value=Credit required>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td style="padding-top: 2em;"><p class="menuItemRadioDescription"><strong> Debit </strong></p></td>
+	                            <td style="padding-left:2em;padding-top:2em;"><input type="radio" name="type" value=Debit required></td>
+	                        </tr>
+	                        <tr>
+	                        	<td style="padding-top: 2em;"><label>Card number:</label></td>
+	                            <td style="padding-left:2em;padding-top:2em;"><input type="text" name="card_number" required pattern="[0-9]{16}" title="FORMAT: 0000123400001234"> </td>
+	                        </tr>
+	                        <tr>
+	                        	<td style="padding-top: 2em;"><label>Exp. Date:</label></td>
+	                            <td style="padding-left:2em;padding-top:2em;"><input type="text" name="exp" placeholder="xx/xx" required pattern="[0-9]{2}[/][0-9]{2}" title="FORMAT: 00/00"> </td> 
+	                        </tr>
+	                        <tr>
+	                        	<td style="padding-top: 2em;"><label>CVV:</label></td>
+	                            <td style="padding-left:2em;padding-top:2em;"><input type="text" name="cvv" required required pattern="[0-9]{3}" title="FORMAT: 000"> </td>
+	                        </tr>
+	                        <tr>
+	                        	<td style="padding-top: 2em;"><label>Country:</label></td>
+	                            <td style="padding-left:2em;padding-top:2em;"><input type="text" name="country" required pattern="\D{4,30}"> </td>
+	                        </tr>
+	                        <tr> 
+	                        	<td style="padding-top: 2em;"><label>Zip Code:</label></td>
+	                            <td style="padding-left:2em;padding-top:2em;"><input type="text" name="zip" required pattern="[0-9]{5}" title="FORMAT: 08901"> </td>
+					        </tr>
 					    </table>
 					    <center style="padding-top: 2em">
 							<input class="btn btn-success btn-sm" type="submit" />
