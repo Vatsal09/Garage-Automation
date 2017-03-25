@@ -43,6 +43,7 @@ def home(request):
             'account' : account,
             'payment_methods' : PaymentMethod.objects.filter(account=account.account_id),
             'vehicles' : Vehicle.objects.filter(account=account.account_id),
+            'parking_sessions' : ParkingSession.objects.filter(account = account)
         }
         return render(request, 'garageAutomation/home.html', context)
 
@@ -58,6 +59,8 @@ def register(request):
             account.last_name = str(request.POST.get('last_name'))
             account.phone_number = str(request.POST.get('phone_number'))
             account.save()
+            account = Account.objects.get(user = form)
+            account.addCard(request.POST.get('type'), request.POST.get('card_number'), request.POST.get('exp'), request.POST.get('cvv'), request.POST.get('country'), request.POST.get('zip'))
             return redirect('garageAutomation/login')
     return render(request, 'garageAutomation/register.html', {'form':form})
 
