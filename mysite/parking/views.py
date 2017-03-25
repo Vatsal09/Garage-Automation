@@ -39,13 +39,14 @@ def add_spot(request, parkingLot_id):
     if form.is_valid():
         parkingLots_spots = parkingLot.spot_set.all()
         for s in parkingLots_spots:
-            if s.spot_number == form.cleaned_data.get("spot_number"):
-                context = {
-                    'parkingLot': parkingLot,
-                    'form': form,
-                    'error_message': 'You already added that spot',
-                }
-                return render(request, 'parking/add_spot.html', context)
+            if s.level == form.cleaned_data.get("level"):
+                if s.spot_number == form.cleaned_data.get("spot_number"):
+                    context = {
+                        'parkingLot': parkingLot,
+                        'form': form,
+                        'error_message': 'You already added that spot',
+                    }
+                    return render(request, 'parking/add_spot.html', context)
         spot = form.save(commit=False)
         spot.parkingLot = parkingLot
 
