@@ -18,6 +18,15 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+             {% if user.is_authenticated %}
+             <ul class="nav navbar-nav navbar-right">
+                <li><a href="/garageAutomation/logout">Logout</a></li>
+            </ul>
+             {% endif %}
+        </div>
+    </nav>
     <button type="button" class="btn-lg btn glyphicon glyphicon-menu-hamburger" data-toggle="modal" data-target="#menuModal"></button>
 
     <h1> Hello, {{account.first_name}} </h1>

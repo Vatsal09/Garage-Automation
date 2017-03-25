@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 
-from .models import Account, PaymentMethod, Vehicle
+from .models import Account, PaymentMethod, Vehicle, ParkingSession
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
