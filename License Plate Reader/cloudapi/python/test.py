@@ -6,7 +6,7 @@ key = os.environ.get('OPENALPR_SECRET_KEY', "sk_DEMODEMODEMODEMODEMODEMO")
 print("Using key: %s" % key)
 
 #response = apiclient.recognize_post(key, "plate,color,make,makemodel", image="C:\Users\Panda\Documents\GitHub\Garage-Automation\License Plate Reader\openalpr\samples\us-3.jpg", country="us")
-response = apiclient.recognize_post(key, "plate,color,make,makemodel", image=".\..\..\Images\us-1.jpg", country="us")
+response = apiclient.recognize_post(key, "plate,color,make,makemodel", image="./../../Images/us-1.jpg", country="us")
 
 # print dir(response.plate.to_dict())
 # plate = response.plate.to_dict()

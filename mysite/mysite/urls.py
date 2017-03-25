@@ -24,5 +24,4 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^parking/', include('parking.urls')),
     url(r'^garageAutomation/', include('garageAutomation.urls')),
-
 ]

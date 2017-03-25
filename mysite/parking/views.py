@@ -17,19 +17,19 @@ def index(request):
 def add_lot(request):
     if not request.user.is_authenticated():
         return render(request, 'parking/login_manager.html')
-    
+
     else:
         form = ParkingLotForm(request.POST or None)
         if form.is_valid():
             parkingLot = form.save(commit=False)
             parkingLot.user = request.user
-              
+
             parkingLot.save()
             return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
         context = {
             "form": form,
         }
-        return render(request, 'parking/add_lot.html', context) 
+        return render(request, 'parking/add_lot.html', context)
 
 def add_spot(request, parkingLot_id):
     form = SpotForm(request.POST or None)
@@ -46,7 +46,7 @@ def add_spot(request, parkingLot_id):
                 return render(request, 'parking/add_spot.html', context)
         spot = form.save(commit=False)
         spot.parkingLot = parkingLot
-        
+
         spot.save()
         return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
     context = {
@@ -60,7 +60,7 @@ def delete_lot(request, parkingLot_id):
     parkingLot.delete()
     parkingLots = Parking_Lot.objects.filter(user=request.user)
     return render(request, 'parking/main.html', {'parkingLots': parkingLots})
-	 
+
 
 def detail(request, parkingLot_id):
     if not request.user.is_authenticated():
@@ -68,9 +68,9 @@ def detail(request, parkingLot_id):
     else:
         user = request.user
         parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
-        return render(request, 'parking/detail.html', {'parkingLot': parkingLot, 'user': user}) 
+        return render(request, 'parking/detail.html', {'parkingLot': parkingLot, 'user': user})
 
- 
+
 
 def delete_spot(request, parkingLot_id, spot_id):
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
@@ -115,7 +115,7 @@ def login_manager(request):
         else:
             return render(request, 'parking/login_manager.html', {'error_message': 'Invalid login'})
     return render(request, 'parking/login_manager.html')
-	
+
 
 
 def logout_manager(request):
@@ -135,7 +135,7 @@ def main(request):
         query = request.GET.get("q")
         if query:
             parkingLots = parkingLots.filter(
-                Q(address__icontains=query)                
+                Q(address__icontains=query)
             ).distinct()
             spot_results = spot_results.filter(
                 Q(spot_number__icontains=query) |
@@ -165,7 +165,7 @@ def update_occupancy(request, parkingLot_id):
     #             s.is_occupied = bool(random.getrandbits(1))
     #             s.save()
     #         time.sleep(10)
-    
+
 def disable_spot(request, parkingLot_id, spot_id):
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     spot = Spot.objects.get(pk=spot_id)
@@ -181,3 +181,12 @@ def enable_spot(request, parkingLot_id, spot_id):
     spot.is_occupied = True
     spot.save()
     return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
+
+
+def system(request, parkingLot_id):
+	if not request.user.is_authenticated():
+		return render(request, 'parking/login_manager.html')
+	else:
+		user = request.user
+		parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+		return render(request, 'parking/system.html', {'parkingLot': parkingLot, 'user': user})
