@@ -11,6 +11,10 @@
 
         <div class="col-sm-4 col-md-6">
 
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'parking:enter_session' parkingLot.id %}">Enter Vehicle</a></li>
+            </ul>
+
             <div class="panel panel-default">
                 <div class="panel-body">
 
@@ -43,6 +47,11 @@
         </div>
 
         <div class="col-sm-4 col-md-6">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'parking:exit_session' parkingLot.id %}">Exit Vehicle</a></li>
+            </ul>
+
             <div class="panel panel-default">
                 <div class="panel-body">
 

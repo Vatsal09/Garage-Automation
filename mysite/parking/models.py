@@ -3,8 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import Permission, User
 from django.core.validators import RegexValidator
 from django.db import models
-from garageAutomation.models import Account
-from garageAutomation.models import Vehicle
+from garageAutomation.models import Account, Vehicle
 import random
 import datetime
 # Create your models here.
@@ -19,8 +18,8 @@ class Parking_Lot(models.Model):
 	# Initialize after manager has been created
 	user = models.ForeignKey(User, default=1)
 	address = models.CharField(max_length= 150)
-	max_levels = models.CharField(max_length = 3, validators=[RegexValidator(r'^\d{1,3}$')])
-	max_spots = models.CharField(max_length = 5, validators=[RegexValidator(r'^\d{1,5}$')])
+	max_levels = models.CharField(max_length = 3, validators=[RegexValidator(r'^[1-9]\d{0,2}$')])
+	max_spots = models.CharField(max_length = 5, validators=[RegexValidator(r'^[1-9]\d{0,4}$')])
 
 	def __str__(self):
 		return str(self.id)
@@ -82,11 +81,17 @@ class Spot(models.Model):
 class Session(models.Model):
     parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE, blank = True)
     #vehicle = models.OneToOneField(Vehicle)
+    CreditCard = models.CharField(max_length = 16, blank = True)
+
     license_plate_number = models.CharField(max_length = 7, validators=[RegexValidator(r'^[A-Z0-9]{6,7}$')], blank = True)
-    time_arrived = models.CharField(max_length = 5, blank = True)
-    time_exited = models.CharField(max_length = 5, blank = True)
+    time_arrived = models.CharField(max_length = 10, blank = True)
+    time_exited = models.CharField(max_length = 10, blank = True)
     stay_length = models.CharField(max_length = 2, blank = True)
     amount_charged = models.CharField(max_length = 5, blank = True)
+	#CC = models.CharField(max_length = 16, blank = True)
+
+    #account = models.ForeignKey(Account, on_delete=models.CASCADE)
+
     #time_arrived = models.DateTimeField(auto_now=True)
     #date_arrived = models.DateField(_("Date"), default=datetime.date.today)
     user_type = models.CharField(max_length = 1)
@@ -96,12 +101,13 @@ class Session(models.Model):
 
 class RegisteredUser(models.Model):
     reg_user = 	models.OneToOneField(Session)
-    account = models.OneToOneField(Account)
+    #account = models.OneToOneField(Account)
+    #vehicle = models.OneToOneField(Vehicle)
     user_type = models.CharField(max_length = 1, default=1)
 
 class GuestUser(models.Model):
     guest_user = models.OneToOneField(Session)
-    CC = models.CharField(max_length = 16)
+    #CC = models.CharField(max_length = 16)
     user_type = models.CharField(max_length = 1, default=2)
 
 class CashUser(models.Model):

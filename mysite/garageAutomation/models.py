@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone 
 from django.contrib.auth.models import User
 # from django_enumfield import enum
 
@@ -138,9 +139,10 @@ class ParkingSession(models.Model):
 
     cost = models.PositiveIntegerField()
     
-    #TODO: figure out default values
-    # enter_time = models.DateTimeField('enter time') 
-    # exit_time = models.DateTimeField('exit time')
+    enter_time = models.DateTimeField(default = timezone.now) 
+    duration = models.PositiveIntegerField(default=0)
     
-    # location = enum.EnumField(ParkingLotName, default=ParkingLotName.NBPL)
     location = models.CharField(max_length=30)
+
+    def __str__(self):
+        return str(self.account.account_id)

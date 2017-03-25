@@ -35,6 +35,10 @@ urlpatterns = [
     url(r'^(?P<parkingLot_id>[0-9]+)/enable_spot/(?P<spot_id>[0-9]+)/$', views.enable_spot, name='enable_spot'),
 
     url(r'^(?P<parkingLot_id>[0-9]+)/system$', views.system, name='system'),
+
+    url(r'^(?P<parkingLot_id>[0-9]+)/system/enter_session/$', views.enter_session, name='enter_session'),
+
+    url(r'^(?P<parkingLot_id>[0-9]+)/system/exit_session/$', views.exit_session, name='exit_session'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

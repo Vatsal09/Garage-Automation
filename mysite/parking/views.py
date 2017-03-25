@@ -1,19 +1,25 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
-from .forms import ParkingLotForm, SpotForm, UserForm
-from .models import Parking_Lot, Spot
+from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, GuestSessionForm
+from .models import Parking_Lot, Spot, Session
+from garageAutomation.models import Account, Vehicle
 import time
 import random
+import datetime
+
 
 # Create your views here.
 
 def index(request):
-	return render(request, 'parking/index.html')
+    if not request.user.is_authenticated():
+        return render(request, 'parking/index.html')
+    return render(request, 'parking/main.html')
 def add_lot(request):
     if not request.user.is_authenticated():
         return render(request, 'parking/login_manager.html')
@@ -37,13 +43,14 @@ def add_spot(request, parkingLot_id):
     if form.is_valid():
         parkingLots_spots = parkingLot.spot_set.all()
         for s in parkingLots_spots:
-            if s.spot_number == form.cleaned_data.get("spot_number"):
-                context = {
-                    'parkingLot': parkingLot,
-                    'form': form,
-                    'error_message': 'You already added that spot',
-                }
-                return render(request, 'parking/add_spot.html', context)
+            if s.level == form.cleaned_data.get("level"):
+                if s.spot_number == form.cleaned_data.get("spot_number"):
+                    context = {
+                        'parkingLot': parkingLot,
+                        'form': form,
+                        'error_message': 'You already added that spot',
+                    }
+                    return render(request, 'parking/add_spot.html', context)
         spot = form.save(commit=False)
         spot.parkingLot = parkingLot
 
@@ -190,3 +197,57 @@ def system(request, parkingLot_id):
 		user = request.user
 		parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
 		return render(request, 'parking/system.html', {'parkingLot': parkingLot, 'user': user})
+
+def enter_session(request, parkingLot_id):
+	form = SessionForm(request.POST or None)
+	parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+	if form.is_valid():
+		license_plate_number= form.cleaned_data['license_plate_number']
+		try:
+			v = Vehicle.objects.get(license_plate = license_plate_number)
+		except Vehicle.DoesNotExist:
+			v = None
+		if (v != None):
+			session = form.save(commit=False)
+			session.user_type = 1
+			session.time_arrived =  datetime.datetime.now().strftime('%H:%M:%S')
+			session.parkingLot = parkingLot
+			session.save()
+			return render(request, 'parking/system.html', {'parkingLot': parkingLot})
+		else:
+			context = {
+				'parkingLot': parkingLot,
+				'license_plate_number': license_plate_number,
+			}
+			return render(request, 'parking/system.html', context)
+			# return render(request, 'parking/system.html', {'parkingLot': parkingLot, '' 'license_plate_number': form.cleaned_data['license_plate_number']})
+
+	context = {
+		'parkingLot': parkingLot,
+		'form': form,
+	}
+	return render(request, 'parking/enter_session.html', context)
+
+def exit_session(request, parkingLot_id):
+    form = SessionForm(request.POST or None)
+    parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+    if form.is_valid():
+        parkingLots_spots = parkingLot.spot_set.all()
+        for s in parkingLots_spots:
+            if s.spot_number == form.cleaned_data.get("spot_number"):
+                context = {
+                    'parkingLot': parkingLot,
+                    'form': form,
+                    'error_message': 'You already added that spot',
+                }
+                return render(request, 'parking/add_spot.html', context)
+        spot = form.save(commit=False)
+        spot.parkingLot = parkingLot
+
+        spot.save()
+        return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
+    context = {
+        'parkingLot': parkingLot,
+        'form': form,
+    }
+    return render(request, 'parking/add_spot.html', context)
