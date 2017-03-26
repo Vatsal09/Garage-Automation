@@ -21,8 +21,8 @@
                         </a>
                         <div class="caption">
                             <h2>{{ parkingLot.address }}</h2>
-                            <h4>{{ parkingLot.max_levels }}</h4>
-                            <h4>{{ parkingLot.max_spots }}</h4>
+                            <h4>Levels: {{ parkingLot.max_levels }}</h4>
+                            <h4>Spots: {{ parkingLot.max_spots }}</h4>
                             <!-- View Details -->
                             <a href="{% url 'parking:detail' parkingLot.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
 
