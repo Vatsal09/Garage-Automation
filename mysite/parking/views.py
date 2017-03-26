@@ -19,6 +19,23 @@ import datetime
 def index(request):
     if not request.user.is_authenticated():
         return render(request, 'parking/index.html')
+
+    parkingLots = Parking_Lot.objects.filter(user=request.user)
+    query = request.GET.get("q")
+    if query:
+        parkingLots = parkingLots.filter(
+            Q(address__icontains=query)
+        ).distinct()
+        spot_results = spot_results.filter(
+            Q(spot_number__icontains=query) |
+            Q(sensor_id__icontains=query)
+        ).distinct()
+        return render(request, 'parking/main.html', {
+            'parkingLots': parkingLots,
+        })
+    else:
+        return render(request, 'parking/main.html', {'parkingLots': parkingLots})
+    parkingLots = Parking_Lot.objects.filter(user=request.user)
     return render(request, 'parking/main.html')
 def add_lot(request):
     if not request.user.is_authenticated():
