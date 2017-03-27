@@ -40,3 +40,13 @@ strong {
   margin-top: 25px;
   margin-bottom: 25px;
 }
+#parking td{
+  background-color: #292b2c;
+  
+}
+#success td{
+  background-color: #43A047;
+}
+#danger td{
+   background-color: #E53935;
+}

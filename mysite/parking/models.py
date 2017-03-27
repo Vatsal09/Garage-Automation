@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import Permission, User
 from django.core.validators import RegexValidator
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 import random
 # Create your models here.
 class Parking_Lot(models.Model):
@@ -28,7 +29,7 @@ class Spot(models.Model):
 	# 1 -M relationship between Parking_Lot and Spot
 	parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE)
 	# Physical number of the parking spot 
-	spot_number = models.CharField(max_length = 10, validators=[RegexValidator(r'^\d{1,10}$')])
+	spot_number = models.IntegerField(validators= [RegexValidator(r'^[1-9]{0,10}$')])
 	# Sensor id number associated witht he spot_number
 	sensor_id = models.CharField(max_length = 10, validators=[RegexValidator(r'^\d{1,10}$')])
 	# Level of the spot 

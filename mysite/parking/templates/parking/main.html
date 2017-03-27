@@ -4,7 +4,7 @@
 {% block body %}
 <div class="albums-container container-fluid">
 
-    <!-- Albums -->
+    <!-- ParkingLots -->
     <div class="row">
         <div class="col-sm-12">
             <h3>{{ user.username }}'s Parking Lots</h3>
@@ -26,7 +26,7 @@
                             <!-- View Details -->
                             <a href="{% url 'parking:detail' parkingLot.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
 
-                            <!-- Delete Album -->
+                            <!-- Delete ParkingLot -->
                             <form action="{% url 'parking:delete_lot' parkingLot.id %}" method="post" style="display: inline;">
                                 {% csrf_token %}
                                 <input type="hidden" name="parkingLot_id" value="{{ parkingLot.id }}" />
@@ -53,7 +53,7 @@
         {% endif %}
     </div>
 
-    <!-- If user searches and there are songs -->
+    
     {% if spots %}
         <div class="row">
             <div class="col-sm-12">

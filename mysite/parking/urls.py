@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^(?P<parkingLot_id>[0-9]+)/add_spot/$', views.add_spot, name='add_spot'),
     # /parking/<Parking_Lot ID>/delete_spot
     url(r'^(?P<parkingLot_id>[0-9]+)/delete_spot/(?P<spot_id>[0-9]+)/$', views.delete_spot, name='delete_spot'),
+    # /parking/<Parking_Lot ID>/level/map
+    url(r'^(?P<parkingLot_id>[0-9]+)/(?P<level>[0-9]+)/map/$', views.map, name='map'),
     # /parking/register_manager
     url(r'^register_manager/$', views.register_manager, name='register_manager'),
     # /parking/login_manager
@@ -32,6 +34,8 @@ urlpatterns = [
     url(r'^(?P<parkingLot_id>[0-9]+)/disable_spot/(?P<spot_id>[0-9]+)/$', views.disable_spot, name='disable_spot'),
     # /parking/<Parking_Lot ID>/disable_spot
     url(r'^(?P<parkingLot_id>[0-9]+)/enable_spot/(?P<spot_id>[0-9]+)/$', views.enable_spot, name='enable_spot'),
+    # /parking/<Parking_Lot ID>/level/map      
+    url(r'^(?P<parkingLot_id>[0-9]+)/(?P<level>[0-9]+)/map$', views.map, name='map'),
 ]
 
-urlpatterns += staticfiles_urlpatterns()
+urlpatterns += staticfiles_urlpatterns()                                                            
