@@ -41,7 +41,7 @@ class Spot(models.Model):
 	# Sensor id number associated witht he spot_number
 	sensor_id = models.CharField(max_length = 10, validators=[RegexValidator(r'^\d{1,10}$')])
 	# Level of the spot
-	level = models.CharField(max_length = 3, validators=[RegexValidator(r'^\d{1,3}$')])
+	level = models.CharField(max_length = 3, validators=[RegexValidator(r'^\d[1-9]{1,3}$')])
 	# Is the space occupied or not
 	is_occupied = models.BooleanField(default= False)
 	# Disabled by manager
