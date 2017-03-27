@@ -224,21 +224,33 @@ def enter_session(request, parkingLot_id):
 			v = Vehicle.objects.get(license_plate = license_plate_number)
 		except Vehicle.DoesNotExist:
 			v = None
-		if (v != None):
-			session = form.save(commit=False)
-			session.user_type = 1
-			session.time_arrived =  datetime.datetime.now().strftime('%H:%M:%S')
-			session.parkingLot = parkingLot
-			session.save()
-			return render(request, 'parking/system.html', {'parkingLot': parkingLot})
+		try:
+			check_session = Session.objects.get(license_plate_number = license_plate_number)
+		except Session.DoesNotExist:
+			check_session = None
+		if (check_session == None):
+			if (v != None):
+				session = form.save(commit=False)
+				session.user_type = 1
+				session.time_arrived =  datetime.datetime.now().strftime('%H:%M:%S')
+				session.parkingLot = parkingLot
+				session.save()
+				return render(request, 'parking/system.html', {'parkingLot': parkingLot})
+			else:
+				context = {
+					'parkingLot': parkingLot,
+					'license_plate_number': license_plate_number,
+				}
+				return render(request, 'parking/system.html', context)
+				# return render(request, 'parking/system.html', {'parkingLot': parkingLot, '' 'license_plate_number': form.cleaned_data['license_plate_number']})
 		else:
 			context = {
 				'parkingLot': parkingLot,
 				'license_plate_number': license_plate_number,
+				'form': form,
+				'error_message': 'This vehicle is in another session.',
 			}
-			return render(request, 'parking/system.html', context)
-			# return render(request, 'parking/system.html', {'parkingLot': parkingLot, '' 'license_plate_number': form.cleaned_data['license_plate_number']})
-
+			return render(request, 'parking/enter_session.html', context)
 	context = {
 		'parkingLot': parkingLot,
 		'form': form,
