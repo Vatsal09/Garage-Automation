@@ -20,6 +20,23 @@ import datetime
 def index(request):
     if not request.user.is_authenticated():
         return render(request, 'parking/index.html')
+
+    parkingLots = Parking_Lot.objects.filter(user=request.user)
+    query = request.GET.get("q")
+    if query:
+        parkingLots = parkingLots.filter(
+            Q(address__icontains=query)
+        ).distinct()
+        spot_results = spot_results.filter(
+            Q(spot_number__icontains=query) |
+            Q(sensor_id__icontains=query)
+        ).distinct()
+        return render(request, 'parking/main.html', {
+            'parkingLots': parkingLots,
+        })
+    else:
+        return render(request, 'parking/main.html', {'parkingLots': parkingLots})
+    parkingLots = Parking_Lot.objects.filter(user=request.user)
     return render(request, 'parking/main.html')
 def add_lot(request):
     if not request.user.is_authenticated():
@@ -209,17 +226,32 @@ def enter_session(request, parkingLot_id):
 			v = Vehicle.objects.get(license_plate = license_plate_number)
 		except Vehicle.DoesNotExist:
 			v = None
-		if (v != None):
-			session = form.save(commit=False)
-			session.user_type = 1
-			session.time_arrived =  datetime.datetime.now().strftime('%H:%M:%S')
-			session.parkingLot = parkingLot
-			session.save()
-			return render(request, 'parking/system.html', {'parkingLot': parkingLot})
+		try:
+			check_session = Session.objects.get(license_plate_number = license_plate_number)
+		except Session.DoesNotExist:
+			check_session = None
+		if (check_session == None):
+			if (v != None):
+				session = form.save(commit=False)
+				session.user_type = 1
+				session.time_arrived =  datetime.datetime.now().strftime('%H:%M:%S')
+				session.parkingLot = parkingLot
+				session.save()
+				return render(request, 'parking/system.html', {'parkingLot': parkingLot})
+			else:
+				context = {
+					'parkingLot': parkingLot,
+					'license_plate_number': license_plate_number,
+				}
+				return redirect('/{}/system/enter_guest/{}'.format(parkingLot_id, license_plate_number), parkingLot_id=parkingLot_id, license_plate= license_plate_number)
 		else:
-			return redirect('/{}/system/enter_guest/{}'.format(parkingLot_id, license_plate_number), parkingLot_id=parkingLot_id, license_plate= license_plate_number)
-			# return redirect('enter_guest', parkingLot_id= parkingLot_id, license_plate= license_plate_number)
-
+			context = {
+				'parkingLot': parkingLot,
+				'license_plate_number': license_plate_number,
+				'form': form,
+				'error_message': 'This vehicle is in another session.',
+			}
+			return render(request, 'parking/enter_session.html', context)
 	context = {
 		'parkingLot': parkingLot,
 		'form': form,

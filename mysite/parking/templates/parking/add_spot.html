@@ -14,8 +14,9 @@
                     <a href="{% url 'parking:detail' parkingLot.id %}">
                         <img src="{% static 'parking/images/index_image.png' %}" class="img-responsive" alt="somepic">
                     </a>
-                    <h1>{{ parkingLot.address}} <small>{{ parkingLot.max_levels }}</small></h1>
-                    <h2>{{ parkingLot.max_spots }}</h2>
+                    <h1>{{ parkingLot.address}}</h1>
+                    <h3>Max Levels: {{ parkingLot.max_levels }}</h3>
+                    <h3>Max Spots: {{ parkingLot.max_spots }}</h3>
                 </div>
             </div>
         </div>
