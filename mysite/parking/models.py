@@ -3,11 +3,9 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import Permission, User
 from django.core.validators import RegexValidator
 from django.db import models
-<<<<<<< HEAD
-from django.core.validators import MaxValueValidator, MinValueValidator
-=======
+
 from garageAutomation.models import Account, Vehicle
->>>>>>> 4f11534a952a650cece4fbd18aa6aba0c905512f
+
 import random
 import datetime
 # Create your models here.
