@@ -35,4 +35,4 @@ class GuestSessionForm(forms.ModelForm):
 
     class Meta:
         model = Session
-        fields = ['CreditCard']
+        fields = ['Credit_Card']

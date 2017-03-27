@@ -80,8 +80,8 @@ class Spot(models.Model):
 
 class Session(models.Model):
     parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE, blank = True)
-    #vehicle = models.OneToOneField(Vehicle)
-    CreditCard = models.CharField(max_length = 16, blank = True)
+    # vehicle = models.OneToOneField(Vehicle)
+    Credit_Card = models.CharField(max_length = 16, blank = True)
 
     license_plate_number = models.CharField(max_length = 7, validators=[RegexValidator(r'^[A-Z0-9]{6,7}$')], blank = True)
     time_arrived = models.CharField(max_length = 10, blank = True)
@@ -99,18 +99,18 @@ class Session(models.Model):
     def __str__(self):
         return str(self.id)
 
-class RegisteredUser(models.Model):
-    reg_user = 	models.OneToOneField(Session)
-    #account = models.OneToOneField(Account)
-    #vehicle = models.OneToOneField(Vehicle)
-    user_type = models.CharField(max_length = 1, default=1)
-
-class GuestUser(models.Model):
-    guest_user = models.OneToOneField(Session)
-    #CC = models.CharField(max_length = 16)
-    user_type = models.CharField(max_length = 1, default=2)
-
-class CashUser(models.Model):
-    cash_user = models.OneToOneField(Session)
-    hasPaid = models.BooleanField(default = False)
-    user_type = models.CharField(max_length = 1, default=3)
+# class RegisteredUser(models.Model):
+#     reg_user = 	models.OneToOneField(Session)
+#     #account = models.OneToOneField(Account)
+#     #vehicle = models.OneToOneField(Vehicle)
+#     user_type = models.CharField(max_length = 1, default=1)
+#
+# class GuestUser(models.Model):
+#     guest_user = models.OneToOneField(Session)
+#     #CC = models.CharField(max_length = 16)
+#     user_type = models.CharField(max_length = 1, default=2)
+#
+# class CashUser(models.Model):
+#     cash_user = models.OneToOneField(Session)
+#     hasPaid = models.BooleanField(default = False)
+#     user_type = models.CharField(max_length = 1, default=3)

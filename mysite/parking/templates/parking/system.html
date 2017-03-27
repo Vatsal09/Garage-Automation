@@ -68,6 +68,7 @@
                         <tr>
                             <th style="text-align: center">License Plate</th>
                             <th style="text-align: center">User Type</th>
+                            <th style="text-align: center">Time Arrived</th>
                             <th style="text-align: center">Time Exited</th>
                             <th style="text-align: center">Total Stay Time</th>
                             <th style="text-align: center">Amount Charged</th>
@@ -79,6 +80,7 @@
                             <tr>
                                 <td class="center_spot" style="text-align: center">{{ session.license_plate_number }}</td>
                                 <td class="center_spot" style="text-align: center">{{ session.user_type }}</td>
+                                <td class="center_spot" style="text-align: center">{{ session.time_arrived }}</td>
                                 <td class="center_spot" style="text-align: center">{{ session.time_exited }}</td>
                                 <td class="center_spot" style="text-align: center">{{ session.stay_length}} Hours</td>
                                 <td class="center_spot" style="text-align: center">${{ session.amount_charged }}</td>

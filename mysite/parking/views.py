@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
@@ -9,6 +9,7 @@ from django.db.models import Q
 from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, GuestSessionForm
 from .models import Parking_Lot, Spot, Session
 from garageAutomation.models import Account, Vehicle
+from django.core.urlresolvers import reverse
 import time
 import random
 import datetime
@@ -200,6 +201,7 @@ def system(request, parkingLot_id):
 
 def enter_session(request, parkingLot_id):
 	form = SessionForm(request.POST or None)
+	license_plate_number = ''
 	parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
 	if form.is_valid():
 		license_plate_number= form.cleaned_data['license_plate_number']
@@ -215,12 +217,8 @@ def enter_session(request, parkingLot_id):
 			session.save()
 			return render(request, 'parking/system.html', {'parkingLot': parkingLot})
 		else:
-			context = {
-				'parkingLot': parkingLot,
-				'license_plate_number': license_plate_number,
-			}
-			return render(request, 'parking/system.html', context)
-			# return render(request, 'parking/system.html', {'parkingLot': parkingLot, '' 'license_plate_number': form.cleaned_data['license_plate_number']})
+			return redirect('/{}/system/enter_guest/{}'.format(parkingLot_id, license_plate_number), parkingLot_id=parkingLot_id, license_plate= license_plate_number)
+			# return redirect('enter_guest', parkingLot_id= parkingLot_id, license_plate= license_plate_number)
 
 	context = {
 		'parkingLot': parkingLot,
@@ -240,7 +238,7 @@ def exit_session(request, parkingLot_id):
 		if (check_session != None):
 			check_session.time_exited =  datetime.datetime.now().strftime('%H:%M:%S')
 			check_session.stay_length = int(check_session.time_exited[:2]) - int(check_session.time_arrived[:2])
-			check_session.amount_charged = str(int(check_session.stay_length[:2])*5)
+			check_session.amount_charged = str(int(check_session.stay_length*5))
 			check_session.save()
 			return render(request, 'parking/system.html', {'parkingLot': parkingLot})
 		else:
@@ -255,3 +253,27 @@ def exit_session(request, parkingLot_id):
 		'form': form,
 	}
 	return render(request, 'parking/exit_session.html', context)
+
+def enter_guest(request, parkingLot_id, license_plate):
+	form = GuestSessionForm(request.POST or None)
+	parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+	if form.is_valid():
+		session = form.save(commit=False)
+		session.license_plate_number = license_plate
+		session.user_type = 2
+		session.time_arrived =  datetime.datetime.now().strftime('%H:%M:%S')
+		session.parkingLot = parkingLot
+		session.save()
+		return render(request, 'parking/system.html', {'parkingLot': parkingLot})
+	context = {
+		'parkingLot': parkingLot,
+        'license_plate': license_plate,
+		'form': form,
+	}
+	return render(request, 'parking/enter_guest.html', context)
+
+def enter_cash_guest(request, parkingLot_id, license_plate):
+    parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+    session = Session(license_plate_number= license_plate, user_type= '3', time_arrived= datetime.datetime.now().strftime('%H:%M:%S'), parkingLot= parkingLot)
+    session.save()
+    return render(request, 'parking/system.html', {'parkingLot': parkingLot})

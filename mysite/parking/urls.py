@@ -33,12 +33,19 @@ urlpatterns = [
     url(r'^(?P<parkingLot_id>[0-9]+)/disable_spot/(?P<spot_id>[0-9]+)/$', views.disable_spot, name='disable_spot'),
     # /parking/<Parking_Lot ID>/disable_spot
     url(r'^(?P<parkingLot_id>[0-9]+)/enable_spot/(?P<spot_id>[0-9]+)/$', views.enable_spot, name='enable_spot'),
-
+    # URL for checking lot status
     url(r'^(?P<parkingLot_id>[0-9]+)/system$', views.system, name='system'),
-
+    # URL for simulating enter session
     url(r'^(?P<parkingLot_id>[0-9]+)/system/enter_session/$', views.enter_session, name='enter_session'),
-
+    # URL for simulating exit session
     url(r'^(?P<parkingLot_id>[0-9]+)/system/exit_session/$', views.exit_session, name='exit_session'),
+
+    url(r'^(?P<parkingLot_id>[0-9]+)/system/enter_guest/(?P<license_plate>[A-Z0-9]+)/$', views.enter_guest, name='enter_guest'),
+    # url(r'^(?P<parkingLot_id>[0-9]+)/system/enter_session/enter_guest/$', views.enter_guest, name='enter_guest'),
+
+    url(r'^(?P<parkingLot_id>[0-9]+)/system/enter_cash_guest/(?P<license_plate>[A-Z0-9]+)/$', views.enter_cash_guest, name='enter_cash_guest'),
+
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()
