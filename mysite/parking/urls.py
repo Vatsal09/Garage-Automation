@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^(?P<parkingLot_id>[0-9]+)/add_spot/$', views.add_spot, name='add_spot'),
     # /parking/<Parking_Lot ID>/delete_spot
     url(r'^(?P<parkingLot_id>[0-9]+)/delete_spot/(?P<spot_id>[0-9]+)/$', views.delete_spot, name='delete_spot'),
+    # /parking/<Parking_Lot ID>/level/map
+    url(r'^(?P<parkingLot_id>[0-9]+)/(?P<level>[0-9]+)/map/$', views.map, name='map'),
     # /parking/register_manager
     url(r'^register_manager/$', views.register_manager, name='register_manager'),
     # /parking/login_manager
@@ -34,11 +36,23 @@ urlpatterns = [
     # /parking/<Parking_Lot ID>/disable_spot
     url(r'^(?P<parkingLot_id>[0-9]+)/enable_spot/(?P<spot_id>[0-9]+)/$', views.enable_spot, name='enable_spot'),
 
+    # /parking/<Parking_Lot ID>/level/map      
+    url(r'^(?P<parkingLot_id>[0-9]+)/(?P<level>[0-9]+)/map$', views.map, name='map'),
+
+    # URL for checking lot status
     url(r'^(?P<parkingLot_id>[0-9]+)/system$', views.system, name='system'),
-
+    # URL for simulating enter session
     url(r'^(?P<parkingLot_id>[0-9]+)/system/enter_session/$', views.enter_session, name='enter_session'),
-
+    # URL for simulating exit session
     url(r'^(?P<parkingLot_id>[0-9]+)/system/exit_session/$', views.exit_session, name='exit_session'),
+
+    url(r'^(?P<parkingLot_id>[0-9]+)/system/enter_guest/(?P<license_plate>[A-Z0-9]+)/$', views.enter_guest, name='enter_guest'),
+    # url(r'^(?P<parkingLot_id>[0-9]+)/system/enter_session/enter_guest/$', views.enter_guest, name='enter_guest'),
+
+    url(r'^(?P<parkingLot_id>[0-9]+)/system/enter_cash_guest/(?P<license_plate>[A-Z0-9]+)/$', views.enter_cash_guest, name='enter_cash_guest'),
+
+
+
 ]
 
-urlpatterns += staticfiles_urlpatterns()
+urlpatterns += staticfiles_urlpatterns()                                                            

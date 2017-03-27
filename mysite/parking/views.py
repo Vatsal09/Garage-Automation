@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
@@ -9,9 +9,11 @@ from django.db.models import Q
 from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, GuestSessionForm
 from .models import Parking_Lot, Spot, Session
 from garageAutomation.models import Account, Vehicle
+from django.core.urlresolvers import reverse
 import time
 import random
 import datetime
+
 
 
 # Create your views here.
@@ -70,7 +72,6 @@ def add_spot(request, parkingLot_id):
                     return render(request, 'parking/add_spot.html', context)
         spot = form.save(commit=False)
         spot.parkingLot = parkingLot
-
         spot.save()
         return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
     context = {
@@ -181,7 +182,8 @@ def update_occupancy(request, parkingLot_id):
         for s in parkingLots_spots:
                 s.is_occupied = bool(random.getrandbits(1))
                 s.save()
-        return render(request, 'parking/update_occupancy.html')
+        return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
+        #return render(request, 'parking/update_occupancy.html')
     # If the inifinite loop is to be activated for checker, uncomment below and uncomment the render request in login_manager(request) view
     # else:
     #     while True:
@@ -206,6 +208,68 @@ def enable_spot(request, parkingLot_id, spot_id):
     spot.save()
     return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
 
+def map(request, parkingLot_id, level):
+    parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+    parkingLots_spots = parkingLot.spot_set.all()
+    num_levels = parkingLot.max_levels
+    num_levels = int(num_levels)
+    level_1 = int(level)
+    last_spot_per_level = []
+    last_spot_per_level.append(0)
+    temp_num = 0
+    for i in range(1, (num_levels+1)):
+        for s in parkingLots_spots:
+            if int(s.level) == i and int(s.spot_number) > temp_num:
+               temp_num = int(s.spot_number)
+        last_spot_per_level.append(temp_num)
+    # [0/1 100 113 455]
+    data_max = last_spot_per_level[level_1]
+    data_min = last_spot_per_level[level_1-1]+1
+    data_set = []
+    # For even
+    if data_max%2==0:
+        bottom_left = data_min
+        top_left = round((float(data_max+data_min)/float(2))-0.5)
+        top_left = int(top_left)
+        bottom_right = top_left+1
+        top_right = data_max
+        data_set = [bottom_left, top_left, bottom_right, top_right]
+
+    else:
+        bottom_left = data_min
+        top_left = ((data_max+data_min)/2)-1
+        bottom_right = top_left+1
+        top_right = data_max
+        data_set = [bottom_left, top_left, bottom_right, top_right]
+    # spots_left = []
+    # spots_right = []
+    # for x in parkingLots_spots :
+    #     if x.spot_number >= data_set[0] and x.spot_number <= data_set[1]:
+    #         spots_left.append(x)
+    #     if x.spot_number >= data_set[2] and x.spot_number <= data_set[3]:
+    #         spots_right.append(x) 
+    spots_left = Spot.objects.filter(parkingLot = parkingLot_id).filter(spot_number__gte = data_set[0]).filter(spot_number__lte = data_set[1])
+    spots_right = Spot.objects.filter(parkingLot = parkingLot_id).filter(spot_number__gte = data_set[2]).filter(spot_number__lte = data_set[3])
+    spots = zip(spots_left, spots_right)
+
+    # left= Parking_Lot.objects.filter(pk=parkingLot_id).filter(spot.all().filter(spot_number__lte = data_set[0]).filter(spot_number__lte = data_set[1])
+    # right = parkingLots_spots.objects.all().filter(int(spot_number)>= data_set[2]).filter(int(spot_number)<= data_set[3])
+
+    
+    # json_data_set = json.dumps(data_set)
+    # json_level = json.dumps(level_1)
+    # json_serializer = serializers.get_serializer("json")()
+    # json_spots = json_serializer.serialize(parkingLot.spot_set.all())
+    return render(request, 'parking/map.html', {
+        'data_set' : data_set,
+        'level' : level,
+        'parkingLot': parkingLot,
+        'spots' : spots,
+        # 'spots1': json_spots, 
+        # 'level': json_level,
+        # 'data_set': json_data_set,
+    })
+
 
 def system(request, parkingLot_id):
 	if not request.user.is_authenticated():
@@ -217,6 +281,7 @@ def system(request, parkingLot_id):
 
 def enter_session(request, parkingLot_id):
 	form = SessionForm(request.POST or None)
+	license_plate_number = ''
 	parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
 	if form.is_valid():
 		license_plate_number= form.cleaned_data['license_plate_number']
@@ -241,8 +306,7 @@ def enter_session(request, parkingLot_id):
 					'parkingLot': parkingLot,
 					'license_plate_number': license_plate_number,
 				}
-				return render(request, 'parking/system.html', context)
-				# return render(request, 'parking/system.html', {'parkingLot': parkingLot, '' 'license_plate_number': form.cleaned_data['license_plate_number']})
+				return redirect('/{}/system/enter_guest/{}'.format(parkingLot_id, license_plate_number), parkingLot_id=parkingLot_id, license_plate= license_plate_number)
 		else:
 			context = {
 				'parkingLot': parkingLot,
@@ -269,7 +333,7 @@ def exit_session(request, parkingLot_id):
 		if (check_session != None):
 			check_session.time_exited =  datetime.datetime.now().strftime('%H:%M:%S')
 			check_session.stay_length = int(check_session.time_exited[:2]) - int(check_session.time_arrived[:2])
-			check_session.amount_charged = str(int(check_session.stay_length[:2])*5)
+			check_session.amount_charged = str(int(check_session.stay_length)*5)
 			check_session.save()
 			return render(request, 'parking/system.html', {'parkingLot': parkingLot})
 		else:
@@ -284,3 +348,27 @@ def exit_session(request, parkingLot_id):
 		'form': form,
 	}
 	return render(request, 'parking/exit_session.html', context)
+
+def enter_guest(request, parkingLot_id, license_plate):
+	form = GuestSessionForm(request.POST or None)
+	parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+	if form.is_valid():
+		session = form.save(commit=False)
+		session.license_plate_number = license_plate
+		session.user_type = 2
+		session.time_arrived =  datetime.datetime.now().strftime('%H:%M:%S')
+		session.parkingLot = parkingLot
+		session.save()
+		return render(request, 'parking/system.html', {'parkingLot': parkingLot})
+	context = {
+		'parkingLot': parkingLot,
+        'license_plate': license_plate,
+		'form': form,
+	}
+	return render(request, 'parking/enter_guest.html', context)
+
+def enter_cash_guest(request, parkingLot_id, license_plate):
+    parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+    session = Session(license_plate_number= license_plate, user_type= '3', time_arrived= datetime.datetime.now().strftime('%H:%M:%S'), parkingLot= parkingLot)
+    session.save()
+    return render(request, 'parking/system.html', {'parkingLot': parkingLot})

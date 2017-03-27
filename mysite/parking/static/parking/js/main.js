@@ -3,10 +3,6 @@ var path = 'http://www.lucashanyok.com/images_1/',
     i = Math.floor(Math.random()*imgs.length);
 $('.el').append("<img src='"+path+imgs[i]+"'>");
 
-
-
-
-
 var AlbumsListPage = {
 	init: function() {
 		this.$container = $('.albums-container');
@@ -67,3 +63,7 @@ $(document).ready(function() {
 	AlbumsListPage.init();
 	SongsListPage.init();
 });
+
+// var data = "{{data_set|safe}}";
+// var level = "{{level|safe}}"
+// var companies = '{{ spots1|escapejs }}';

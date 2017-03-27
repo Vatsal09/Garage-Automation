@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import Permission, User
 from django.core.validators import RegexValidator
 from django.db import models
+
 from garageAutomation.models import Account, Vehicle
+
 import random
 import datetime
 # Create your models here.
@@ -32,8 +34,10 @@ class Parking_Lot(models.Model):
 class Spot(models.Model):
 	# 1 -M relationship between Parking_Lot and Spot
 	parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE)
-	# Physical number of the parking spot
-	spot_number = models.CharField(max_length = 10, validators=[RegexValidator(r'^\d{1,10}$')])
+
+	# Physical number of the parking spot 
+	spot_number = models.IntegerField(validators= [RegexValidator(r'^[1-9]{0,10}$')])
+
 	# Sensor id number associated witht he spot_number
 	sensor_id = models.CharField(max_length = 10, validators=[RegexValidator(r'^\d{1,10}$')])
 	# Level of the spot
@@ -80,8 +84,8 @@ class Spot(models.Model):
 
 class Session(models.Model):
     parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE, blank = True)
-    #vehicle = models.OneToOneField(Vehicle)
-    CreditCard = models.CharField(max_length = 16, blank = True)
+    # vehicle = models.OneToOneField(Vehicle)
+    Credit_Card = models.CharField(max_length = 16, blank = True)
 
     license_plate_number = models.CharField(max_length = 7, validators=[RegexValidator(r'^[A-Z0-9]{6,7}$')], blank = True)
     time_arrived = models.CharField(max_length = 10, blank = True)
@@ -99,18 +103,18 @@ class Session(models.Model):
     def __str__(self):
         return str(self.id)
 
-class RegisteredUser(models.Model):
-    reg_user = 	models.OneToOneField(Session)
-    #account = models.OneToOneField(Account)
-    #vehicle = models.OneToOneField(Vehicle)
-    user_type = models.CharField(max_length = 1, default=1)
-
-class GuestUser(models.Model):
-    guest_user = models.OneToOneField(Session)
-    #CC = models.CharField(max_length = 16)
-    user_type = models.CharField(max_length = 1, default=2)
-
-class CashUser(models.Model):
-    cash_user = models.OneToOneField(Session)
-    hasPaid = models.BooleanField(default = False)
-    user_type = models.CharField(max_length = 1, default=3)
+# class RegisteredUser(models.Model):
+#     reg_user = 	models.OneToOneField(Session)
+#     #account = models.OneToOneField(Account)
+#     #vehicle = models.OneToOneField(Vehicle)
+#     user_type = models.CharField(max_length = 1, default=1)
+#
+# class GuestUser(models.Model):
+#     guest_user = models.OneToOneField(Session)
+#     #CC = models.CharField(max_length = 16)
+#     user_type = models.CharField(max_length = 1, default=2)
+#
+# class CashUser(models.Model):
+#     cash_user = models.OneToOneField(Session)
+#     hasPaid = models.BooleanField(default = False)
+#     user_type = models.CharField(max_length = 1, default=3)
