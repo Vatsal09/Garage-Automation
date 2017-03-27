@@ -270,7 +270,7 @@ def exit_session(request, parkingLot_id):
 		if (check_session != None):
 			check_session.time_exited =  datetime.datetime.now().strftime('%H:%M:%S')
 			check_session.stay_length = int(check_session.time_exited[:2]) - int(check_session.time_arrived[:2])
-			check_session.amount_charged = str(int(check_session.stay_length*5))
+			check_session.amount_charged = str(int(check_session.stay_length)*5)
 			check_session.save()
 			return render(request, 'parking/system.html', {'parkingLot': parkingLot})
 		else:
