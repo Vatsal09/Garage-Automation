@@ -49,12 +49,11 @@ class Account(models.Model):
     def __str__(self):
         return str(self.account_id) + ": " + self.first_name
 
-    def haveCard(self,card_number):
-        cards = PaymentMethod.objects.filter(account=self.account_id)
-        for card in cards:
-            if card.card_number == card_number:
-                return True
-        return False
+    def haveCard(self,c_num): 
+        if len(PaymentMethod.objects.filter(card_number=c_num)) > 0 : #card can only exist on one account
+            return True
+        else:
+            return False
 
     def addCard(self, type, card_number, exp, cvv, country, zip):
         if self.haveCard(card_number) == False:
