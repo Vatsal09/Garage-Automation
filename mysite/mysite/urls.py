@@ -24,5 +24,7 @@ urlpatterns = [
     url(r'', include('parking.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^parking/', include('parking.urls')),
-    url(r'^garageAutomation/', include('garageAutomation.urls')), url(r'^manager/', include('manager.urls')),
+    url(r'^garageAutomation/', include('garageAutomation.urls')), 
+    url(r'^manager/', include('manager.urls',namespace ='manager_page')),
+
 ]
