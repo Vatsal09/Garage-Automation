@@ -19,20 +19,29 @@
                     <h4 class="give_space"><strong>Parking Lot Address:</strong> </h4>
                     <h4 class="give_space">{{ parkingLot.address }}</h4>
                     <h4 class="give_space"><strong>Number of Levels:</strong> {{ parkingLot.max_levels }}</h4>
-                    <h4 class="give_space"><strong>Number of Spots:</strong> {{ parkingLot.max_spots }}</h4>                    
+                    <h4 class="give_space"><strong>Number of Spots:</strong> {{ parkingLot.max_spots }}</h4>
                 </div>
             </div>
         </div>
 
+<<<<<<< HEAD
         <!-- Right Spot Info -->
+=======
+        <!-- Right Song Info -->
+
+>>>>>>> 4f11534a952a650cece4fbd18aa6aba0c905512f
         <div class="col-sm-8 col-md-9">
 
             <ul class="nav nav-pills" style="margin-bottom: 10px;">
-                
                 <li role="presentation" class="active"><a href="{% url 'parking:add_spot' parkingLot.id %}">Add New Spot</a></li>
             </ul>
 
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'parking:system' parkingLot.id %}">Check Lot Status</a></li>
+            </ul>
+
             <div class="panel panel-default">
+
                 <div class="panel-body">
 
                     <h3>All Spots</h3>
@@ -47,7 +56,7 @@
                             <th style="text-align: center">Parking Lot Level</th>
                             <th style="text-align: center">Spot Number</th>
                             <th style="text-align: center">Sensor ID</th>
-                            <th style="text-align: center">Spot Occupied?</th> 
+                            <th style="text-align: center">Spot Occupied?</th>
                             <th style="text-align: center">Spot Disabled?</th>
                             <th style="text-align: center">Disable Spot</th>
                             <th style="text-align: center">Enable Spot</th>
@@ -85,12 +94,12 @@
                                         {% csrf_token %}
                                         <input type="hidden" name="spot_id" value="{{ spot.id }}" />
                                         <button type="submit" class="btn btn-default btn-xs">
-                                            <span class="glyphicon glyphicon-trash"></span>&nbsp; 
+                                            <span class="glyphicon glyphicon-trash"></span>&nbsp;
                                         </button>
                                     </form>
                                 </td>
-                                                             
-                                
+
+
                             </tr>
                         {% endfor %}
                         </tbody>

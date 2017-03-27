@@ -17,11 +17,20 @@
     
 </head>
 
-<body>
+<body style="background-image: url({%static "garageAutomation/background.png"%});>
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+             {% if user.is_authenticated %}
+             <ul class="nav navbar-nav navbar-right">
+                <li><a href="/garageAutomation/logout">Logout</a></li>
+            </ul>
+             {% endif %}
+        </div>
+    </nav>
     <button type="button" class="btn-lg btn glyphicon glyphicon-menu-hamburger" data-toggle="modal" data-target="#menuModal"></button>
 
     <h1> Hello, {{account.first_name}} </h1>
-
+    
     <!-- Menu Modal -->
     <div class="modal fade left" id="menuModal" role="dialog">
         <div class="modal-dialog menuModalDiv">
@@ -29,7 +38,7 @@
                 <div class="modal-body menuModalDiv">
                     <span style="padding:10px"></span>
                     <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#paymentModal">Payment</button> <!-- closes menu and opens payment -->
-                    <button class="menuButton" type="button">History</button> <!--TODO-->
+                    <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#historyModal">History</button> <!--TODO-->
                     <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#settingsModal">Settings</button>
                 </div>
             </div>
@@ -52,7 +61,7 @@
                                 <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{payment_method.printType}} •••• {{payment_method.getLastFour}}</button>   
                             {% endfor %}
                         {% else %}
-                            <<!-- TODO: logic to force payment method -->
+                            <!-- TODO: logic to force payment method -->
                         {% endif %}
                         <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal">Add Payment Method</button>                           
                     </div>                     
@@ -133,6 +142,61 @@
             </div>
         </div>
     </div>
+    <!-- History Modal -->
+    <div class="modal fade bottom windowModal" id="historyModal" role="dialog">
+        <div class="modal-dialog modal-lg windowModal">
+            <div class="modal-content windowModal">
+                <div class="modal-body">
+                    <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <div class="subMenuTitles">
+                        <h1>History</h1>
+                        <h3 class="subMenu_subTitle">Parking Session</h3>
+                    </div>
+                    <div> 
+                        {% if parking_sessions %}
+                            {%for session in parking_sessions%}
+                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#session_{{session.pk}}">{{session.enter_time}} - {{session.location}}</button>   
+                            {% endfor %}
+                        {% else %}
+                            <!-- TODO: logic to force payment method -->
+                        {% endif %}                       
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if parking_sessions %}
+            {%for session in parking_sessions%}
+                <div class="modal fade right windowModal" id="session_{{session.pk}}" role="dialog">
+                    <div class="modal-dialog modal-lg windowModal">
+                        <div class="modal-content windowModal">
+                            <div class="modal-body">
+                                <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                                <div class="subMenuTitles">
+                                    <h1>{{session.enter_time}} - {{session.location}}</h1>
+                                </div>
+                                <div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Cost </p>
+                                        <p> {{ session.cost }} </p>
+                                    </div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> License Plate </p>
+                                        <p>{{ session.vehicle.license_plate }}</p>
+                                    </div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Card Number </p>
+                                        <p> •••• •••• •••• {{ session.paymentMethod.getLastFour }} </p>
+                                    </div>
+                                    
+                                </div>                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
 
     <!--Settings Modal-->
     <div class="modal fade bottom windowModal" id="settingsModal" role="dialog">

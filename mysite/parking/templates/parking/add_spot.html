@@ -14,12 +14,14 @@
                     <a href="{% url 'parking:detail' parkingLot.id %}">
                         <img src="{% static 'parking/images/index_image.png' %}" class="img-responsive">
                     </a>
+
                     <h4 class="give_space"><strong>Management Username:</strong> {{parkingLot.user}}</h4>
                     <h4 class="give_space"><strong>Parking Lot Number:</strong> {{ parkingLot.id }}</h4>
                     <h4 class="give_space"><strong>Parking Lot Address:</strong> </h4>
                     <h4 class="give_space">{{ parkingLot.address }}</h4>
                     <h4 class="give_space"><strong>Number of Levels:</strong> {{ parkingLot.max_levels }}</h4>
                     <h4 class="give_space"><strong>Number of Spots:</strong> {{ parkingLot.max_spots }}</h4>                    
+
                 </div>
             </div>
         </div>

@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone 
+from django.contrib.auth.models import User
 # from django_enumfield import enum
 
 # pip install --pre django-enumfield==1.3b2  <-- Does not work, neither does stable
@@ -37,9 +39,9 @@ from django.db import models
 #     labels = {
 #         NBPL: "New Brunswick Parking Lot",
 #     }
-
 class Account(models.Model):
-    account_id = models.PositiveIntegerField(primary_key=True)
+    account_id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=10)
@@ -137,9 +139,10 @@ class ParkingSession(models.Model):
 
     cost = models.PositiveIntegerField()
     
-    #TODO: figure out default values
-    # enter_time = models.DateTimeField('enter time') 
-    # exit_time = models.DateTimeField('exit time')
+    enter_time = models.DateTimeField(default = timezone.now) 
+    duration = models.PositiveIntegerField(default=0)
     
-    # location = enum.EnumField(ParkingLotName, default=ParkingLotName.NBPL)
     location = models.CharField(max_length=30)
+
+    def __str__(self):
+        return str(self.account.account_id)
