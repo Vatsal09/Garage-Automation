@@ -35,10 +35,10 @@ def home(request):
                 'payment_methods' : PaymentMethod.objects.filter(account=recievedAccount.account_id),
                 'vehicles' : Vehicle.objects.filter(account=recievedAccount.account_id),
                 'parking_sessions' : ParkingSession.objects.filter(account = recievedAccount)
-            }
+            } 
         except Account.DoesNotExist:
             raise Http404("Account does not exist")
-        return render(request, 'garageAutomation/home.html', context)
+        return render(request, 'garageAutomation/home.html', context) #context is what gets passed to the rendered HTML page
     else:
         account = Account.objects.get(user = request.user)
         context = {
@@ -47,7 +47,7 @@ def home(request):
             'vehicles' : Vehicle.objects.filter(account=account.account_id),
             'parking_sessions' : ParkingSession.objects.filter(account = account)
         } 
-        return render(request, 'garageAutomation/home.html', context) #context is what gets passed to the rendered HTML page
+        return render(request, 'garageAutomation/home.html', context) 
 
 def register(request):
     form = UserCreationForm(request.POST or None)
