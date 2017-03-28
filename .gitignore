@@ -1,8 +1,13 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Distribution / packaging
+bin/
+include/
+lib/
 env/
 venv/
-/static/
-.DS_store
-db.sqlite3
+*.DS_store
+
