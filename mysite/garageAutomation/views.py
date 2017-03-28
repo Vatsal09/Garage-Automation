@@ -46,8 +46,8 @@ def home(request):
             'payment_methods' : PaymentMethod.objects.filter(account=account.account_id),
             'vehicles' : Vehicle.objects.filter(account=account.account_id),
             'parking_sessions' : ParkingSession.objects.filter(account = account)
-        }
-        return render(request, 'garageAutomation/home.html', context)
+        } 
+        return render(request, 'garageAutomation/home.html', context) #context is what gets passed to the rendered HTML page
 
 def register(request):
     form = UserCreationForm(request.POST or None)
