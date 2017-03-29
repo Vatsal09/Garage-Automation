@@ -1,10 +1,10 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 README1 - Running the source code
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-There are two ways to run the recent most version of the codebase: Github or through the files below. The later version is quite cumbersome because it will require some files from the Github repository to satisfy the Django and CloudAPI (license plate reader) dependencies. 
+There are two ways to run the the codebase: Github or through the files below. The first contains the latest version of the code and it's proven to work. 
 
 
-Easier Way to Execute Source Files:
+Recommended Way to Execute Source Files:
 
 	1)	Clone the Github repository located at https://github.com/Vatsal09/Garage-Automation 
 
@@ -20,7 +20,7 @@ Easier Way to Execute Source Files:
 			ii.	Linux – Execute: pip install –r requirements.txt
 			iii. Windows/OSX – Execute: pip install –r windows_requirements.txt
 
-	3)	Running the Django project
+	3)	Running the Django project:
 		a.	cd into mysite folder 
 		b.	For all platforms (Linux/Windows/OSX) – Execute: python manage.py runserver
 		c.	From your browser, go to:
@@ -28,17 +28,15 @@ Easier Way to Execute Source Files:
 			ii.	http://127.0.0.1:8000/parking - To view Parking Monitoring/System (follow the more specific directions provided below in the Parking Section)  
 			iii. http://127.0.0.1:8000/manager - To view Manager dashboard (follow the more specific directions provided below in the Manager Section)
 
-	4)	Running the license plate reader program
+	4)	Running the license plate reader program:
 		a.	Locate and cd into “License Plate Reader” folder from the base/parent directory
 		b.	cd into “cloudapi/python” folder
 		c.	Run the program: python test.py 
 		d.	The file above deciphers the license plate text for the image file named “us-1.jpg” located in “License Plate Reader/Images” 
 
-Harder Way to Execute Source Files (not recommended):
-	1)	Acquiring the dependencies:
-		a.	Navigate to https://github.com/Vatsal09/Garage-Automation and download the requirements.txt and windows_requirements.txt files 
-		b.	Place the files into this folder (1_code)
-	2)	Install virtualenv via pip and start a virtual environment within this folder: 
+Not Recommended Way to Execute Source Files:
+
+	1)	Install virtualenv via pip and start a virtual environment within this folder: 
 		a.	Execute: pip install virtualenv
 		b.	cd into “1_code” folder 
 		c.	Execute: virtualenv env
@@ -49,14 +47,16 @@ Harder Way to Execute Source Files (not recommended):
 			i.	cd into “1_code” folder (where the requirements.txt and windows_requirements.txt are located)
 			ii.	Linux – Execute: pip install –r requirements.txt
 			iii.	Windows/OSX – Execute: pip install –r windows_requirements.txt
-	3)	Running the Django project
+
+	2)	Running the Django project:
 		a.	cd into “1_code/mysite” folder 
 		b.	For all platforms (Linux/Windows/OSX) – Execute: python manage.py runserver
 		c.	From your browser, go to:
 			i.	http://127.0.0.1:8000/garageAutomation/login - To view User Interface (follow the more specific directions provided below in the User Interface Section)
 			ii.	http://127.0.0.1:8000/parking - To view Parking Monitoring/System (follow the more specific directions provided below in the Parking Section)
 			iii. http://127.0.0.1:8000/manager - To view Manager dashboard (follow the more specific directions provided below in the Manager Section)
-	4)	Running the license plate reader program
+
+	3)	Running the license plate reader program:
 		a.	Locate and cd into “1_code/License Plate Reader” folder 
 		b.	cd into “cloudapi/python” folder
 		c.	Run the program: python test.py 
