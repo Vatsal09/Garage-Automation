@@ -1,0 +1,13 @@
+<h1>TEST PAGE</h1>
+<!--**This page exists purely for testing purposes**-->
+{% if account_list %}
+    <form action="/garageAutomation/home/" method="post">
+    {% csrf_token %}
+    {% for account in account_list %}
+        <input type="radio" name="account_id" value={{account.account_id}}> {{account.account_id}} <br>
+    {% endfor %}
+        <input type="submit" name="submit">
+    </form>
+{% else %}
+    <p>potatos</p>
+{% endif %}

@@ -1,0 +1,231 @@
+<html lang="en">
+<head>
+    <!--JQuery-->
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-3.1.1.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{%static "garageAutomation/home.css"%}"/>
+    <script type="text/javascript" src="{%static "garageAutomation/home.js"%}"></script>
+    
+</head>
+
+<body style="background-image: url({%static "garageAutomation/background.png"%});>
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+             {% if user.is_authenticated %}
+             <ul class="nav navbar-nav navbar-right">
+                <li><a href="/garageAutomation/logout">Logout</a></li>
+            </ul>
+             {% endif %}
+        </div>
+    </nav>
+    <button type="button" class="btn-lg btn glyphicon glyphicon-menu-hamburger" data-toggle="modal" data-target="#menuModal"></button>
+
+    <h1> Hello, {{account.first_name}} </h1>
+    
+    <!-- Menu Modal -->
+    <div class="modal fade left" id="menuModal" role="dialog">
+        <div class="modal-dialog menuModalDiv">
+            <div class="modal-content menuModalDiv">
+                <div class="modal-body menuModalDiv">
+                    <span style="padding:10px"></span>
+                    <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#paymentModal">Payment</button> <!-- closes menu and opens payment -->
+                    <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#historyModal">History</button> <!--TODO-->
+                    <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#settingsModal">Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal fade bottom windowModal" id="paymentModal" role="dialog">
+        <div class="modal-dialog modal-lg windowModal">
+            <div class="modal-content windowModal">
+                <div class="modal-body">
+                    <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <div class="subMenuTitles">
+                        <h1>Payment</h1>
+                        <h3 class="subMenu_subTitle">Payment Methods</h3>
+                    </div>
+                    <div> 
+                        {% if payment_methods %}
+                            {%for payment_method in payment_methods%}
+                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{payment_method.printType}} •••• {{payment_method.getLastFour}}</button>   
+                            {% endfor %}
+                        {% endif %}
+                        <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal">Add Payment Method</button>                           
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Payment Method Detail Modals-->
+        {% if payment_methods %}
+            {%for payment_method in payment_methods%}
+                <div class="modal fade right windowModal" id="paymentMethod_{{payment_method.pk}}" role="dialog">
+                    <div class="modal-dialog modal-lg windowModal">
+                        <div class="modal-content windowModal">
+                            <div class="modal-body">
+                                <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                                <div class="subMenuTitles">
+                                    <h1>{{payment_method.type}}</h1>
+                                </div>
+                                <div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Card Number </p>
+                                        <p> •••• •••• •••• {{ payment_method.getLastFour }} </p>
+                                    </div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Expiry Date </p>
+                                        <p>{{ payment_method.exp }}</p>
+                                    </div>
+                                    
+                                    <!--Delete Card-->
+                                    <form id="removePaymentMethodForm" action="/garageAutomation/home/" method="post">
+                                    {% csrf_token %}
+                                        <input hidden="hidden" name="removeCard", value="true">
+                                        <input hidden="hidden" name="account_id", value="{{account.account_id}}">                                        
+                                        <input hidden="hidden" name="card_number", value="{{payment_method.card_number}}">    
+                                        <input hidden="hidden" name="exp", value="{{payment_method.exp}}">
+                                        
+                                        <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px" value="Remove">                               
+                                    </form>
+                                </div>                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    <!--Add payment method Modal-->
+    <div class="modal fade right windowModal" id="addPaymentMethodModal" role="dialog">
+        <div class="modal-dialog modal-lg windowModal">
+            <div class="modal-content windowModal">
+                <div class="modal-body">
+                    <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                    <div class="subMenuTitles">
+                        <h1>Add Payment Method</h1>
+                    </div>
+                    <form id="addPaymentMethodForm" action="/garageAutomation/home/" method="post" onload="clearForm(this);" >
+                    {% csrf_token %}
+                        <fieldset>
+                            <!--not input-->
+                            <input hidden="hidden" name="addCard", value="true">
+                            <input hidden="hidden" name="account_id", value="{{account.account_id}}">
+
+                            <!--input-->
+                            <input type="radio" name="type" value=Credit required> <p class="menuItemRadioDescription"> Credit </p> <br>
+                            <input type="radio" name="type" value=Debit required> <p class="menuItemRadioDescription"> Debit </p> <br>
+
+                            <input type="text" name="card_number" placeholder="Card Number" required pattern="[0-9]{16}" title="FORMAT: 0000123400001234"> <br>
+                            <input type="text" name="exp" placeholder="Exp. Date (xx/xx)" required pattern="[0-9]{2}[/][0-9]{2}" title="FORMAT: 00/00"> <br>   
+                            <input type="text" name="cvv" placeholder="CVV" required required pattern="[0-9]{3}" title="FORMAT: 000"> <br>
+                            <input type="text" name="country" placeholder="Country" required pattern="\D{4,30}"> <br>
+                            <input type="text" name="zip" placeholder="Zip Code" required pattern="[0-9]{5}" title="FORMAT: 08901"> <br>
+
+                            <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px" value="Save">
+                        </fieldset>
+                    </form>        
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- History Modal -->
+    <div class="modal fade bottom windowModal" id="historyModal" role="dialog">
+        <div class="modal-dialog modal-lg windowModal">
+            <div class="modal-content windowModal">
+                <div class="modal-body">
+                    <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <div class="subMenuTitles">
+                        <h1>History</h1>
+                        <h3 class="subMenu_subTitle">Parking Session</h3>
+                    </div>
+                    <div> 
+                        {% if parking_sessions %}
+                            {%for session in parking_sessions%}
+                                <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#session_{{session.pk}}">{{session.enter_time}} - {{session.location}}</button>   
+                            {% endfor %}
+                        {% else %}
+                            <!-- TODO: logic to force payment method -->
+                        {% endif %}                       
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Parking Detail Modals -->
+    {% if parking_sessions %}
+            {%for session in parking_sessions%}
+                <div class="modal fade right windowModal" id="session_{{session.pk}}" role="dialog">
+                    <div class="modal-dialog modal-lg windowModal">
+                        <div class="modal-content windowModal">
+                            <div class="modal-body">
+                                <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                                <div class="subMenuTitles">
+                                    <h1>{{session.enter_time}} - {{session.location}}</h1>
+                                </div>
+                                <div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Cost </p>
+                                        <p> ${{ session.cost }} </p>
+                                    </div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> License Plate </p>
+                                        <p>{{ session.vehicle.license_plate }}</p>
+                                    </div>
+                                    <div class="detailsMenuListItem">
+                                        <p class="menuItemDetailsDescription"> Card Number </p>
+                                        <p> •••• •••• •••• {{ session.paymentMethod.getLastFour }} </p>
+                                    </div>
+                                    
+                                </div>                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    <!--Settings Modal-->
+    <div class="modal fade bottom windowModal" id="settingsModal" role="dialog">
+        <div class="modal-dialog modal-lg windowModal">
+            <div class="modal-content windowModal">
+                <div class="modal-body">
+                    <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <div>
+                        <h1 class="subMenuTitles">Settings</h1>
+
+                        <div class="subMenuBlock">
+                            <h3>{{account.first_name}} {{account.last_name}}</h1>
+                            <h3>{{account.printPhoneNumber}}</h1>
+                        </div>
+
+                        <h3 class="subMenuTitles subMenu_subTitle">Vehicles</h3>
+                    </div>
+                    <div> 
+                        {% if vehicles %}
+                            {%for vehicle in vehicles%}
+                                <div type="button" class="detailsMenuListItem" >
+                                <p style="display: inline-block; margin-top: 22;">{{vehicle.license_plate}} </p>
+                                <button class="glyphicon glyphicon-remove" onclick="removeVehicle('{{account.account_id}}','{{vehicle.pk}}','{{vehicle.license_plate}}')"></button>
+                                </div>   
+                            {% endfor %}
+                        {% else %}
+                        <p style="font-size: 20px; padding-left: 20px; margin-bottom: 0px;">No Vehicles Registered</p>
+                        {% endif %}                       
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,62 @@
+{% extends 'parking/base.html' %}
+{% block title %}{{ Map }}{% endblock %}
+{% block parkingLots_active %}active{% endblock %}
+{% load staticfiles %}
+{% block body %}
+<div class="container-fluid songs-container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <h3>Level: {{level}}</h3>
+            
+            {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p>
+            {% endif %}
+
+            <table class="table">
+                <!-- <thead>
+                    <tr>
+                        <th>Left</th>
+                        <th>Right</th>
+
+                    </tr>
+                </thead> -->
+                
+                <tbody>
+
+                {% for l_spot, r_spot in spots %}
+                    <tr>
+                        {% if l_spot.is_occupied%}
+                            <td class="bg-danger center_spot" style="color:white; background-color: #E53935;">{{l_spot.spot_number}} </td>
+                        {% endif %}
+                        {% if not l_spot.is_occupied%}
+                            <td class="bg-success center_spot" style="color:white; background-color: #43A047;">{{l_spot.spot_number}} </td>
+                        {% endif %}                       
+                        <td class="center_spot" style="background-color: #292b2c; border-top:none; padding-left:30px; padding-right:30px;"> </td> 
+                        {% if r_spot.is_occupied%}
+                            <td class="bg-danger center_spot" style="color:white; background-color: #E53935;">{{r_spot.spot_number}} </td>
+                        {% endif %}
+                        {% if not r_spot.is_occupied %}
+                            <td class="bg-success center_spot" style="color:white; background-color: #43A047;">{{r_spot.spot_number}} </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        {% if num_levels > 0%}
+        <div class="panel-body">
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                {% if level != 1 %}
+                    <li role="presentation" class="active"><a href="{% url 'parking:map' parkingLot.id prev_level%}">Previous Level</a></li>
+                {% endif %}
+                {% if level < num_levels %}
+                    <li role="presentation" class="active"><a href="{% url 'parking:map' parkingLot.id next_level%}">Next Level</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

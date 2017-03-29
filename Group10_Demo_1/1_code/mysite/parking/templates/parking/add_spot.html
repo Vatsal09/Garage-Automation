@@ -1,0 +1,64 @@
+{% extends 'parking/base.html' %}
+{% block title %}Add a New Spot{% endblock %}
+{% block parkingLots_active %}active{% endblock %}
+{% load staticfiles %}
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Left ParkingLot Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'parking:detail' parkingLot.id %}">
+                        <img src="{% static 'parking/images/index_image.png' %}" class="img-responsive">
+                    </a>
+
+                    <h4 class="give_space"><strong>Management Username:</strong> {{parkingLot.user}}</h4>
+                    <h4 class="give_space"><strong>Parking Lot Number:</strong> {{ parkingLot.id }}</h4>
+                    <h4 class="give_space"><strong>Parking Lot Address:</strong> </h4>
+                    <h4 class="give_space">{{ parkingLot.address }}</h4>
+                    <h4 class="give_space"><strong>Number of Levels:</strong> {{ parkingLot.max_levels }}</h4>
+                    <h4 class="give_space"><strong>Number of Spots:</strong> {{ parkingLot.max_spots }}</h4>                    
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Spot Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation"><a href="{% url 'parking:detail' parkingLot.id %}">View All</a></li>
+                <li role="presentation" class="active"><a href="{% url 'parking:add_spot' parkingLot.id %}">Add New Spot</a></li>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Add a New Spot</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <input type="hidden" name="parkingLot" value="{{ parkingLot }}">
+                        {% include 'parking/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

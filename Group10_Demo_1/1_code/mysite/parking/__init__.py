@@ -1,0 +1,1 @@
+default_app_config = 'mysite.apps.Parking.apps.ParkingConfig'
