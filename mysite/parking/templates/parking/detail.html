@@ -36,7 +36,9 @@
             <ul class="nav nav-pills" style="margin-bottom: 10px;">
                 <li role="presentation" class="active"><a href="{% url 'parking:system' parkingLot.id %}">Check Lot Status</a></li>
             </ul>
-
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" class="active"><a href="{% url 'parking:map' parkingLot.id 1%}">Check Map</a></li>
+            </ul>
             <div class="panel panel-default">
 
                 <div class="panel-body">
