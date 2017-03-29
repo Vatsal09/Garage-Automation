@@ -78,7 +78,7 @@ Parking Specific Instructions
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 To run the run the code, you must start the website: in the terminal go to mysite and then run python manage.py runserver
-Then go to http://127.0.0.1:8000/parking and click login: Username="Vatsal" password="group10password"  #NOTE! the capital V in the username, dont include quotes
+Then go to http://127.0.0.1:8000/parking and double click login: Username="Vatsal" password="group10password"  #NOTE! the capital V in the username, dont include quotes
 
 Register a new account in http://127.0.0.1:8000/parking, if necessary 
 
