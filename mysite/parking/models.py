@@ -35,7 +35,7 @@ class Parking_Lot(models.Model):
 
 	# Function to check number of spots open
 	def num_spots_open(self): #This needs to be checked
-		open_spots = Spot.objects.filter(is_occupied == False).count() #This needs to be checked
+		open_spots = Spot.objects.filter(parkingLot = self.id).filter(is_occupied = False).count() #This needs to be checked
 		return open_spots
 #Spot model
 class Spot(models.Model):
@@ -61,7 +61,7 @@ class Spot(models.Model):
 		else:
 			result = "Not Occupied"
 
-		return self.spot_number + ' - ' + self.sensor_id + ' - ' + result
+		return str(self.spot_number) + ' - ' + str(self.sensor_id) + ' : ' + result
 
 	#Function to check if spot is open
 	def is_open(self):
