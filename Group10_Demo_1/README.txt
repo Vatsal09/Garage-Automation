@@ -12,17 +12,17 @@ Table of Contents
 4_data_collection
 	Discusses how data is collected and the data collected thus far. Read README4 for how to view the data from the database.
 
-x5_documentation
+5_documentation
 	Demo_1.pdf
 		Powerpoint file for DEMO #1.  
 
 	brochure_demo_1.pdf
 		PDF version of DEMO #1 brochure
 	
-	xUserDocumentation.pdf
+	UserDocumentation.pdf
 		Provides an overview of Website functioning
 
-	xTechnicalDocumentation.pdf
+	TechnicalDocumentation.pdf
 		Provides the technical descriptions of the different functionalities of componenets. 
 
 	Contributions.pdf
