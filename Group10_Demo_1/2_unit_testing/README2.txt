@@ -165,4 +165,8 @@ Update Occupancy
 Manager Unit Testing
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-<Manager stuff>
+Django is integrated with a basic testing command, as test-driven development simply formalizes the problem in a Python test case.
+Since there are not many classes involved yet, directly run our test by typing in the terminal:
+$ cd .../Garage-Automation/mysite/
+$ python manage.py test manager
+The command basically looks for tests in the manager application and creates a special database for the purpose of testing. 

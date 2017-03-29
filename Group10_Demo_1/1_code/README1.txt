@@ -105,9 +105,15 @@ Map of the occupancy
 
 	Shows occupancy of parking lot. Navigate to parking lot with address 220 Marvin Lane and click the "Check Map" button. Scroll to bottom and click "Next Level" to see other levels
 
-!!!!!!!!!<Gao/Kendric add lines here>!!!!!!!
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Manager Interface Specific Instructions
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-!!!!!!!!!<Yunqi add lines here>!!!!!!!
+The code of Manager's Dashboard is mainly under the directory mysite/manager/.
+To run the webpage though, you must start the Django python server in the terminal. 
+Go to mysite/ using cd command and then run the Django server using the following commands:
+$ cd .../Garage-Automation/mysite/
+$ sudo python manage.py runserver
+Then open your browser and go to http://127.0.0.1:8000/manager/
+Note that currently the verification of manager's login confidentials have not been set up yet, so just click login to template button to second page. On the second page, click payment history to go to the third page.

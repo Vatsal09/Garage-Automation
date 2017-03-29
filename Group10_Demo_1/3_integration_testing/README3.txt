@@ -13,6 +13,10 @@ For User Interface browser integration testing:
 		Settings --> More Tools --> Developer Tools
 		On the top left, press the phone/tablet icon
 
-For Parking bowser integration testing:
+For Parking browser integration testing:
 	Similar to the User Interface, we employed the use of Bootstrap frontend framework to render HTML/CSS. This ensures browser compatibility with different browsers and different versions of browsers. 
 	Test by changing the size of the window. We made it so that a manager can view the site from a tablet.
+
+For Manager browser integration testing:
+    The application is oriented for a manager who wishes to monitor and control the garage on a PC browser, so the web page is designed for mainstream PC browsers, not limited to certain operating systems.
+	To test the integration, simply test the functionalities of all the web pages by lauching them in the browser.
