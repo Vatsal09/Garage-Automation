@@ -37,6 +37,8 @@ class Parking_Lot(models.Model):
 	def num_spots_open(self): #This needs to be checked
 		open_spots = Spot.objects.filter(parkingLot = self.id).filter(is_occupied = False).count() #This needs to be checked
 		return open_spots
+
+
 #Spot model
 class Spot(models.Model):
 	#Initialize a parkingLot field with a many-to-one relationship to the Parking_Lot model.

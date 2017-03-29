@@ -1,20 +1,18 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+#A view function, or view for short, is simply a Python function that takes a Web request and returns a Web response
+#The two essential Django packages to utilize HTTP requests and to render Django's dynamic HTML tempaltes, HttpResponse and render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse 
+
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, GuestSessionForm
 from .models import Parking_Lot, Spot, Session
 from garageAutomation.models import Account, Vehicle
 from django.core.urlresolvers import reverse
+
 import time
 import random
 import datetime
-
-
 
 # Create your views here.
 
