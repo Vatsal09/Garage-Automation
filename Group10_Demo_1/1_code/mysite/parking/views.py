@@ -11,8 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 # Package to create complex lookup queries.
 from django.db.models import Q
 # Import local models and forms from parking directory.
-from forms import ParkingLotForm, SpotForm, UserForm, SessionForm, GuestSessionForm
-from models import Parking_Lot, Spot, Session
+from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, GuestSessionForm
+from .models import Parking_Lot, Spot, Session
 # Import garageAutomation models.
 from garageAutomation.models import Account, Vehicle
 from django.core.urlresolvers import reverse
