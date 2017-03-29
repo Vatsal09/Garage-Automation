@@ -209,11 +209,14 @@ def enable_spot(request, parkingLot_id, spot_id):
     return render(request, 'parking/detail.html', {'parkingLot': parkingLot})
 
 def map(request, parkingLot_id, level):
+    
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     parkingLots_spots = parkingLot.spot_set.all()
     num_levels = parkingLot.max_levels
     num_levels = int(num_levels)
     level_1 = int(level)
+    prev_level = int(level)-1
+    next_level = int(level)+1
     last_spot_per_level = []
     last_spot_per_level.append(0)
     temp_num = 0
@@ -262,7 +265,10 @@ def map(request, parkingLot_id, level):
     # json_spots = json_serializer.serialize(parkingLot.spot_set.all())
     return render(request, 'parking/map.html', {
         'data_set' : data_set,
-        'level' : level,
+        'level' : int(level),
+        'prev_level' : int(prev_level),
+        'next_level' : int(next_level),
+        'num_levels' : num_levels,
         'parkingLot': parkingLot,
         'spots' : spots,
         # 'spots1': json_spots, 
