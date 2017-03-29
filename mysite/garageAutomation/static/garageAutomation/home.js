@@ -1,4 +1,4 @@
-//crsf
+//crsf - needed for Django internal form validation when submitting forms through ajax
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -15,7 +15,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-//post to removeVehicle
+//post to removeVehicle implemented with ajax
 function removeVehicle(accountId,pk,licensePlate){
     var answer = confirm("Remove " + licensePlate + "?");
     if (answer){

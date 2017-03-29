@@ -60,8 +60,6 @@
                             {%for payment_method in payment_methods%}
                                 <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#paymentMethod_{{payment_method.pk}}">{{payment_method.printType}} •••• {{payment_method.getLastFour}}</button>   
                             {% endfor %}
-                        {% else %}
-                            <!-- TODO: logic to force payment method -->
                         {% endif %}
                         <button type="button" class="subMenuListButton" data-toggle="modal" data-target="#addPaymentMethodModal">Add Payment Method</button>                           
                     </div>                     
@@ -165,7 +163,7 @@
             </div>
         </div>
     </div>
-
+    <!-- Parking Detail Modals -->
     {% if parking_sessions %}
             {%for session in parking_sessions%}
                 <div class="modal fade right windowModal" id="session_{{session.pk}}" role="dialog">
@@ -179,7 +177,7 @@
                                 <div>
                                     <div class="detailsMenuListItem">
                                         <p class="menuItemDetailsDescription"> Cost </p>
-                                        <p> {{ session.cost }} </p>
+                                        <p> ${{ session.cost }} </p>
                                     </div>
                                     <div class="detailsMenuListItem">
                                         <p class="menuItemDetailsDescription"> License Plate </p>
