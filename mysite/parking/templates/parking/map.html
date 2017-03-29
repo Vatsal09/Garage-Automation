@@ -45,6 +45,18 @@
             </table>
 
         </div>
+        {% if num_levels > 0%}
+        <div class="panel-body">
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                {% if level != 1 %}
+                    <li role="presentation" class="active"><a href="{% url 'parking:map' parkingLot.id prev_level%}">Previous Level</a></li>
+                {% endif %}
+                {% if level < num_levels %}
+                    <li role="presentation" class="active"><a href="{% url 'parking:map' parkingLot.id next_level%}">Next Level</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
