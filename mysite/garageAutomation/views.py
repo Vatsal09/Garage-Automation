@@ -28,6 +28,10 @@ def home(request):
             #remove Vehicle
             if request.POST.get('removeVehicle'):     
                 recievedAccount.removeVehicle(request.POST.get('vehicle_pk'),request.POST.get('license_plate'))
+            
+            # delete Account
+            if request.POST.get('deleteAccount'):    
+                recievedAccount.user.delete()
 
             # render home
             context = {
@@ -63,7 +67,7 @@ def register(request):
             account.save()
             account = Account.objects.get(user = form)
             account.addCard(request.POST.get('type'), request.POST.get('card_number'), request.POST.get('exp'), request.POST.get('cvv'), request.POST.get('country'), request.POST.get('zip'))
-            return redirect('garageAutomation/login')
+            return redirect('/garageAutomation/login')
     return render(request, 'garageAutomation/register.html', {'form':form})
 
 

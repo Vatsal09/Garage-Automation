@@ -79,7 +79,7 @@ class Vehicle(models.Model):
         return self.license_plate
 
 class ParkingSession(models.Model): 
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=None) #Manager should still have access to all prior sessions, even if account deleted
     paymentMethod = models.ForeignKey(PaymentMethod, on_delete=None)
     vehicle = models.ForeignKey(Vehicle, on_delete=None)
 

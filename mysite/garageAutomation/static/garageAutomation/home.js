@@ -34,3 +34,20 @@ function removeVehicle(accountId,pk,licensePlate){
         }});
     }
 }
+
+function deleteAccount(accountId){
+    var answer = confirm("Are you sure you want to delete your account?");
+    if (answer){
+        $.ajax({
+            'url': "/garageAutomation/home/",
+            'type': 'POST',
+            'data':{
+                'csrfmiddlewaretoken':getCookie('csrftoken'),
+                'deleteAccount': 'true',
+                'account_id':accountId, 
+            },
+            'success': function(result){
+            window.location = "/garageAutomation/logout"; //log out of session
+        }});
+    }
+}
