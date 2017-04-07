@@ -50,9 +50,11 @@
         <div class="modal-dialog modal-lg windowModal">
             <div class="modal-content windowModal">
                 <div class="modal-body">
+                <div class="modal-head">
                     <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <h1>Payment</h1>
+                </div>
                     <div class="subMenuTitles">
-                        <h1>Payment</h1>
                         <h3 class="subMenu_subTitle">Payment Methods</h3>
                     </div>
                     <div> 
@@ -75,10 +77,10 @@
                     <div class="modal-dialog modal-lg windowModal">
                         <div class="modal-content windowModal">
                             <div class="modal-body">
+                            <div class="modal-head">
                                 <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
-                                <div class="subMenuTitles">
-                                    <h1>{{payment_method.type}}</h1>
-                                </div>
+                                <h1>{{payment_method.type}}</h1>
+                            </div>
                                 <div>
                                     <div class="detailsMenuListItem">
                                         <p class="menuItemDetailsDescription"> Card Number </p>
@@ -112,9 +114,9 @@
         <div class="modal-dialog modal-lg windowModal">
             <div class="modal-content windowModal">
                 <div class="modal-body">
-                    <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
-                    <div class="subMenuTitles">
-                        <h1>Add Payment Method</h1>
+                    <div class="modal-head">
+                        <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                        <h1>Add Payment Method</h1>                        
                     </div>
                     <form id="addPaymentMethodForm" action="/garageAutomation/home/" method="post" onload="clearForm(this);" >
                     {% csrf_token %}
@@ -145,9 +147,11 @@
         <div class="modal-dialog modal-lg windowModal">
             <div class="modal-content windowModal">
                 <div class="modal-body">
-                    <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <div class="modal-head">
+                        <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                        <h1>History</h1>                        
+                    </div>
                     <div class="subMenuTitles">
-                        <h1>History</h1>
                         <h3 class="subMenu_subTitle">Parking Session</h3>
                     </div>
                     <div> 
@@ -170,9 +174,9 @@
                     <div class="modal-dialog modal-lg windowModal">
                         <div class="modal-content windowModal">
                             <div class="modal-body">
-                                <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
-                                <div class="subMenuTitles">
-                                    <h1>{{session.enter_time}} - {{session.location}}</h1>
+                                <div class="modal-head">
+                                    <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                                    <h1>{{session.enter_time}} - {{session.location}}</h1>                                    
                                 </div>
                                 <div>
                                     <div class="detailsMenuListItem">
@@ -201,10 +205,11 @@
         <div class="modal-dialog modal-lg windowModal">
             <div class="modal-content windowModal">
                 <div class="modal-body">
-                    <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                    <div class="modal-head">
+                        <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>  
+                        <h1>Settings</h1>                        
+                    </div>
                     <div>
-                        <h1 class="subMenuTitles">Settings</h1>
-
                         <div class="subMenuBlock">
                             <h3>{{account.first_name}} {{account.last_name}}</h1>
                             <h3>{{account.printPhoneNumber}}</h1>
