@@ -33,6 +33,18 @@ def home(request):
             if request.POST.get('deleteAccount'):    
                 recievedAccount.user.delete()
 
+            # update First Name
+            if request.POST.get('updateFirstName'):    
+                recievedAccount.first_name = request.POST.get('firstName')
+
+            # update Last Name
+            if request.POST.get('updateLastName'):    
+                recievedAccount.last_name = request.POST.get('lastName')
+
+            # update Phone Number
+            if request.POST.get('updatePhoneNumber'):    
+                recievedAccount.phone_number = request.POST.get('phoneNumber')
+
             # render home
             context = {
                 'account' : recievedAccount,

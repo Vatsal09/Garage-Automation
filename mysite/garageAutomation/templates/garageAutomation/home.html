@@ -36,7 +36,7 @@
         <div class="modal-dialog menuModalDiv">
             <div class="modal-content menuModalDiv">
                 <div class="modal-body menuModalDiv">
-                    <span style="padding:10px"></span>
+                    <span style="padding:10px;"></span>
                     <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#paymentModal">Payment</button> <!-- closes menu and opens payment -->
                     <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#historyModal">History</button> <!--TODO-->
                     <button class="menuButton" type="button" data-dismiss="modal" data-toggle="modal" data-target="#settingsModal">Settings</button>
@@ -99,7 +99,7 @@
                                         <input hidden="hidden" name="card_number", value="{{payment_method.card_number}}">    
                                         <input hidden="hidden" name="exp", value="{{payment_method.exp}}">
                                         
-                                        <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px" value="Remove">                               
+                                        <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px;" value="Remove">                               
                                     </form>
                                 </div>                     
                             </div>
@@ -135,7 +135,7 @@
                             <input type="text" name="country" placeholder="Country" required pattern="\D{4,30}"> <br>
                             <input type="text" name="zip" placeholder="Zip Code" required pattern="[0-9]{5}" title="FORMAT: 08901"> <br>
 
-                            <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px" value="Save">
+                            <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px;" value="Save">
                         </fieldset>
                     </form>        
                 </div>
@@ -210,10 +210,10 @@
                         <h1>Settings</h1>                        
                     </div>
                     <div>
-                        <div class="subMenuBlock">
+                        <button type="button" class="subMenuBlock" data-toggle="modal" data-target="#editAccount">
                             <h3>{{account.first_name}} {{account.last_name}}</h1>
                             <h3>{{account.printPhoneNumber}}</h1>
-                        </div>
+                        </button>
 
                         <h3 class="subMenuTitles subMenu_subTitle">Vehicles</h3>
                     </div>
@@ -229,9 +229,124 @@
                         <p style="font-size: 20px; padding-left: 20px; margin-bottom: 0px;">No Vehicles Registered</p>
                         {% endif %}                       
                     </div>
-                    <button type="button" class="subMenuListButton" onclick="deleteAccount('{{account.account_id}}')" style="color: red">Delete Account</button>                                       
+                    <button type="button" class="subMenuListButton" onclick="deleteAccount('{{account.account_id}}')" style="color: red;">Delete Account</button>                                       
                 </div>
             </div>
         </div>
     </div>
+
+    <!--Edit Account Modal-->
+        <div class="modal fade right windowModal" id="editAccount" role="dialog">
+            <div class="modal-dialog modal-lg windowModal">
+                <div class="modal-content windowModal">
+                    <div class="modal-body">
+                    <div class="modal-head">
+                        <button type="button" class="btn-lg glyphicon glyphicon-arrow-left" data-dismiss="modal"></button>   
+                        <h1>Edit Account  <span class="glyphicon glyphicon-edit"> </span></h1>
+                    </div>
+                        <div>
+                            <button type="button" class="detailsMenuListItem subMenuListButton" data-toggle="modal" data-target="#updateFirstName">
+                                <p class="menuItemDetailsDescription">First Name </p>
+                                <p> {{account.first_name}}</p>
+                            </button>
+                            <button type="button" class="detailsMenuListItem subMenuListButton" data-toggle="modal" data-target="#updateLastName">
+                                <p class="menuItemDetailsDescription">Last Name</p>
+                                <p>{{account.last_name}}</p>
+                            </button>
+                            <button type="button" class="detailsMenuListItem subMenuListButton" data-toggle="modal" data-target="#updatePhoneNumber">
+                                <p class="menuItemDetailsDescription"> Phone Number</p>
+                                <p> {{account.printPhoneNumber}}</p>
+                            </button>
+                        </div>                     
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Update First Name Modal-->
+        <div class="modal fade right windowModal" id="updateFirstName" role="dialog">
+            <div class="modal-dialog modal-lg windowModal">
+                <div class="modal-content windowModal">
+                    <div class="modal-body">
+                        <div class="modal-head">
+                            <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>   
+                        </div>
+                        <div>
+                            <form id="updateFirstName" action="/garageAutomation/home/" method="post" onload="clearForm(this);" >
+                            {% csrf_token %}
+                                <fieldset>
+                                    <!--not input-->
+                                    <input hidden="hidden" name="updateFirstName", value="true">
+                                    <input hidden="hidden" name="account_id", value="{{account.account_id}}">
+
+                                    <!--input-->
+                                    <input type="text" name="firstName" placeholder="First Name" required> <br>
+
+                                    <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px;" value="Update First Name">
+                                </fieldset>
+                            </form>
+                        </div>                     
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Update Last Name Modal-->
+        <div class="modal fade right windowModal" id="updateLastName" role="dialog">
+            <div class="modal-dialog modal-lg windowModal">
+                <div class="modal-content windowModal">
+                    <div class="modal-body">
+                        <div class="modal-head">
+                            <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>   
+                        </div>
+                        <div>
+                            <form id="updateLastName" action="/garageAutomation/home/" method="post" onload="clearForm(this);" >
+                            {% csrf_token %}
+                                <fieldset>
+                                    <!--not input-->
+                                    <input hidden="hidden" name="updateLastName", value="true">
+                                    <input hidden="hidden" name="account_id", value="{{account.account_id}}">
+
+                                    <!--input-->
+                                    <input type="text" name="lastName" placeholder="Last Name" required> <br>
+
+                                    <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px;" value="Update Last Name">
+                                </fieldset>
+                            </form>                                
+                        </div>                     
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Update Phone Number Modal-->
+        <div class="modal fade right windowModal" id="updatePhoneNumber" role="dialog">
+            <div class="modal-dialog modal-lg windowModal">
+                <div class="modal-content windowModal">
+                    <div class="modal-body">
+                        <div class="modal-head">
+                            <button type="button" class="btn-lg glyphicon glyphicon-remove" data-dismiss="modal"></button>   
+
+                        </div>
+                        <div>
+                            <form id="updatePhoneNumber" action="/garageAutomation/home/" method="post" onload="clearForm(this);" >
+                            {% csrf_token %}
+                                <fieldset>
+                                    <!--not input-->
+                                    <input hidden="hidden" name="updatePhoneNumber", value="true">
+                                    <input hidden="hidden" name="account_id", value="{{account.account_id}}">
+
+                                    <!--input-->
+                                    <input type="text" name="phoneNumber" placeholder="Phone Number" required required pattern="[0-9]{10}" title="FORMAT: 5551235555"> <br>
+
+                                    <input type=submit class="subMenuListButton" style="padding-left: 0; text-indent: 20px;" value="Update Phone Number">
+                                </fieldset>
+                            </form>                                
+                        </div>                     
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </body>
+        

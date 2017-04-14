@@ -125,10 +125,14 @@ form{
     border-width: thin;    
     border-left: none;
     border-right: none;
+    background-color: white;
+    width: 100%;
+    
 }
 .subMenuBlock h3{
     margin-top: 15px;
     margin-bottom: 15px;
+    display: flex;
 }
 
 .detailsMenuListItem button{
@@ -147,4 +151,7 @@ form{
 }
 .modal-body{
     padding: 0px;
+}
+.subMenuListButton p{
+    margin-top: 0px;
 }
