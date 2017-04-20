@@ -1,7 +1,7 @@
 #Import forms, which is a set of data.
 from django import forms
 from django.contrib.auth.models import User
-from .models import Parking_Lot, Spot, Session
+from .models import Parking_Lot, Spot, Session, ActiveSession
 
 #Creating a form from the Parking_Lot model.
 class ParkingLotForm(forms.ModelForm):
@@ -37,6 +37,13 @@ class SessionForm(forms.ModelForm):
     class Meta:
         model = Session
 	#Creating a form field for each model field.
+        fields = ['license_plate_number']
+#Creating a form from the Session model.
+class ActiveSessionForm(forms.ModelForm):
+
+    class Meta:
+        model = ActiveSession
+    #Creating a form field for each model field.
         fields = ['license_plate_number']
 
 
