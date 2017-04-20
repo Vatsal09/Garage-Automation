@@ -11,10 +11,10 @@ from django.contrib.auth import authenticate, login, logout
 # Package to create complex lookup queries.
 from django.db.models import Q
 # Import local models and forms from parking directory.
-from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, GuestSessionForm
-from .models import Parking_Lot, Spot, Session
+from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, ActiveSessionForm,GuestSessionForm
+from .models import Parking_Lot, Spot, Session, ActiveSession
 # Import garageAutomation models.
-from garageAutomation.models import Account, Vehicle
+from garageAutomation.models import Account, Vehicle, ParkingSession, PaymentMethod
 from django.core.urlresolvers import reverse
 
 # Import python packages for logical functions.
@@ -409,7 +409,7 @@ def system(request, parkingLot_id):
 #View for enter_session,
 def enter_session(request, parkingLot_id):
     #Receive form with post data.
-    form = SessionForm(request.POST or None)
+    form = ActiveSessionForm(request.POST or None)
     #Initialize parkingLot instance with parkingLot_id
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     #Check if form is valid
@@ -423,8 +423,8 @@ def enter_session(request, parkingLot_id):
             v = None
         #Check if the license_plate is in a current session.
         try:
-            check_session = Session.objects.get(license_plate_number=license_plate_number)
-        except Session.DoesNotExist:
+            check_session = ActiveSession.objects.get(license_plate_number=license_plate_number)
+        except ActiveSession.DoesNotExist:
             check_session = None
         #Go through this logic if the license_plate does not have a current session.
         if check_session == None:
@@ -475,17 +475,38 @@ def exit_session(request, parkingLot_id):
         license_plate_number = form.cleaned_data['license_plate_number']
         #Check if session exists
         try:
-            check_session = Session.objects.get(license_plate_number=license_plate_number)
-        except Session.DoesNotExist:
+            check_session = ActiveSession.objects.get(license_plate_number=license_plate_number)
+        except ActiveSession.DoesNotExist:
             check_session = None
         if check_session != None:
+            store_session = form.save(commit=False)
+            store_session.user_type = check_session.user_type 
+            #Set the session to have a time_arrived of the current time
+            store_session.time_arrived = check_session.time_arrived 
+            #Set the parkingLot to the session
+            store_session.parkingLot = check_session.parkingLot
             #Initialize values of the session
             #Give time_exited current time
-            check_session.time_exited = datetime.datetime.now().strftime('%H:%M:%S')
+            store_session.time_exited = datetime.datetime.now().strftime('%H:%M:%S')
             #Calculated stay_length base on time_exited and time_arrived.
-            check_session.stay_length = int(check_session.time_exited[:2]) - int(check_session.time_arrived[:2])
-            check_session.amount_charged = str(int(check_session.stay_length) * 5)
-            check_session.save()
+            store_session.stay_length = int(store_session.time_exited[:2]) - int(check_session.time_arrived[:2])
+            store_session.amount_charged = str(int(store_session.stay_length) * 5)
+            store_session.save()
+            check_session.delete()
+
+            #Save parking session for user History
+            session = ParkingSession()
+            vehicle = Vehicle.objects.get(license_plate=license_plate_number)
+            session.account = vehicle.account
+            session.vehicle = vehicle
+            #Uses the first available payment method
+            session.paymentMethod = PaymentMethod.objects.filter(account=vehicle.account)[0]
+            session.cost = store_session.amount_charged
+            session.enter_time = datetime.datetime.now()
+            session.duration = store_session.stay_length
+            session.location = parkingLot_id
+            session.save()
+
             return render(request, 'parking/system.html',
                           {'parkingLot': parkingLot})
         else:
