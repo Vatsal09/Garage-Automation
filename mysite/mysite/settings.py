@@ -33,8 +33,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     #'django.contrib.sites',
-
+	
     'manager.apps.ManagerConfig',
+    #'manager.page2.apps.Page2Config', #!
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
