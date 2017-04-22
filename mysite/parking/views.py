@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 # Package to create complex lookup queries.
 from django.db.models import Q
 # Import local models and forms from parking directory.
-from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, ActiveSessionForm,GuestSessionForm
+from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, ActiveSessionForm, GuestSessionForm, UploadFileForm
 from .models import Parking_Lot, Spot, Session, ActiveSession
 # Import garageAutomation models.
 from garageAutomation.models import Account, Vehicle, ParkingSession, PaymentMethod
@@ -173,7 +173,7 @@ def register_manager(request):
         if user is not None:
             #Check if user is activated.
             if user.is_active:
-                #Login the user.            
+                #Login the user.
                 login(request, user)
                 #Retrieve all lots associated with user.
                 parkingLots = Parking_Lot.objects.filter(user=request.user)
@@ -406,16 +406,21 @@ def system(request, parkingLot_id):
         return render(request, 'parking/system.html',
                       {'parkingLot': parkingLot, 'user': user})
 
+
 #View for enter_session,
 def enter_session(request, parkingLot_id):
     #Receive form with post data.
-    form = ActiveSessionForm(request.POST or None)
+    form = UploadFileForm(request.POST, request.FILES)
     #Initialize parkingLot instance with parkingLot_id
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     #Check if form is valid
     if form.is_valid():
+        #Put the computer vision library logic here gao
+
         #Initialize license_plate_number with form entry.
-        license_plate_number = form.cleaned_data['license_plate_number']
+        # license_plate_number = form.cleaned_data['license_plate_number']
+        # Hardcoded licenese_plate for no errors DELETE LATER
+        license_plate_number = ABC1234
         #Try to acquire Vehicle object with license_plate_number
         try:
             v = Vehicle.objects.get(license_plate=license_plate_number)
@@ -480,9 +485,9 @@ def exit_session(request, parkingLot_id):
             check_session = None
         if check_session != None:
             store_session = form.save(commit=False)
-            store_session.user_type = check_session.user_type 
+            store_session.user_type = check_session.user_type
             #Set the session to have a time_arrived of the current time
-            store_session.time_arrived = check_session.time_arrived 
+            store_session.time_arrived = check_session.time_arrived
             #Set the parkingLot to the session
             store_session.parkingLot = check_session.parkingLot
             #Initialize values of the session
@@ -549,7 +554,3 @@ def enter_cash_guest(request, parkingLot_id, license_plate):
     session.save()
     return render(request, 'parking/system.html',
                   {'parkingLot': parkingLot})
-
-
-
-            
