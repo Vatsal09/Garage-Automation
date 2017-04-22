@@ -21,7 +21,8 @@ from django.core.urlresolvers import reverse
 import time
 import random
 import datetime
-
+import openalpr_api
+import os
 
 # Create your views here.
 
@@ -413,14 +414,13 @@ def enter_session(request, parkingLot_id):
     form = UploadFileForm(request.POST, request.FILES)
     #Initialize parkingLot instance with parkingLot_id
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
+    apiclient = openalpr_api.DefaultApi()
+    key = os.environ.get('OPENALPR_SECRET_KEY', "sk_DEMODEMODEMODEMODEMODEMO")
+    response = apiclient.recognize_post(key, "plate,color,make,makemodel", image=request.FILES['file'].name, country="us")
     #Check if form is valid
     if form.is_valid():
-        #Put the computer vision library logic here gao
-
-        #Initialize license_plate_number with form entry.
-        # license_plate_number = form.cleaned_data['license_plate_number']
-        # Hardcoded licenese_plate for no errors DELETE LATER
-        license_plate_number = ABC1234
+        plate_obj = response.plate.results[0]
+        license_plate_number = plate_obj.plate
         #Try to acquire Vehicle object with license_plate_number
         try:
             v = Vehicle.objects.get(license_plate=license_plate_number)
@@ -436,6 +436,7 @@ def enter_session(request, parkingLot_id):
             if v != None:
                 #Create a session
                 session = form.save(commit=False)
+                session.license_plate_number = license_plate_number
                 #Give the session a user_type of 1
                 session.user_type = 1
                 #Set the session to have a time_arrived of the current time
