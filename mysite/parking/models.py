@@ -30,7 +30,7 @@ class Parking_Lot(models.Model):
 
 	#A python method that returns a unicode representation of the model. This is what is displayed when the model is called as a string.
 	def __str__(self):
-		#Return the id of the Parking_Lot as a string.	
+		#Return the id of the Parking_Lot as a string.
 		return str(self.id)
 
 	# Function to check number of spots open
@@ -96,7 +96,8 @@ class Session(models.Model):
     #If the parkingLot gets deleted then all the sessions in the relationship gets deleted.
     parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE, blank = True)
     # vehicle = models.OneToOneField(Vehicle)
-    
+
+    image = models.ImageField(upload_to='pics/', blank = True)
     #Initialize a Credit_Card field associated with the session with char data type with a max_length of 16.
     Credit_Card = models.CharField(max_length = 16, blank = True)
 
@@ -104,6 +105,10 @@ class Session(models.Model):
     license_plate_number = models.CharField(max_length = 7, validators=[RegexValidator(r'^[A-Z0-9]{6,7}$')], blank = True)
     #Initialize a time_arrived field associated with the session with char data type with a max_length of 10.
     time_arrived = models.CharField(max_length = 10, blank = True)
+    #Initialize a date_arrived field associated with the session with char data type
+    date_arrived = models.CharField(max_length = 10, blank = True)
+    #Initialize a date_exited field associated with the session with char data type
+    date_exited = models.CharField(max_length = 10, blank = True)
     #Initialize a time_exited field associated with the session with char data type with a max_length of 10.
     time_exited = models.CharField(max_length = 10, blank = True)
     #Initialize a stay_length field associated with the session with char data type with a max_length of 2.
@@ -125,7 +130,7 @@ class ActiveSession(models.Model):
     #If the parkingLot gets deleted then all the sessions in the relationship gets deleted.
     parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE, blank = True)
     # vehicle = models.OneToOneField(Vehicle)
-    
+
     #Initialize a Credit_Card field associated with the session with char data type with a max_length of 16.
     Credit_Card = models.CharField(max_length = 16, blank = True)
 
@@ -135,6 +140,10 @@ class ActiveSession(models.Model):
     time_arrived = models.CharField(max_length = 10, blank = True)
     #Initialize a time_exited field associated with the session with char data type with a max_length of 10.
     time_exited = models.CharField(max_length = 10, blank = True)
+	#Initialize a date_arrived field associated with the session with char data type
+    date_arrived = models.CharField(max_length = 10, blank = True)
+	#Initialize a date_exited field associated with the session with char data type
+    date_exited = models.CharField(max_length = 10, blank = True)
     #Initialize a stay_length field associated with the session with char data type with a max_length of 2.
     stay_length = models.CharField(max_length = 2, blank = True)
     #Initialize a amount_charged field associated with the session with char data type with a max_length of 5.
@@ -149,6 +158,12 @@ class ActiveSession(models.Model):
     def __str__(self):
         return str(self.id)
 
+class Image(models.Model):
+    image = models.ImageField(upload_to='pics/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)
 # class RegisteredUser(models.Model):
 #     reg_user = 	models.OneToOneField(Session)
 #     #account = models.OneToOneField(Account)

@@ -9,9 +9,10 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 # Package to custom build a functioning authentication system
 from django.contrib.auth import authenticate, login, logout
 # Package to create complex lookup queries.
+from django.db import models
 from django.db.models import Q
 # Import local models and forms from parking directory.
-from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, ActiveSessionForm,GuestSessionForm
+from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, ActiveSessionForm, GuestSessionForm, ImageUploadForm
 from .models import Parking_Lot, Spot, Session, ActiveSession
 # Import garageAutomation models.
 from garageAutomation.models import Account, Vehicle, ParkingSession, PaymentMethod
@@ -21,7 +22,8 @@ from django.core.urlresolvers import reverse
 import time
 import random
 import datetime
-
+import openalpr_api
+import os
 
 # Create your views here.
 
@@ -173,7 +175,7 @@ def register_manager(request):
         if user is not None:
             #Check if user is activated.
             if user.is_active:
-                #Login the user.            
+                #Login the user.
                 login(request, user)
                 #Retrieve all lots associated with user.
                 parkingLots = Parking_Lot.objects.filter(user=request.user)
@@ -406,16 +408,22 @@ def system(request, parkingLot_id):
         return render(request, 'parking/system.html',
                       {'parkingLot': parkingLot, 'user': user})
 
+
 #View for enter_session,
 def enter_session(request, parkingLot_id):
     #Receive form with post data.
-    form = ActiveSessionForm(request.POST or None)
+    form = ImageUploadForm(request.POST, request.FILES)
     #Initialize parkingLot instance with parkingLot_id
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     #Check if form is valid
     if form.is_valid():
-        #Initialize license_plate_number with form entry.
-        license_plate_number = form.cleaned_data['license_plate_number']
+        form.save()
+        apiclient = openalpr_api.DefaultApi()
+        key = os.environ.get('OPENALPR_SECRET_KEY', "sk_DEMODEMODEMODEMODEMODEMO")
+        response = apiclient.recognize_post(key, "plate,color,make,makemodel", image='media/pics/{}'.format(request.FILES['image'].name), country="us")
+
+        plate_obj = response.plate.results[0]
+        license_plate_number = plate_obj.plate
         #Try to acquire Vehicle object with license_plate_number
         try:
             v = Vehicle.objects.get(license_plate=license_plate_number)
@@ -430,11 +438,29 @@ def enter_session(request, parkingLot_id):
         if check_session == None:
             if v != None:
                 #Create a session
-                session = form.save(commit=False)
+                session = Session()
+
+                session.license_plate_number = license_plate_number
                 #Give the session a user_type of 1
                 session.user_type = 1
-                #Set the session to have a time_arrived of the current time
+                #Set the session to have time_arrived of the current time
                 session.time_arrived = datetime.datetime.now().strftime('%H:%M:%S')
+                #Set the session to have date_arrive of the current date
+                session.date_arrived = datetime.datetime.now().strftime('%m/%d/%Y')
+                #Set the parkingLot to the session
+                session.parkingLot = parkingLot
+                #Save the session.
+                session.save()
+
+                session = ActiveSession()
+
+                session.license_plate_number = license_plate_number
+                #Give the session a user_type of 1
+                session.user_type = 1
+                #Set the session to have time_arrived of the current time
+                session.time_arrived = datetime.datetime.now().strftime('%H:%M:%S')
+                #Set the session to have date_arrive of the current date
+                session.date_arrived = datetime.datetime.now().strftime('%m/%d/%Y')
                 #Set the parkingLot to the session
                 session.parkingLot = parkingLot
                 #Save the session.
@@ -466,46 +492,71 @@ def enter_session(request, parkingLot_id):
 #View for exit_session.
 def exit_session(request, parkingLot_id):
     #Receive form with post data.
-    form = SessionForm(request.POST or None)
+    form = ImageUploadForm(request.POST, request.FILES)
     #Initialize parkingLot instance with parkingLot_id
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     #Check if form is valid.
     if form.is_valid():
         #Initialize license_plate_number with form data.
-        license_plate_number = form.cleaned_data['license_plate_number']
+        form.save()
+        apiclient = openalpr_api.DefaultApi()
+        key = os.environ.get('OPENALPR_SECRET_KEY', "sk_DEMODEMODEMODEMODEMODEMO")
+        response = apiclient.recognize_post(key, "plate,color,make,makemodel", image='media/pics/{}'.format(request.FILES['image'].name), country="us")
+
+        plate_obj = response.plate.results[0]
+        license_plate_number = plate_obj.plate
         #Check if session exists
         try:
             check_session = ActiveSession.objects.get(license_plate_number=license_plate_number)
         except ActiveSession.DoesNotExist:
             check_session = None
+        try:
+            store_session = Session.objects.filter(license_plate_number=license_plate_number).latest('time_arrived')
+        except Session.DoesNotExist:
+            store_session = None
         if check_session != None:
-            store_session = form.save(commit=False)
-            store_session.user_type = check_session.user_type 
+            #store_session = Session()
+            #store_session.license_plate_number = license_plate_number
+            #store_session.user_type = check_session.user_type
             #Set the session to have a time_arrived of the current time
-            store_session.time_arrived = check_session.time_arrived 
+            #store_session.time_arrived = check_session.time_arrived
             #Set the parkingLot to the session
-            store_session.parkingLot = check_session.parkingLot
+            #store_session.parkingLot = check_session.parkingLot
             #Initialize values of the session
             #Give time_exited current time
-            store_session.time_exited = datetime.datetime.now().strftime('%H:%M:%S')
+            #store_session.time_exited = datetime.datetime.now().strftime('%H:%M:%S')
             #Calculated stay_length base on time_exited and time_arrived.
-            store_session.stay_length = int(store_session.time_exited[:2]) - int(check_session.time_arrived[:2])
+            #store_session.stay_length = int(store_session.time_exited[:2]) - int(check_session.time_arrived[:2])
+            #store_session.amount_charged = str(int(store_session.stay_length) * 5)
+            store_session.time_exited = datetime.datetime.now().strftime('%H:%M:%S')
+            session.date_exited = datetime.datetime.now().strftime('%m/%d/%Y')
+            store_session.stay_length = int(store_session.time_exited[:2]) - int(store_session.time_arrived[:2])
             store_session.amount_charged = str(int(store_session.stay_length) * 5)
             store_session.save()
             check_session.delete()
 
             #Save parking session for user History
-            session = ParkingSession()
-            vehicle = Vehicle.objects.get(license_plate=license_plate_number)
-            session.account = vehicle.account
-            session.vehicle = vehicle
-            #Uses the first available payment method
-            session.paymentMethod = PaymentMethod.objects.filter(account=vehicle.account)[0]
-            session.cost = store_session.amount_charged
-            session.enter_time = datetime.datetime.now()
-            session.duration = store_session.stay_length
-            session.location = parkingLot_id
-            session.save()
+            if store_session.user_type == 1:
+                session = ParkingSession()
+                try:
+                    vehicle = Vehicle.objects.get(license_plate=license_plate_number)
+                except Vehicle.DoesNotExist:
+                    vehicle = Vehicle()
+                    vehicle.license_plate = license_plate_number
+                    vehicle.account = Account.objects.get(first_name="Guest")
+                session.account = vehicle.account
+                session.vehicle = vehicle
+                #Uses the first available payment method
+                try:
+                    session.paymentMethod = session.account.paymentmethods[0]
+                except PaymentMethod.DoesNotExist:
+                    card = PaymentMethod()
+                    session.paymentMethod = card
+                session.cost = store_session.amount_charged
+                session.enter_time = datetime.datetime.now()
+                session.duration = store_session.stay_length
+                session.location = parkingLot_id
+                session.save()
 
             return render(request, 'parking/system.html',
                           {'parkingLot': parkingLot})
@@ -530,7 +581,18 @@ def enter_guest(request, parkingLot_id, license_plate):
         #Set user_type to 2 to correspond with a guest user.
         session.user_type = 2
         session.time_arrived = datetime.datetime.now().strftime('%H:%M:%S')
+        session.date_arrived = datetime.datetime.now().strftime('%m/%d/%Y')
         session.parkingLot = parkingLot
+        session.save()
+        session = ActiveSession()
+        session.license_plate_number = license_plate
+        #Give the session a user_type of 1
+        session.user_type = 2
+        #Set the session to have a time_arrived of the current time
+        session.time_arrived = datetime.datetime.now().strftime('%H:%M:%S')
+        #Set the parkingLot to the session
+        session.parkingLot = parkingLot
+        #Save the session.
         session.save()
         return render(request, 'parking/system.html',
                       {'parkingLot': parkingLot})
@@ -543,13 +605,9 @@ def enter_cash_guest(request, parkingLot_id, license_plate):
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     #Set the user_type to cash user
     session = Session(license_plate_number=license_plate, user_type='3'
-                      ,
+                      , date_arrived = datetime.datetime.now().strftime('%m/%d/%Y'),
                       time_arrived=datetime.datetime.now().strftime('%H:%M:%S'
                       ), parkingLot=parkingLot)
     session.save()
     return render(request, 'parking/system.html',
                   {'parkingLot': parkingLot})
-
-
-
-            
