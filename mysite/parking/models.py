@@ -97,6 +97,7 @@ class Session(models.Model):
     parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE, blank = True)
     # vehicle = models.OneToOneField(Vehicle)
     
+    image = models.ImageField(upload_to='pics/', blank = True)
     #Initialize a Credit_Card field associated with the session with char data type with a max_length of 16.
     Credit_Card = models.CharField(max_length = 16, blank = True)
 
