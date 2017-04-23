@@ -460,7 +460,7 @@ def enter_session(request, parkingLot_id):
                 #Set the session to have time_arrived of the current time
                 session.time_arrived = datetime.datetime.now().strftime('%H:%M:%S')
                 #Set the session to have date_arrive of the current date
-                session.date_arrived = datetime.datetime.now().date()
+                session.date_arrived = datetime.datetime.now().strftime('%m/%d/%Y')
                 #Set the parkingLot to the session
                 session.parkingLot = parkingLot
                 #Save the session.
