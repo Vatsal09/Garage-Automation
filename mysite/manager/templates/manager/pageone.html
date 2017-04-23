@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Login Form</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>
+            function call_counter(url, pk) {
+                window.open(url);
+                $.get('YOUR_VIEW_HERE/'+pk+'/', function (data) {
+                    alert("counter updated!");
+                });
+            }
+        </script>
+  
+  
+    <!--  <link rel="stylesheet" href="css/style.css"> -->
+      <link rel="stylesheet" type="text/css" href="{% static 'manager/style.css' %}" />
+
+  
+</head>
+
+<body>
+  <body>
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+        <h1>Manager Authentication Page</h1>
+        <p><b>Dashboard Login</b></p>
+			</div>
+
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="Username" id="login-name">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="password" class="login-field" value="" placeholder="Password" id="login-pass">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+
+				<a class="btn btn-primary btn-large btn-block" href="#">Login</a>
+				 <button onclick="call_counter('http://127.0.0.1:8000/manager/page2/', 12345);"> 
+					 Login the template
+        </button>
+			</div>
+		</div>
+	</div>
+
+</body>
+  {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
+  {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+  
+</body>
+</html>
