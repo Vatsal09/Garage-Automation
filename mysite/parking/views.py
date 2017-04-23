@@ -443,8 +443,10 @@ def enter_session(request, parkingLot_id):
                 session.license_plate_number = license_plate_number
                 #Give the session a user_type of 1
                 session.user_type = 1
-                #Set the session to have a time_arrived of the current time
+                #Set the session to have time_arrived of the current time
                 session.time_arrived = datetime.datetime.now().strftime('%H:%M:%S')
+                #Set the session to have date_arrive of the current date
+                session.date_arrived = datetime.datetime.now().strftime('%m/%d/%Y')
                 #Set the parkingLot to the session
                 session.parkingLot = parkingLot
                 #Save the session.
@@ -455,8 +457,10 @@ def enter_session(request, parkingLot_id):
                 session.license_plate_number = license_plate_number
                 #Give the session a user_type of 1
                 session.user_type = 1
-                #Set the session to have a time_arrived of the current time
+                #Set the session to have time_arrived of the current time
                 session.time_arrived = datetime.datetime.now().strftime('%H:%M:%S')
+                #Set the session to have date_arrive of the current date
+                session.date_arrived = datetime.datetime.now().date()
                 #Set the parkingLot to the session
                 session.parkingLot = parkingLot
                 #Save the session.
@@ -525,6 +529,7 @@ def exit_session(request, parkingLot_id):
             #store_session.stay_length = int(store_session.time_exited[:2]) - int(check_session.time_arrived[:2])
             #store_session.amount_charged = str(int(store_session.stay_length) * 5)
             store_session.time_exited = datetime.datetime.now().strftime('%H:%M:%S')
+            session.date_exited = datetime.datetime.now().strftime('%m/%d/%Y')
             store_session.stay_length = int(store_session.time_exited[:2]) - int(store_session.time_arrived[:2])
             store_session.amount_charged = str(int(store_session.stay_length) * 5)
             store_session.save()
@@ -552,7 +557,7 @@ def exit_session(request, parkingLot_id):
                 session.duration = store_session.stay_length
                 session.location = parkingLot_id
                 session.save()
-    
+
             return render(request, 'parking/system.html',
                           {'parkingLot': parkingLot})
         else:
@@ -576,6 +581,7 @@ def enter_guest(request, parkingLot_id, license_plate):
         #Set user_type to 2 to correspond with a guest user.
         session.user_type = 2
         session.time_arrived = datetime.datetime.now().strftime('%H:%M:%S')
+        session.date_arrived = datetime.datetime.now().strftime('%m/%d/%Y')
         session.parkingLot = parkingLot
         session.save()
         session = ActiveSession()
@@ -599,7 +605,7 @@ def enter_cash_guest(request, parkingLot_id, license_plate):
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     #Set the user_type to cash user
     session = Session(license_plate_number=license_plate, user_type='3'
-                      ,
+                      , date_arrived = datetime.datetime.now().strftime('%m/%d/%Y'),
                       time_arrived=datetime.datetime.now().strftime('%H:%M:%S'
                       ), parkingLot=parkingLot)
     session.save()
