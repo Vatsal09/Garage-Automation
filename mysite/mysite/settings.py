@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     #'django.contrib.sites',
-	
+
     'manager.apps.ManagerConfig',
     #'manager.page2.apps.Page2Config', #!
     'django.contrib.admin',
@@ -130,3 +130,8 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/garageAutomation/home'
 LOGOUT_REDIRECT_URL = '/garageAutomation/login'
+
+
+# Location for Uploaded files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

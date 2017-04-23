@@ -55,6 +55,6 @@ class GuestSessionForm(forms.ModelForm):
 	#Creating a form field for each model field.
         fields = ['Credit_Card']
 
-#Creating a upload file form for photo upload
-class UploadFileForm(forms.Form):
-    file = forms.FileField()
+#Creating a upload image form
+class ImageUploadForm(forms.Form):
+    image = forms.ImageField(upload_to='pics/')

@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 # Package to create complex lookup queries.
 from django.db.models import Q
 # Import local models and forms from parking directory.
-from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, ActiveSessionForm, GuestSessionForm, UploadFileForm
+from .forms import ParkingLotForm, SpotForm, UserForm, SessionForm, ActiveSessionForm, GuestSessionForm, ImageUploadForm
 from .models import Parking_Lot, Spot, Session, ActiveSession
 # Import garageAutomation models.
 from garageAutomation.models import Account, Vehicle, ParkingSession, PaymentMethod
@@ -411,14 +411,15 @@ def system(request, parkingLot_id):
 #View for enter_session,
 def enter_session(request, parkingLot_id):
     #Receive form with post data.
-    form = UploadFileForm(request.POST, request.FILES)
+    form = ImageUploadForm(request.POST, request.FILES)
     #Initialize parkingLot instance with parkingLot_id
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
-    apiclient = openalpr_api.DefaultApi()
-    key = os.environ.get('OPENALPR_SECRET_KEY', "sk_DEMODEMODEMODEMODEMODEMO")
-    response = apiclient.recognize_post(key, "plate,color,make,makemodel", image=request.FILES['file'].name, country="us")
     #Check if form is valid
     if form.is_valid():
+        apiclient = openalpr_api.DefaultApi()
+        key = os.environ.get('OPENALPR_SECRET_KEY', "sk_DEMODEMODEMODEMODEMODEMO")
+        response = apiclient.recognize_post(key, "plate,color,make,makemodel", image='MEDIA_ROOT/pics/{}'.format(request.FILES['image'].name), country="us")
+
         plate_obj = response.plate.results[0]
         license_plate_number = plate_obj.plate
         #Try to acquire Vehicle object with license_plate_number
