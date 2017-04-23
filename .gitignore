@@ -26,6 +26,7 @@ var/
 *.pyo
 # ---------------------------
 .Python
+media/
 bin/
 include/
 lib/

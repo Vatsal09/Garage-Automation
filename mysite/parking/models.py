@@ -149,6 +149,12 @@ class ActiveSession(models.Model):
     def __str__(self):
         return str(self.id)
 
+class Image(models.Model):
+    image = models.ImageField(upload_to='pics/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)
 # class RegisteredUser(models.Model):
 #     reg_user = 	models.OneToOneField(Session)
 #     #account = models.OneToOneField(Account)

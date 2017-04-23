@@ -416,9 +416,10 @@ def enter_session(request, parkingLot_id):
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     #Check if form is valid
     if form.is_valid():
+        form.save()
         apiclient = openalpr_api.DefaultApi()
         key = os.environ.get('OPENALPR_SECRET_KEY', "sk_DEMODEMODEMODEMODEMODEMO")
-        response = apiclient.recognize_post(key, "plate,color,make,makemodel", image='MEDIA_ROOT/pics/{}'.format(request.FILES['image'].name), country="us")
+        response = apiclient.recognize_post(key, "plate,color,make,makemodel", image='media/pics/{}'.format(request.FILES['image'].name), country="us")
 
         plate_obj = response.plate.results[0]
         license_plate_number = plate_obj.plate
