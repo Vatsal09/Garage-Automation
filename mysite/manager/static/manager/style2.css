@@ -5,11 +5,20 @@ box-sizing: border-box;
 *:focus {
 	outline: none;
 }
+
+
+
 body {
+  background: #f2f2f2 url(images/background.jpg); 
+  height: 650px;
+  padding: 100px 0 0 0;
+}
+
+/*body {
 font-family: Arial;
 background-color: #3498DB;
 padding: 50px;
-}
+}*/
 .login {
 margin: 20px auto;
 width: 300px;

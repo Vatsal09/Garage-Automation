@@ -11,10 +11,14 @@ app_name="manager"
 # /manager/
 urlpatterns =[
 	url(r'^$', views.index, name='index'), #index page
-	url(r'^page2/',include('manager.page2.urls')),
-	url(r'^page3/',include('manager.page3.urls')),
+#	url(r'^analytics/',include('manager.page2.urls')),
+#	url(r'^history/',include('manager.page3.urls')),
+#	url(r'^(?P<>)/$')
+	url(r'^analytics/', views.analytics, name='analytics' ),
+	url(r'^history/', views.history, name='history' ),
 	url(r'^admin/', admin.site.urls),
-
+	url(r'^searchli/', views.searchlicense, name='searchlicense'),
+#	url(r'^searchdt/', views.searchdate, name='searchdate'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     #'django.contrib.sites',
-
+  
+    #'cal.apps.CalConfig',
     'manager.apps.ManagerConfig',
     #'manager.page2.apps.Page2Config', #!
     'django.contrib.admin',

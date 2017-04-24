@@ -1,0 +1,86 @@
+{% load staticfiles %}
+<!--<link rel="stylesheet" type="text/css" href="{% static 'manager/style.css' %}"/>-->
+<link rel="stylesheet" type="text/css" href="{% static 'manager/style.css' %}" />
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+  <meta charset="UTF-8">
+ 
+  <!--<meta name="viewport" content="width = device-width, initial-scale =1">-->
+  <title>Login Page</title>
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!--
+<style>
+.jumbotron{
+	background-color: #2E2D88;
+	color: white;
+}
+/*Adds borders for tabs */	
+.tab content {
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 10px;
+}
+.nav-tabs{
+	margin-bottom:0;
+}
+</style> 
+-->
+ 
+        <script>
+            function call_counter(url, pk) {
+                window.open(url);
+                $.get('YOUR_VIEW_HERE/'+pk+'/', function (data) {
+                    alert("counter updated!");
+                });
+            }
+        </script>
+  
+  
+   
+     
+
+ <!--<div class="inner" style="background-image: url({% static "images/HD.jpg" %}");> -->
+</head>
+
+<body>
+  <body>
+	<div class="container">
+		<div class="login-screen">
+			<div class="app-title">
+        <h1>Manager's Dashboard for Garage Automation</h1>
+        <p><b>Dashboard Login</b></p>
+			</div>
+
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="Username" id="login-name">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="password" class="login-field" value="" placeholder="Password" id="login-pass">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+
+				
+				 <button onclick="call_counter('http://127.0.0.1:8000/manager/analytics', 12345);"> 
+					 Login 
+        </button>
+			</div>
+		</div>
+	</div>
+
+</body>
+  {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
+  {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</body>
+</html>
