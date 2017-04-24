@@ -17,7 +17,7 @@
     
 </head>
 
-<body style="background-image: url({%static "garageAutomation/background.png"%});>
+<body style="background-image: url({%static "garageAutomation/background.png"%});">
     <nav class="navbar navbar-fixed-top">
         <div class="container-fluid">
              {% if user.is_authenticated %}
@@ -30,6 +30,61 @@
     <button type="button" class="btn-lg btn glyphicon glyphicon-menu-hamburger" data-toggle="modal" data-target="#menuModal"></button>
 
     <h1> Hello, {{account.first_name}} </h1>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <h3>Level: {{level}}</h3>
+            
+            {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p>
+            {% endif %}
+
+            <table class="table">
+                <!-- <thead>
+                    <tr>
+                        <th>Left</th>
+                        <th>Right</th>
+
+                    </tr>
+                </thead> -->
+                
+                <tbody>
+
+                {% for l_spot, r_spot in spots %}
+                    <tr>
+                        {% if l_spot.is_occupied%}
+                            <td class="bg-danger center_spot" style="color:white; background-color: #E53935;">{{l_spot.spot_number}} </td>
+                        {% endif %}
+                        {% if not l_spot.is_occupied%}
+                            <td class="bg-success center_spot" style="color:white; background-color: #43A047;">{{l_spot.spot_number}} </td>
+                        {% endif %}                       
+                        <td class="center_spot" style="background-color: #292b2c; border-top:none; padding-left:30px; padding-right:30px;"> </td> 
+                        {% if r_spot.is_occupied%}
+                            <td class="bg-danger center_spot" style="color:white; background-color: #E53935;">{{r_spot.spot_number}} </td>
+                        {% endif %}
+                        {% if not r_spot.is_occupied %}
+                            <td class="bg-success center_spot" style="color:white; background-color: #43A047;">{{r_spot.spot_number}} </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        {% if num_levels > 0%}
+        <div class="panel-body">
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                {% if level != 1 %}
+                    <li role="presentation" class="active"><a href="{% url 'garageAutomation:home' parkingLot.id prev_level%}">Previous Level</a></li>
+                {% endif %}
+                {% if level < num_levels %}
+                    <li role="presentation" class="active"><a href="{% url 'garageAutomation:home' parkingLot.id next_level%}">Next Level</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
     
     <!-- Menu Modal -->
     <div class="modal fade left" id="menuModal" role="dialog">

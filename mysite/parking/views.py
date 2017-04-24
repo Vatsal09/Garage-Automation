@@ -529,7 +529,7 @@ def exit_session(request, parkingLot_id):
             #store_session.stay_length = int(store_session.time_exited[:2]) - int(check_session.time_arrived[:2])
             #store_session.amount_charged = str(int(store_session.stay_length) * 5)
             store_session.time_exited = datetime.datetime.now().strftime('%H:%M:%S')
-            session.date_exited = datetime.datetime.now().strftime('%m/%d/%Y')
+            store_session.date_exited = datetime.datetime.now().strftime('%m/%d/%Y')
             store_session.stay_length = int(store_session.time_exited[:2]) - int(store_session.time_arrived[:2])
             store_session.amount_charged = str(int(store_session.stay_length) * 5)
             store_session.save()
@@ -604,10 +604,11 @@ def enter_guest(request, parkingLot_id, license_plate):
 def enter_cash_guest(request, parkingLot_id, license_plate):
     parkingLot = get_object_or_404(Parking_Lot, pk=parkingLot_id)
     #Set the user_type to cash user
-    session = Session(license_plate_number=license_plate, user_type='3'
-                      , date_arrived = datetime.datetime.now().strftime('%m/%d/%Y'),
-                      time_arrived=datetime.datetime.now().strftime('%H:%M:%S'
-                      ), parkingLot=parkingLot)
+    session = Session(license_plate_number=license_plate, 
+                      user_type='3',
+                      date_arrived = datetime.datetime.now().strftime('%m/%d/%Y'),
+                      time_arrived=datetime.datetime.now().strftime('%H:%M:%S'),
+                      parkingLot=parkingLot)
     session.save()
     return render(request, 'parking/system.html',
                   {'parkingLot': parkingLot})
