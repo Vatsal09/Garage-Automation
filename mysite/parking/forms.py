@@ -37,7 +37,7 @@ class SessionForm(forms.ModelForm):
     class Meta:
         model = Session
 	#Creating a form field for each model field.
-        fields = ['image']
+        fields = ['license_plate_number']
 #Creating a form from the Session model.
 class ActiveSessionForm(forms.ModelForm):
 

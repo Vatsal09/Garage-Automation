@@ -97,7 +97,6 @@ class Session(models.Model):
     parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE, blank = True)
     # vehicle = models.OneToOneField(Vehicle)
 
-    image = models.ImageField(upload_to='pics/', blank = True)
     #Initialize a Credit_Card field associated with the session with char data type with a max_length of 16.
     Credit_Card = models.CharField(max_length = 16, blank = True)
 
@@ -140,9 +139,9 @@ class ActiveSession(models.Model):
     time_arrived = models.CharField(max_length = 10, blank = True)
     #Initialize a time_exited field associated with the session with char data type with a max_length of 10.
     time_exited = models.CharField(max_length = 10, blank = True)
-	#Initialize a date_arrived field associated with the session with char data type
+    #Initialize a date_arrived field associated with the session with char data type
     date_arrived = models.CharField(max_length = 10, blank = True)
-	#Initialize a date_exited field associated with the session with char data type
+    #Initialize a date_exited field associated with the session with char data type
     date_exited = models.CharField(max_length = 10, blank = True)
     #Initialize a stay_length field associated with the session with char data type with a max_length of 2.
     stay_length = models.CharField(max_length = 2, blank = True)
