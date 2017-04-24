@@ -12,7 +12,7 @@ def index(request):
     return render(request, 'garageAutomation/index.html', context)
 
 @login_required
-def home(request, parkingLot_id, level):
+def home(request, parkingLot_id=1, level=1):
     if request.method == "POST":     
         try:
             recievedAccount = Account.objects.get(user = request.user)

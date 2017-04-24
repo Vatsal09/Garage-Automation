@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'logout$', logout),
     url(r'register$', views.register, name='register'),
     url(r'^home/(?P<parkingLot_id>[0-9]+)/(?P<level>[0-9]+)$', views.home, name='home'),
+    url(r'^home/$', views.home, name='home'),
 ]
 
 
