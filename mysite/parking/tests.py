@@ -290,7 +290,7 @@ class ActiveSessionModelTest(TestCase):
 		session1 = Session.objects.get(id=1)
 		self.assertTrue(session1.date_exited >= session1.date_arrived)
 		self.assertTrue(session1.time_exited >= session1.time_arrived)
-		time.sleep(2)
+		time.sleep(3)
 		stay_length1 = int(session1.time_exited[:2]) - int(session1.time_arrived[:2])
 		self.assertEquals(str(stay_length1), session1.stay_length)		
 	def test_user_type(self):
