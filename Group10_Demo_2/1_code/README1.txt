@@ -29,13 +29,6 @@ Recommended Way to Execute Source Files:
 		c.	From your browser, go to:
 			i.	http://127.0.0.1:8000/garageAutomation/login - To view User Interface (follow the more specific directions provided below in the User Interface Section)
 			ii.	http://127.0.0.1:8000/parking - To view Parking Monitoring/System (follow the more specific directions provided below in the Parking Section)  
-			iii. http://127.0.0.1:8000/manager - To view Manager dashboard (follow the more specific directions provided below in the Manager Section)
-
-	4)	Running the license plate reader program:
-		a.	Locate and cd into “License Plate Reader” folder from the base/parent directory
-		b.	cd into “cloudapi/python” folder
-		c.	Run the program: python test.py 
-		d.	The file above deciphers the license plate text for the image file named “us-1.jpg” located in “License Plate Reader/Images” 
 
 Not Recommended Way to Execute Source Files:
 
@@ -60,14 +53,7 @@ Not Recommended Way to Execute Source Files:
 		c.	From your browser, go to:
 			i.	http://127.0.0.1:8000/garageAutomation/login - To view User Interface (follow the more specific directions provided below in the User Interface Section)
 			ii.	http://127.0.0.1:8000/parking - To view Parking Monitoring/System (follow the more specific directions provided below in the Parking Section)
-			iii. http://127.0.0.1:8000/manager - To view Manager dashboard (follow the more specific directions provided below in the Manager Section)
-
-	3)	Running the license plate reader program:
-		a.	Locate and cd into “1_code/License Plate Reader” folder 
-		b.	cd into “cloudapi/python” folder
-		c.	Run the program: python test.py 
-		d.	The file above deciphers the license plate text for the image file named “us-1.jpg” located in “1_code/License Plate Reader/Images” 
-
+			
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 User Interface Specific Instructions
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
