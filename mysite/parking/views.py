@@ -610,5 +610,11 @@ def enter_cash_guest(request, parkingLot_id, license_plate):
                       time_arrived=datetime.datetime.now().strftime('%H:%M:%S'),
                       parkingLot=parkingLot)
     session.save()
+    session = ActiveSession(license_plate_number=license_plate, 
+                      user_type='3',
+                      date_arrived = datetime.datetime.now().strftime('%m/%d/%Y'),
+                      time_arrived=datetime.datetime.now().strftime('%H:%M:%S'),
+                      parkingLot=parkingLot)
+    session.save()
     return render(request, 'parking/system.html',
                   {'parkingLot': parkingLot})
