@@ -73,11 +73,17 @@ User Interface Specific Instructions
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 To run the run the code, you must start the website: in the terminal go to mysite and then run python manage.py runserver
-Then go to http://127.0.0.1:8000/garageAutomation/login: Username="Guy" password="group10password"  #NOTE! the capital G in the username, dont include quotes
+Then go to http://127.0.0.1:8000/garageAutomation/login: Username="Guy" password="group10password"  #NOTE! the capital G in the username, don’t include quotes
 
 This account has some payment methods and parking sessions already set in the database
 
 Register a new account in http://127.0.0.1:8000/garageAutomation/register if necessary 
+
+Using the Map
+	It will be displayed after logging in. You can view different levels by pressing the button on the bottom
+
+Viewing Account Info
+	Pressing the hamburger button on the top left will display the Payment, History, and Settings buttons that will each display the pages if they are pressed.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Parking Specific Instructions
