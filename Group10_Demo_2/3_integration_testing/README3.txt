@@ -16,9 +16,9 @@ Home menu:
 Payment Page:
     Press button on top left on http://127.0.0.1:8000/garageAutomation/home/
     Press Payment
-    *****IMPORTANT*****
+    	*****IMPORTANT*****
 	-Adding a card that already exists in the database or removing the only card in the account is prohibited by design!
-	*****IMPORTANT*****
+    	*****IMPORTANT*****
     1 ----Payment Details-----
         Press on listed Payment Payment method
         a ----back----
@@ -37,7 +37,7 @@ Payment Page:
             if any fields are improperly filled:
                 webpage will indicate fields and how to fill them
             else
-                Payment Page will now dispaly new card with provided credentials
+                Payment Page will now display new card with provided credentials
         b ----back----
             press back arrow on top left
     3 ----Close-----
@@ -66,6 +66,13 @@ Settings Page:
         Pressing ok: vehicle will no longer be listed in Settings page
     2 ----Close-----
         press x on top left
+    3 ----Edit Info-----
+    Pressing on the name/phone number will bring up the edit page. Clicking on First Name, Last Name, or Phone number will
+    bring up their respective editing page. After pressing update, the changes should be reflected in the settings page.
+    4 ----Delete Account-----
+    Pressing delete account will bring up a confirmation page.
+        Pressing cancel: alert will close and nothing will happen
+        Pressing ok: the account will be logged out and deleted. The username and password will no longer be valid because they will not exist.
 
 Login/Register an Account:
 	To test my code I registered an account through the registration page and then checked in the django shell to make sure that an account object was created and had the correct attributes. Then I logged into the account through the login page and navigated to the history option to display the history of parking sessions for this account. For now I created history sessions manually and added them to the database but in the future the history sessions should come from the other part of the system that tracks the vehicle in the parking lot.
