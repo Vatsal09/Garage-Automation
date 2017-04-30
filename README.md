@@ -11,7 +11,6 @@ Group Members and Skills:
   3. Pan, Gao | <gao.pan.1996@rutgers.edu> | C++, Java, Python, PHP, HTML/CSS, JavaScript, MySQL
   4. Postrero, Kendric | <kendric.postrero@rutgers.edu> | C++, Python, Java, PHP, HTML/CSS, JavaScript
   5. Pandya, Vatsal | <vatsal.pandya@rutgers.edu> | C++, Python, Flask, SQLAlchemy, HTML/CSS, JavaScript 
-  6. Luo, Peter | <peter.luo@rutgers.edu> | C++, Java, HTML/CSS
-  7. Shen, Yunqi | <yunqi.shen@rutgers.edu> | C++, Shell Scripting 
+  6. Shen, Yunqi | <yunqi.shen@rutgers.edu> | C++, Shell Scripting 
 
   
