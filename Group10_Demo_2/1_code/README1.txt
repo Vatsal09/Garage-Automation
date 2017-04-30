@@ -1,6 +1,6 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 README1 - Running the source code
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 There are two ways to run the the codebase: Github or through the files below. The first contains the latest version of the code and it's proven to work. 
 
 
@@ -68,9 +68,9 @@ Not Recommended Way to Execute Source Files:
 		c.	Run the program: python test.py 
 		d.	The file above deciphers the license plate text for the image file named “us-1.jpg” located in “1_code/License Plate Reader/Images” 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 User Interface Specific Instructions
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 To run the run the code, you must start the website: in the terminal go to mysite and then run python manage.py runserver
 Then go to http://127.0.0.1:8000/garageAutomation/login: Username="Guy" password="group10password"  #NOTE! the capital G in the username, don’t include quotes
@@ -85,9 +85,9 @@ Using the Map
 Viewing Account Info
 	Pressing the hamburger button on the top left will display the Payment, History, and Settings buttons that will each display the pages if they are pressed.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Parking Specific Instructions
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 To run the run the code, you must start the website: in the terminal go to mysite and then run python manage.py runserver
 Then go to http://127.0.0.1:8000/parking and double click login: Username="Vatsal" password="group10password"  #NOTE! the capital V in the username, dont include quotes
@@ -118,14 +118,3 @@ Map of the occupancy
 	Shows occupancy of parking lot. Navigate to parking lot with address 220 Marvin Lane and click the "Check Map" button. Scroll to bottom and click "Next Level" to see other levels
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Manager Interface Specific Instructions
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-The code of Manager's Dashboard is mainly under the directory mysite/manager/.
-To run the webpage though, you must start the Django python server in the terminal. 
-Go to mysite/ using cd command and then run the Django server using the following commands:
-$ cd .../Garage-Automation/mysite/
-$ sudo python manage.py runserver
-Then open your browser and go to http://127.0.0.1:8000/manager/
-Note that currently the verification of manager's login confidentials have not been set up yet, so just click login to template button to second page. On the second page, click payment history to go to the third page.

@@ -7,18 +7,30 @@ Table of Contents
 	Contains readme on how to test the individual componenets in the source code.
 
 3_integration_testing
-	Documents how to test integration between the different Django modules (views), the webserver and the database, and the mobile platform and the database.
+	Documents how to test integration between the different Django modules (views), the webserver, the database, and the website.
 
 4_data_collection
 	Discusses how data is collected and the data collected thus far. Read README4 for how to view the data from the database.
 
 5_documentation
 	Demo_1.pdf
-		Powerpoint file for DEMO #1.  
+		Powerpoint file for DEMO #1. 
+	
+	Please Note:
+		Since Prof. Marsic's website said to "avoid slide presentation in demo #2. Rather, use live demonstration to show the product functionality', we decided against creating slides for Demo2.
 
 	brochure_demo_1.pdf
-		PDF version of DEMO #1 brochure
-	
+		PDF version of DEMO #1 and DEMO #2 brochure
+
+	Report1.pdf
+		PDF version of the original, final version of Report 1
+
+	Report2.pdf
+		PDF version of the original, final version of Report 2
+
+	Report3.pdf
+		PDF version of the final Report 3
+
 	UserDocumentation.pdf
 		Provides an overview of Website functioning
 
