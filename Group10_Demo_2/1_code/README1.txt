@@ -89,7 +89,11 @@ Base page: http://127.0.0.1:8000/parking
 
 Add Lot/ Delete Lot
 
-	You will see button in the nav bar to "Add Parking Lot" to add a lot. Click "All Lots" -> click delete icon to delete a lot (don't delete lot with address 220 Marvin Lane because we will use it to show other functionality)
+	You will see a button in the navigation bar to "Add Parking Lot" to add a lot. Click "All Lots" -> click delete icon to delete a lot (don't delete lot with address 220 Marvin Lane because we will use it to show other functionality)
+
+Add Spot/ Delete Spot
+
+	You will see a button below the navigation bar to "Add New Spot" to add a new spot. Click the delete icon to delete the corresponding spot.
 
 View all lots
 	
@@ -98,6 +102,12 @@ View all lots
 View lot details
 
 	Click the lot to view details about spots, add spots, delete spots, enable, and disable spots (best seen with the initialized lot with address 220 Marvin Lane)
+
+View lot status
+	Click the "Check lot status" button to view details about Active Sessions in the parking lot and past sessions.
+
+Enter Vehicle/Exit Vehicle
+	A vehicle entering and exiting the lot can be simulated via the buttons provided in the lot status view. They are both integrated with the License Plate reader such that you can just upload an image to enter the vehicle.
 
 Map of the occupancy
 
