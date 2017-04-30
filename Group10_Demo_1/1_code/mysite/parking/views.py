@@ -114,6 +114,9 @@ def add_spot(request, parkingLot_id):
             if parkingLot.spot_set.filter(level = form.cleaned_data.get('level')).filter(spot_number = form.cleaned_data.get('spot_number')):
                 context = {'parkingLot': parkingLot,'form': form,'error_message': 'You already added that spot'}
                 return render(request, 'parking/add_spot.html',context)
+            if form.cleaned_data.get('level') < 1 or int(form.cleaned_data.get('level')) > int(parkingLot.max_levels):
+                context = {'parkingLot': parkingLot,'form': form,'error_message': 'That level does not exist.'}
+                return render(request, 'parking/add_spot.html',context)
             #Otherwise add the spot to the lot and save the form.
             spot = form.save(commit=False)
             spot.parkingLot = parkingLot
