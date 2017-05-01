@@ -1,6 +1,9 @@
 #Importing required django packages to process URLs.
 from django.conf.urls import url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.conf.urls.static import static
+
 #Importing required functions from parking/views.py
 from . import views
 #Namespace for this urls.py file to be used in main urls.py file (../mysite/urls.py)
@@ -38,7 +41,7 @@ urlpatterns = [
     url(r'^(?P<parkingLot_id>[0-9]+)/disable_spot/(?P<spot_id>[0-9]+)/$', views.disable_spot, name='disable_spot'),
     # /parking/<Parking_Lot ID>/disable_spot
     url(r'^(?P<parkingLot_id>[0-9]+)/enable_spot/(?P<spot_id>[0-9]+)/$', views.enable_spot, name='enable_spot'),
-    # /parking/<Parking_Lot ID>/level/map      
+    # /parking/<Parking_Lot ID>/level/map
     url(r'^(?P<parkingLot_id>[0-9]+)/(?P<level>[0-9]+)/map$', views.map, name='map'),
     # URL for checking lot status
     # /parking/<Parking_Lot ID>/system
@@ -56,4 +59,4 @@ urlpatterns = [
 
 ]
 #Add the list of static file URL pattern list.
-urlpatterns += staticfiles_urlpatterns()                                                            
+urlpatterns += staticfiles_urlpatterns()

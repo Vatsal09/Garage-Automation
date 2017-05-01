@@ -33,7 +33,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for session in parkingLot.session_set.all %}
+                        {% for session in parkingLot.activesession_set.all %}
                             {% if session.time_exited == '' %}
                             <tr>
                                 <td class="center_spot" style="text-align: center">{{ session.license_plate_number }}</td>
