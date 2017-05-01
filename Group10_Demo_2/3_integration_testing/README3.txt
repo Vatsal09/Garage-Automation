@@ -153,7 +153,17 @@ Detail Page (of each Parking Lot):
             else
                 show default
     7 ----Enter/Exit-----
-        Manager is able to simulate the entering and exiting of a vehicle using an image uploaded with the license plate information.
+        Manager is able to simulate the entering and exiting of a vehicle using an image uploaded with the license plate information
+            if the car is in the system and resitered
+                the system will recognize the user as a user type 1
+                the system will open exit turnstile as soon as the license plate reader scans the license plate and recognizes user type 1
+                the system will calculate the difference in enter and stay time and charge the user
+            if the user is a guest user
+                the system will recognize the user as user type 2
+                the system will open exit turnstile as soon as the license plate reader scans the license plate and recognizes user type 2
+                the system will charge the credit card associated with gues account based on the time of stay
+            if the user is a cash user
+                the system will wait for validated ticket to be entered and then open turnstile
     8 ----Map-----
         Displays the occupancy of the map based on the current occupancy reading
             if the check map button is clicked
