@@ -30,7 +30,7 @@ class Parking_Lot(models.Model):
 
 	#A python method that returns a unicode representation of the model. This is what is displayed when the model is called as a string.
 	def __str__(self):
-		#Return the id of the Parking_Lot as a string.	
+		#Return the id of the Parking_Lot as a string.
 		return str(self.id)
 
 	# Function to check number of spots open
@@ -96,7 +96,7 @@ class Session(models.Model):
     #If the parkingLot gets deleted then all the sessions in the relationship gets deleted.
     parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE, blank = True)
     # vehicle = models.OneToOneField(Vehicle)
-    
+
     #Initialize a Credit_Card field associated with the session with char data type with a max_length of 16.
     Credit_Card = models.CharField(max_length = 16, blank = True)
 
@@ -104,6 +104,10 @@ class Session(models.Model):
     license_plate_number = models.CharField(max_length = 7, validators=[RegexValidator(r'^[A-Z0-9]{6,7}$')], blank = True)
     #Initialize a time_arrived field associated with the session with char data type with a max_length of 10.
     time_arrived = models.CharField(max_length = 10, blank = True)
+    #Initialize a date_arrived field associated with the session with char data type
+    date_arrived = models.CharField(max_length = 10, blank = True)
+    #Initialize a date_exited field associated with the session with char data type
+    date_exited = models.CharField(max_length = 10, blank = True)
     #Initialize a time_exited field associated with the session with char data type with a max_length of 10.
     time_exited = models.CharField(max_length = 10, blank = True)
     #Initialize a stay_length field associated with the session with char data type with a max_length of 2.
@@ -120,6 +124,45 @@ class Session(models.Model):
     def __str__(self):
         return str(self.id)
 
+class ActiveSession(models.Model):
+    #Initialize a parkingLot field to create a many-to-one relationship to the Parking_Lot model.
+    #If the parkingLot gets deleted then all the sessions in the relationship gets deleted.
+    parkingLot = models.ForeignKey(Parking_Lot, on_delete=models.CASCADE, blank = True)
+    # vehicle = models.OneToOneField(Vehicle)
+
+    #Initialize a Credit_Card field associated with the session with char data type with a max_length of 16.
+    Credit_Card = models.CharField(max_length = 16, blank = True)
+
+    #Initialize a license_plate_number field associated with the session with char data type with a max_length of 7.
+    license_plate_number = models.CharField(max_length = 7, validators=[RegexValidator(r'^[A-Z0-9]{6,7}$')], blank = True)
+    #Initialize a time_arrived field associated with the session with char data type with a max_length of 10.
+    time_arrived = models.CharField(max_length = 10, blank = True)
+    #Initialize a time_exited field associated with the session with char data type with a max_length of 10.
+    time_exited = models.CharField(max_length = 10, blank = True)
+    #Initialize a date_arrived field associated with the session with char data type
+    date_arrived = models.CharField(max_length = 10, blank = True)
+    #Initialize a date_exited field associated with the session with char data type
+    date_exited = models.CharField(max_length = 10, blank = True)
+    #Initialize a stay_length field associated with the session with char data type with a max_length of 2.
+    stay_length = models.CharField(max_length = 2, blank = True)
+    #Initialize a amount_charged field associated with the session with char data type with a max_length of 5.
+    amount_charged = models.CharField(max_length = 5, blank = True)
+    #account = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+    #time_arrived = models.DateTimeField(auto_now=True)
+    #date_arrived = models.DateField(_("Date"), default=datetime.date.today)
+    #Initialize a user_type field associated with the session with char data type with a max_length of 1.
+    user_type = models.CharField(max_length = 1)
+
+    def __str__(self):
+        return str(self.id)
+
+class Image(models.Model):
+    image = models.ImageField(upload_to='pics/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)
 # class RegisteredUser(models.Model):
 #     reg_user = 	models.OneToOneField(Session)
 #     #account = models.OneToOneField(Account)

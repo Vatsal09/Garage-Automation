@@ -27,14 +27,21 @@
     background: white;
 }
 
-.glyphicon-remove, .glyphicon-arrow-left{
+div.modal-head .glyphicon-remove, div.modal-head .glyphicon-arrow-left{
+    padding: 0;
+    padding-top: 10px;
+    margin:0px;
+    border: none;
+    display: block;
+    background-color: black;
+}
+.glyphicon-remove{
     padding: 0;
     margin: 20px;
     margin-top: 30px;
     border: none;
     display: block;
     background: white;
-    
 }
 .windowModal{
     padding: 0em;
@@ -99,6 +106,7 @@ form input[type=text]{
     font-size: 20;
 }
 .menuItemRadioDescription{
+    margin-top: 5px;
     display: inline-block;
     font-size: 20;
 }
@@ -117,13 +125,33 @@ form{
     border-width: thin;    
     border-left: none;
     border-right: none;
+    background-color: white;
+    width: 100%;
+    
 }
 .subMenuBlock h3{
     margin-top: 15px;
     margin-bottom: 15px;
+    display: flex;
 }
 
 .detailsMenuListItem button{
     display: inline-block;
     float: right;
+}
+
+.modal-head{
+    background: black;
+    padding: 0px;
+    margin: 0px;
+    color: white;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    background-color: black;    
+}
+.modal-body{
+    padding: 0px;
+}
+.subMenuListButton p{
+    margin-top: 0px;
 }
