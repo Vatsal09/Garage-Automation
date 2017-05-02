@@ -13,7 +13,7 @@ Table of Contents
 	Discusses how data is collected and the data collected thus far. Read README4 for how to view the data from the database.
 
 5_documentation
-	Demo_1.pdf
+	Slides_Demo_1.pdf
 		Powerpoint file for DEMO #1. 
 	
 	Please Note:
