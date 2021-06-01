@@ -27,6 +27,6 @@ pyxdg==0.25
 requests==2.2.1
 six==1.5.2
 testtools==0.9.35
-urllib3==1.7.1
+urllib3==1.26.5
 wheel==0.24.0
 wsgiref==0.1.2
