@@ -3,7 +3,7 @@ certifi==2017.1.23
 chardet==2.3.0
 colorama==0.3.7
 defer==1.0.4
-Django==1.10.6
+Django==2.2.24
 django-geojson==2.10.0
 django-leaflet==0.21.0
 django-location-field==2.0.2
