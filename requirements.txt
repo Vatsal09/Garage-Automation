@@ -9,7 +9,7 @@ django-leaflet==0.20.0
 django-location-field==2.0.2
 extras==0.0.3
 fixtures==0.3.14
-html5lib==0.999
+html5lib==0.99999999
 mox3==0.7.0
 pbr==0.7.0
 ply==3.4
