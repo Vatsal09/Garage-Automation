@@ -28,5 +28,5 @@ requests==2.2.1
 six==1.5.2
 testtools==0.9.35
 urllib3==1.7.1
-wheel==0.24.0
+wheel==0.38.1
 wsgiref==0.1.2
